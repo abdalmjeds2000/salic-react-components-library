@@ -1,0 +1,154 @@
+import React from "react";
+import { DatePicker, Form, Input, Radio, Select, Space } from "antd";
+import { NationaltiesOptions } from "../../it_json";
+import { AutoCompleteOrgUsers } from '../../../../../components/AutoCompleteOrgUsers';
+
+function NewAccountFields() {
+  const [departments, setDepartments] = React.useState([]);
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await fetch('https://salicapi.com/api/user/departments');
+      const data = await response.json();
+      setDepartments(data.Data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  React.useEffect(() => {
+    fetchDepartments();
+  }, []);
+
+  return (
+    <div className="new-account-fields-container">
+      <Form.Item name="AccountType" label="Account Type" rules={[{ required: true, message: '' }]}>
+        <Radio.Group>
+          <Space direction="vertical">
+            <Radio value="AccountType1">Email Account</Radio>
+            <Radio value="AccountType2">Employee Account (Active Directory)</Radio>
+            <Radio value="AccountType3">Contractor</Radio>
+            <Radio value="AccountType4">Consultant</Radio>
+            <Radio value="AccountType5">Trainee</Radio>
+          </Space>
+        </Radio.Group>
+      </Form.Item>
+
+      <Form.Item label="Account Information" rules={[{ required: true, message: '' }]}>
+        <Form.Item rules={[{ required: true }]} style={{ margin: 0 }}>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)'}}>First Name</span>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px'}}>Last Name</span>
+          <Form.Item name="FirstName" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)' }} >
+            <Input placeholder="Enter First Name" />
+          </Form.Item>
+          <Form.Item name="LastName" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px' }} >
+            <Input placeholder="Enter Last Name" />
+          </Form.Item>
+        </Form.Item>
+
+        <span>Company</span>
+        <Form.Item name="Company" rules={[{ required: true, message: '' }]} >
+          <Input placeholder="Write Here" />
+        </Form.Item>
+        
+        <span>Job Title</span>
+        <Form.Item name="JobTitle" rules={[{ required: true, message: '' }]} >
+          <Input placeholder="Write Here" />
+        </Form.Item>
+
+
+        <Form.Item rules={[{ required: true }]} style={{ margin: 0 }}>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)'}}>Nationality</span>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px'}}>Department</span>
+          <Form.Item name="Nationality" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)' }} >
+            <Select placeholder="Select Country">
+              {NationaltiesOptions.map(n => <Select.Option value={n.value}>{n.label}</Select.Option>)}
+            </Select>
+          </Form.Item>
+          <Form.Item name="departments" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px' }} >
+            <Select placeholder="Select Department">
+              {departments?.map(dep => <Select.Option value={dep}>{dep}</Select.Option>)}
+            </Select>
+          </Form.Item>
+        </Form.Item>
+
+        <span>Mobile #</span>
+        <Form.Item name="Mobile" rules={[{ required: true, message: '' }]} >
+          <Input placeholder="Write Here" />
+        </Form.Item>
+
+        <span>Phone #</span>
+        <Form.Item name="Phone" rules={[{ required: true, message: '' }]} >
+          <Input placeholder="Write Here" />
+        </Form.Item>
+
+
+        <Form.Item rules={[{ required: true }]}>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)'}}>Manager</span>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px'}}>Hire Date</span>
+          {/* <Form.Item rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)' }} >
+            <DropdownSelectUser name="Manager" size="middle" placeholder="Select Manager" required={true} isDisabled={false} />
+          </Form.Item> */}
+          <Form.Item name="Manager" rules={[{ required: true, message: "" }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: 0 }}>
+            <AutoCompleteOrgUsers valueRender='mail' placeholder="Select Manager" />
+          </Form.Item>
+          <Form.Item name="DateOfEmployee" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px' }} >
+            <DatePicker format="MM/DD/YYYY" style={{ width: "100%" }} />
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item rules={[{ required: true }]} style={{ margin: 0 }}>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)'}}>Grade</span>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px'}}>National ID\IQAMA</span>
+          <Form.Item name="Grade" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)' }} >
+            <Select placeholder="Select Grade">
+              <Select.Option value="None">None</Select.Option>
+              <Select.Option value={1}>1</Select.Option>
+              <Select.Option value={2}>2</Select.Option>
+              <Select.Option value={3}>3</Select.Option>
+              <Select.Option value={4}>4</Select.Option>
+              <Select.Option value={5}>5</Select.Option>
+              <Select.Option value={6}>6</Select.Option>
+              <Select.Option value={7}>7</Select.Option>
+              <Select.Option value={8}>8</Select.Option>
+              <Select.Option value={9}>9</Select.Option>
+              <Select.Option value={10}>10</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="IQAMA" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px' }} >
+            <Input placeholder="Write Here" />
+          </Form.Item>  
+        </Form.Item>
+
+        <span>Start & End Date</span>
+        <Form.Item name="StartEndDate" rules={[{ required: true, message: "" }]}>
+          <DatePicker.RangePicker format="MM/DD/YYYY" style={{ width: "100%" }} />
+        </Form.Item>
+
+        <Form.Item rules={[{ required: true }]} style={{ margin: 0 }}>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)'}}>With Laptop</span>
+          <span style={{display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px'}}>Gender</span>
+          <Form.Item name="WithLaptop" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)' }} >
+            <Select placeholder="With Laptop ?">
+              <Select.Option value="Yes">Yes</Select.Option>
+              <Select.Option value="No">No</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="Gender" rules={[{ required: true, message: '' }]} style={{ display: 'inline-block', width: 'calc(50% - 5px)', margin: '0 0 0 10px' }} >
+            <Select placeholder="Select Gender">
+              <Select.Option value="Male">Male</Select.Option>
+              <Select.Option value="Female">Female</Select.Option>
+            </Select>
+          </Form.Item>
+        </Form.Item>
+
+        <span>Private Email Address</span>
+        <Form.Item name="PrivateEmail" rules={[{ required: true, message: "" }]} style={{ margin: 0 }}>
+          <Input placeholder="e.g. example@mail.com" />
+        </Form.Item>
+      </Form.Item>
+    </div>
+  );
+}
+
+export default NewAccountFields;
