@@ -44,12 +44,15 @@ const ReplyForm = ({ fileList, setFileList, btnLoader, onFinish, replyForm }: an
               style={{ backgroundColor: "#cfe6ff" }} 
               data={data}
               trigger={"@"}
-              renderSuggestion={(entry:any, search:any, highlightedDisplay:any) => ( 
-                <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} />
-                  <span>{highlightedDisplay}</span>
-                </div>
-              )} 
+              renderSuggestion={(entry:any, search:any, highlightedDisplay:any) => {
+                console.log(entry, search, highlightedDisplay);
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} />
+                    <span>{highlightedDisplay}</span>
+                  </div>
+                )
+              }} 
             />
           </MentionsInput>
         </Form.Item>

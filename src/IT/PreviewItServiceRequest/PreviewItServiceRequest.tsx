@@ -67,7 +67,7 @@ type Props = {
   IsAdmin: boolean;
 }
 
-const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => {
+export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => {
   const [requestData, setRequestData] = React.useState<any>({});
   const [loading, setLoading] = React.useState<any>(true);
   const [fileList, setFileList] = React.useState<any>([]);
@@ -439,5 +439,3 @@ const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => {
     </div>
   )
 }
-
-export default PreviewItServiceRequest;

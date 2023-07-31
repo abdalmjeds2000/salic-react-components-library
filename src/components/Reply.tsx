@@ -48,7 +48,8 @@ const Reply = (props: Props) => {
           props.Files != undefined && props?.Files?.length > 0
           ? <div style={replyAttachmentContainer}>
               {props.Files.map((file: any, i: number) => (
-                <FileIcon 
+                <FileIcon
+                  key={i} 
                   FileName={file.fileName}
                   FilePath={file.filePath}
                   FileType={file.fileType}

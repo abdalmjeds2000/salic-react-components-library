@@ -23,7 +23,7 @@ function UpdateRequestForm(props: Props) {
     } else {
       try {
         values.Id = props.RequestData?.Id;
-        const updateRequest = await fetch(`https://salicapi.com/api/tracking/UpdateServiceRequest`, {
+        await fetch(`https://salicapi.com/api/tracking/UpdateServiceRequest`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
