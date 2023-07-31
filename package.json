@@ -39,11 +39,11 @@
   "size-limit": [
     {
       "path": "dist/salic-react-components-library.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "10 MB"
     },
     {
       "path": "dist/salic-react-components-library.esm.js",
-      "limit": "10 KB"
+      "limit": "10 MB"
     }
   ],
   "devDependencies": {

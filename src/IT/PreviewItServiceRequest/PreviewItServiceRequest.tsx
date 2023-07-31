@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Avatar, Form, Image, Spin, Steps, Timeline, Typography, message } from 'antd';
-import "./PreviewRequest.css";
+// import "./PreviewRequest.css";
 import moment from 'moment';
 import { CaretRightOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
