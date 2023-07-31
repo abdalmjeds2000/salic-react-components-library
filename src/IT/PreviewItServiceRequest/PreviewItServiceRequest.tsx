@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Avatar, Form, Image, Spin, Steps, Timeline, Typography, message } from 'antd';
-// import "./PreviewRequest.css";
+import "./PreviewRequest.css";
 import moment from 'moment';
 import { CaretRightOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
@@ -97,11 +97,11 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => 
       GetRequest();
     }
   }, []);
-  // React.useEffect(() => {
-  //   if(Object.keys(requestData).length > 0) {
-  //     correctImgs();
-  //   }
-  // }, [requestData])
+  React.useEffect(() => {
+    if(Object.keys(requestData).length > 0) {
+      correctImgs();
+    }
+  }, [requestData])
   
   // post reply
   async function AddReply(formValues: any) {
@@ -142,53 +142,53 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => 
   }
 
   // fix ticket images
-  // const correctImgs = () => {
-  //   let imgs: any = document.getElementsByTagName("img");
-  //   for (const element of imgs) {
-  //     if(element.src.startsWith("cid")) {
-  //       let name = element.src.split('@')[0].replace('cid:','');
+  const correctImgs = () => {
+    let imgs: any = document.getElementsByTagName("img");
+    for (const element of imgs) {
+      if(element.src.startsWith("cid")) {
+        let name = element.src.split('@')[0].replace('cid:','');
         
-  //       var deleteImgs: any = document.querySelectorAll('[data-originalName="'+name+'"]');
-  //       let src: any = deleteImgs?.[0]?.getAttribute("data-guid");
+        var deleteImgs: any = document.querySelectorAll('[data-originalName="'+name+'"]');
+        let src: any = deleteImgs?.[0]?.getAttribute("data-guid");
         
-  //       // delete parent of deleteImg
-  //       for (const deleteImg of deleteImgs) {
-  //         // deleteImg?.parentNode?.remove();
-  //         const delEl = deleteImg?.parentNode as HTMLElement;
-  //         delEl?.style.setProperty('display', 'none');
-  //       }
+        // delete parent of deleteImg
+        for (const deleteImg of deleteImgs) {
+          // deleteImg?.parentNode?.remove();
+          const delEl = deleteImg?.parentNode as HTMLElement;
+          delEl?.style.setProperty('display', 'none');
+        }
         
-  //       element.setAttribute('src', (src ?? ''));
-  //       // on hover curser pointer
-  //       element.style.cursor = "pointer";
-  //       // scale image on hover
-  //       element.style.transition = "transform 0.5s";
-  //       element.onmouseover = function() {
-  //         element.style.transform = "scale(1.03)";
-  //       }
-  //       element.onmouseout = function() {
-  //         element.style.transform = "scale(1)";
-  //       }
-  //       // element on click to show image in Image Component
-  //       element.onclick = function() {
-  //         setImageViewData({ src: src, visible: true });
-  //       }
-  //     }
-  //   }
+        element.setAttribute('src', (src ?? ''));
+        // on hover curser pointer
+        element.style.cursor = "pointer";
+        // scale image on hover
+        element.style.transition = "transform 0.5s";
+        element.onmouseover = function() {
+          element.style.transform = "scale(1.03)";
+        }
+        element.onmouseout = function() {
+          element.style.transform = "scale(1)";
+        }
+        // element on click to show image in Image Component
+        element.onclick = function() {
+          setImageViewData({ src: src, visible: true });
+        }
+      }
+    }
 
-  //   const x: any = document.getElementsByClassName("attachments-container")[0];
-  //   let hideImages = 0;
-  //   let imagesTotal = x.children.length;
-  //   for (const element of x.children) {
-  //     const el = element as HTMLElement;
-  //     if(el.style.display === "none") {
-  //       hideImages += 1;
-  //     }
-  //   }
-  //   if(hideImages === imagesTotal) {
-  //     x.innerHTML = "No attachments for this ticket"
-  //   }
-  // }
+    const x: any = document.getElementsByClassName("attachments-container")[0];
+    let hideImages = 0;
+    let imagesTotal = x.children.length;
+    for (const element of x.children) {
+      const el = element as HTMLElement;
+      if(el.style.display === "none") {
+        hideImages += 1;
+      }
+    }
+    if(hideImages === imagesTotal) {
+      x.innerHTML = "No attachments for this ticket"
+    }
+  }
 
   // Toggle Properties Section (show and hide in mobile size)
   const propertiesSectionRef = React.useRef<any>(null);
