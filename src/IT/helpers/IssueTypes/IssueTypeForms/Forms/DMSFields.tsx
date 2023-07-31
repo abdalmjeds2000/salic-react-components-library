@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Select } from "antd";
+import { apiLink } from '../../../../../index';
 
 function DMSFields() {
   const [oracleFormData, setOracleFormData] = useState([] as any[]);
@@ -12,7 +13,7 @@ function DMSFields() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://salicapi.com/api/Tracking/GetOracleFormData");
+      const response = await fetch(`${apiLink}/Tracking/GetOracleFormData`);
       const data = await response.json();
       setOracleFormData(data?.Data);
     } catch (error) {

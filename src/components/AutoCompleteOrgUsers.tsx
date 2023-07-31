@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Avatar, Image, Select, SelectProps } from 'antd';
+import { apiLink } from '../index';
 
 const fetchUsers = async (value: string) => {
   try {
-    const response = await fetch(`https://salicapi.com/api/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
+    const response = await fetch(`${apiLink}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
     const data = await response.json();
     return data;
   } catch (error) {

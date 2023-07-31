@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Select } from 'antd';
 import { AutoCompleteOrgUsers } from '../../../../../components/AutoCompleteOrgUsers';
+import { apiLink } from '../../../../../index';
 
 
 const MASARFields = () => {
@@ -8,7 +9,7 @@ const MASARFields = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch('https://salicapi.com/api/user/departments');
+      const response = await fetch(`${apiLink}/user/departments`);
       const data = await response.json();
       setDepartments(data.Data);
     } catch (error) {

@@ -2,13 +2,14 @@ import React from "react";
 import { DatePicker, Form, Input, Radio, Select, Space } from "antd";
 import { NationaltiesOptions } from "../../it_json";
 import { AutoCompleteOrgUsers } from '../../../../../components/AutoCompleteOrgUsers';
+import { apiLink } from '../../../../../index';
 
 function NewAccountFields() {
   const [departments, setDepartments] = React.useState([]);
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch('https://salicapi.com/api/user/departments');
+      const response = await fetch(`${apiLink}/user/departments`);
       const data = await response.json();
       setDepartments(data.Data);
     } catch (error) {

@@ -5,7 +5,7 @@ import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
 import { AutoCompleteOrgUsers } from '../components/AutoCompleteOrgUsers';
 import IssueTypeForms from './helpers/IssueTypes/IssueTypeForms/IssueTypeForms';
-
+import { apiLink } from '../index';
 
 export interface ITServiceRequestFormProps {
   listOfIssue: any[];
@@ -146,8 +146,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
     try {
       setLoading(true);
-      // const response = await fetch("https://salicapi.com/api/tracking/Add", {
-      const response = await fetch("https://dev.salic.com/api/tracking/Add", {
+      const response = await fetch(`${apiLink}/tracking/Add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -275,7 +274,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
         <Form.Item label="Documents">
           <FilesUploader 
-            endpoint="https://salicapi.com/api/uploader/up"
+            endpoint={`${apiLink}/uploader/up`}
             fileList={fileList}
             GetFilesList={(files: any[]) => setFileList(files)}
           />
