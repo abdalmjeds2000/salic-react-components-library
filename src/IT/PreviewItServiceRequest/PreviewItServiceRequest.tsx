@@ -10,7 +10,7 @@ import FileIcon from '../../components/FileIcon';
 import ReplyForm from './utils/ReplyForm';
 import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
-import "./styles.module.css";
+import "./styles.it.css";
 
 
 
@@ -33,6 +33,7 @@ const UserImage = ({ email }: { email: string }) => {
           // src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${email}`}
           // preview={{src: `https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=L&username=${email}`,}}
           src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
+          title={email}
         />
       }
     />

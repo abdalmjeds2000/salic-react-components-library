@@ -6,6 +6,9 @@ import { FilesUploader } from '../components/CustomAntUploader';
 import { AutoCompleteOrgUsers } from '../components/AutoCompleteOrgUsers';
 import IssueTypeForms from './helpers/IssueTypes/IssueTypeForms/IssueTypeForms';
 import { apiLink } from '../index';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 export interface ITServiceRequestFormProps {
   listOfIssue: any[];
   Email: string;
@@ -267,8 +270,9 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
         <Divider />
 
-        <Form.Item name="Description" label="Descriptions / Justifications" rules={[{ required: true }]} >
-          <Input.TextArea rows={8} placeholder="write a brief description" />
+        <Form.Item name="Description" label="Descriptions / Justifications" rules={[{ required: true, message: "" }]} >
+          {/* <Input.TextArea rows={8} placeholder="write a brief description" /> */}
+          <ReactQuill theme="snow" placeholder="write a brief description" style={{ height: 120, marginBottom: 30 }} />
         </Form.Item>
 
         <Form.Item label="Documents">
