@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Avatar, Form, Image, Spin, Steps, Timeline, Typography, message } from 'antd';
-import "./PreviewRequest.css";
 import moment from 'moment';
 import { CaretRightOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
@@ -11,6 +10,7 @@ import FileIcon from '../../components/FileIcon';
 import ReplyForm from './utils/ReplyForm';
 import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
+import "./styles.module.css";
 
 
 
@@ -65,9 +65,10 @@ type Props = {
   TicketId: string | number;
   Email: string;
   IsAdmin: boolean;
+  IssueTypes: any[];
 }
 
-export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => {
+export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }: Props) => {
   const [requestData, setRequestData] = React.useState<any>({});
   const [loading, setLoading] = React.useState<any>(true);
   const [fileList, setFileList] = React.useState<any>([]);
@@ -346,7 +347,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin }: Props) => 
         </div>
 
         <div className='properties' ref={propertiesSectionRef}>
-          <UpdateRequestForm IsAdmin={IsAdmin} RequestData={requestData} handleAfterUpdate={GetRequest} IssueTypes={[]} />
+          <UpdateRequestForm IsAdmin={IsAdmin} RequestData={requestData} handleAfterUpdate={GetRequest} IssueTypes={IssueTypes || []} />
           <Section SectionTitle="Attached Files">
             <div className='attachments-container'>
               {requestData?.Files?.map((file:any, i:number) => (

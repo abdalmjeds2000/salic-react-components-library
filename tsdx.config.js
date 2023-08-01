@@ -1,5 +1,6 @@
 // Not transpiled with TypeScript or Babel, so use plain Es6/Node.js!
 const replace = require('@rollup/plugin-replace');
+const postcss = require('rollup-plugin-postcss');
 
 module.exports = {
   // This function will run for each entry/format/env combination
@@ -13,5 +14,15 @@ module.exports = {
         : p
     );
     return config; // always return a config.
+  },
+};
+module.exports = {
+  rollup(config, options) {
+    config.plugins.push(
+      postcss({
+        modules: true,
+      })
+    );
+    return config;
   },
 };
