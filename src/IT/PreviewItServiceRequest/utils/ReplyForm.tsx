@@ -48,7 +48,8 @@ const ReplyForm = ({ fileList, setFileList, btnLoader, onFinish, replyForm }: an
                 console.log(entry, search, highlightedDisplay);
                 return (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} />
+                    {/* <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} /> */}
+                    <img alt="" src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`} width={20} style={{ borderRadius: 99 }} />
                     <span>{highlightedDisplay}</span>
                   </div>
                 )

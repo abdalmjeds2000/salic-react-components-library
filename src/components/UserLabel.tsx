@@ -11,8 +11,9 @@ const UserLabel = (props: { Mail: string, DisplayName: string, NameDescription?:
           style={{minWidth: 32}}
           src={
             <Image
-              src={`https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=s&username=${props.Mail}`}
-              preview={{src: `https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=L&username=${props.Mail}`,}}
+              // src={`https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=s&username=${props.Mail}`}
+              // preview={{src: `https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=L&username=${props.Mail}`,}}
+              src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
             />
           }
         />}
