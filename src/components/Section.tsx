@@ -9,7 +9,7 @@ type Props = {
   [x:string]: any
 }
 
-const Section = (props: Props) => {
+export const Section = (props: Props) => {
   const AssigneeRecordsStyle: any = {
     display: 'flex',
     flexDirection: 'column',
@@ -26,5 +26,3 @@ const Section = (props: Props) => {
     </div>
   )
 }
-
-export default Section

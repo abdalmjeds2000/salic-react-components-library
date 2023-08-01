@@ -10,7 +10,7 @@ type Props = {
   callback: (toggle: boolean) => void,
 }
 
-const ToggleButton = (props: Props) => {
+export const ToggleButton = (props: Props) => {
   const [toggle, setToggle] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -30,5 +30,3 @@ const ToggleButton = (props: Props) => {
     </Tooltip>
   )
 }
-
-export default ToggleButton

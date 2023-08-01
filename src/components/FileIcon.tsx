@@ -41,7 +41,7 @@ type Props = {
 
 
 
-const FileIcon = (props: Props) => {
+export const FileIcon = (props: Props) => {
   return (
     <Tooltip title={props.FileName}>
       <img 
@@ -56,5 +56,3 @@ const FileIcon = (props: Props) => {
     </Tooltip>
   )
 }
-
-export default FileIcon;

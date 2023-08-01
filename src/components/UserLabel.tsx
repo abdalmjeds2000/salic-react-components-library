@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Image, Typography } from 'antd';
 
 
-const UserLabel = (props: { Mail: string, DisplayName: string, NameDescription?: string }) => {
+export const UserLabel = (props: { Mail: string, DisplayName: string, NameDescription?: string }) => {
 
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '7px', }}>
@@ -29,5 +29,3 @@ const UserLabel = (props: { Mail: string, DisplayName: string, NameDescription?:
     </div>
   )
 }
-
-export default UserLabel

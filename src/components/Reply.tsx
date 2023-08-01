@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tag } from 'antd';
-import FileIcon from './FileIcon';
+import { FileIcon } from './FileIcon';
 
 const contentStyle: any = {
   backgroundColor: '#fff',
@@ -27,7 +27,7 @@ type Props = {
   Footer?: any
 }
 
-const Reply = (props: Props) => {
+export const Reply = (props: Props) => {
   return (
     <div className="reply-container">
       <h3 style={{fontSize: '1.2rem'}}>{props.Title}</h3>
@@ -67,5 +67,3 @@ const Reply = (props: Props) => {
     </div>
   )
 }
-
-export default Reply

@@ -5,7 +5,7 @@ type LoaderProps = {
   label?: string;
 };
 
-const Loader = ({ label }: LoaderProps) => {
+export const Loader = ({ label }: LoaderProps) => {
   return (
     <span style={{ fontSize: "1rem", color: "#1890ff" }}>
       <LoadingOutlined style={{ fontSize: "1.25rem" }} />
@@ -13,5 +13,3 @@ const Loader = ({ label }: LoaderProps) => {
     </span>
   );
 };
-
-export default Loader;

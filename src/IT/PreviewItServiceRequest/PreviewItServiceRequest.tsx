@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { Avatar, Form, Image, Spin, Steps, Timeline, Typography, message } from 'antd';
+import { Avatar, Form, Image, Steps, Timeline, Typography, message } from 'antd';
 import moment from 'moment';
 import { CaretRightOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
-import Reply from '../../components/Reply';
-import ToggleButton from '../../components/ToggleButton';
-import Section from '../../components/Section';
-import FileIcon from '../../components/FileIcon';
+import { Reply } from '../../components/Reply';
+import { ToggleButton } from '../../components/ToggleButton';
+import { Section } from '../../components/Section';
+import { FileIcon } from '../../index';
 import ReplyForm from './utils/ReplyForm';
 import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
+import { Loader } from "../../index";
 import "./styles.it.css";
-
 
 
 
@@ -213,7 +213,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
   }
 
   if (Object.keys(requestData)?.length === 0) {
-    return <div><Spin size="large" /> Loading...</div>;
+    return <Loader />;
   }
   return (
     <div className='preview-request-container'>

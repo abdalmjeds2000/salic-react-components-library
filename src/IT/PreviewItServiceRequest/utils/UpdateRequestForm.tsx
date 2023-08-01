@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Form, message, Radio, Select, Space } from 'antd';
-import Section from '../../../components/Section';
+import { Section } from '../../../components/Section';
 
 type Props = {
   RequestData: any;
