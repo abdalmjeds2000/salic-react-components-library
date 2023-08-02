@@ -1,19 +1,24 @@
 import * as React from 'react';
 import moment from 'moment';
 import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
 import { AutoCompleteOrgUsers } from '../components/AutoCompleteOrgUsers';
 import IssueTypeForms from './helpers/IssueTypes/IssueTypeForms/IssueTypeForms';
 import { apiLink } from '../index';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
+import "jodit/build/jodit.min.css";
+import JoditEditor from "jodit-react";
+import { editorConfig } from "../utils/richtext-editor"
 
 export interface ITServiceRequestFormProps {
   listOfIssue: any[];
   Email: string;
   initialValues?: any;
   initialFiles?: any[];
+  emailDescription?: string;
 }
 const initIssueProps = { category: "Hardware", type: "" };
 const initIssueExtra = { guidLink: { src: null, visible: false }, pdfLink: null };
@@ -270,9 +275,14 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
         <Divider />
 
-        <Form.Item name="Description" label="Descriptions / Justifications" rules={[{ required: true, message: "" }]} >
-          {/* <Input.TextArea rows={8} placeholder="write a brief description" /> */}
-          <ReactQuill theme="snow" placeholder="write a brief description" style={{ height: 120, marginBottom: 30 }} />
+        <Form.Item name="Description" hidden><TextArea /></Form.Item>
+        <Form.Item label="Descriptions / Justifications" required>
+          {/* <ReactQuill theme="snow" placeholder="write a brief description" style={{ height: 120, marginBottom: 30 }} /> */}
+          <JoditEditor
+            value={props.emailDescription || ""}
+            config={editorConfig}
+            onChange={value => form.setFieldsValue({ Description: value })}
+          />
         </Form.Item>
 
         <Form.Item label="Documents">
