@@ -69,7 +69,6 @@
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.4",
     "react-mentions": "^4.4.10",
-    "react-quill": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2"
   }
 }

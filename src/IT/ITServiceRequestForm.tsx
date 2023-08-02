@@ -1,17 +1,15 @@
 import * as React from 'react';
 import moment from 'moment';
-import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image } from 'antd';
+import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image, ConfigProvider } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
 import { AutoCompleteOrgUsers } from '../components/AutoCompleteOrgUsers';
 import IssueTypeForms from './helpers/IssueTypes/IssueTypeForms/IssueTypeForms';
 import { apiLink } from '../index';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
 import "jodit/build/jodit.min.css";
 import JoditEditor from "jodit-react";
-import { editorConfig } from "../utils/richtext-editor"
+import { editorConfig, antdCustomTheme } from "../index";
 
 export interface ITServiceRequestFormProps {
   listOfIssue: any[];
@@ -19,6 +17,7 @@ export interface ITServiceRequestFormProps {
   initialValues?: any;
   initialFiles?: any[];
   emailDescription?: string;
+  Source?: "Web" | "ADD-IN" | string;
 }
 const initIssueProps = { category: "Hardware", type: "" };
 const initIssueExtra = { guidLink: { src: null, visible: false }, pdfLink: null };
@@ -146,7 +145,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
     const formData = { 
       AccountType: "AccountType",
       Email: props.Email,
-      Source: "WEB",
+      Source: props.Source || "Web",
       FileNames: files.join(","),
       ...FormData,
     };
@@ -176,140 +175,141 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
   const handleFinishFailed = () => message.error("Please, fill out the form correctly.");
 
   return (
-    <div className='new-it-request-form-container'> 
-      <Form 
-        {...{ labelCol: { span: 6 }, wrapperCol: { span: 12 } }}
-        form={form}
-        labelWrap
-        name="new-service-request-form"
-        onFinish={onFinish}
-        onFinishFailed={handleFinishFailed}
-        initialValues={props.initialValues}
-      >
-        <Form.Item name="ReceivedDate" label="Date"  initialValue={moment().format("MM-DD-YYYY hh:mm")}>
-          <Input placeholder="Date" size="large" disabled />
-        </Form.Item>
-        <Form.Item name="onbehalf" label="On Behalf Of">
-          <AutoCompleteOrgUsers valueRender='mail' size="large" allowClear placeholder="Select User" />
-        </Form.Item>
-        <Form.Item name="Subject" label="Subject" rules={[{ required: true }]} >
-          <Input placeholder="write breif subject" size="large" />
-        </Form.Item>
-
-        <Divider />
-
-        <Form.Item name="CategoryType" label="Issue Category" initialValue="Hardware">
-          <Radio.Group value={issue.category} onChange={({ target: { value } }) => setIssue({ category: value, type: "" })}>
-            <Space direction="vertical">
-              <Radio value="Hardware">
-                <Typography.Text strong>Hardware & Devices</Typography.Text> <br />
-                <Typography.Text type="secondary">Hardware problem such as laptop or screen broken</Typography.Text>
-              </Radio>
-              <Radio value="Software">
-                <Typography.Text strong>Software</Typography.Text> <br />
-                <Typography.Text type="secondary">Software problem such as application not working</Typography.Text>
-              </Radio>
-              <Radio value="Access">
-                <Typography.Text strong>Access, Permissions, and Licenses</Typography.Text> <br />
-                <Typography.Text type="secondary">Access Issues such as Permissions to access a resource</Typography.Text>
-              </Radio>
-              <Radio value="Security">
-                <Typography.Text strong>Security Incident</Typography.Text> <br />
-                <Typography.Text type="secondary">Security Incidents such as email phishing.</Typography.Text>
-              </Radio>
-            </Space>
-          </Radio.Group>
-        </Form.Item>
-
-        <Form.Item name="Priority" label="Priority" initialValue="1">
-          <Select placeholder="Priority" size="large">
-            <Select.Option value="1">Normal</Select.Option>
-            <Select.Option value="2">Critical</Select.Option>
-          </Select>
-        </Form.Item>
-        
-        <Form.Item 
-          name="IssueType" 
-          label="Issue Type"
-          style={{ marginBottom: 0 }}
-          extra={
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-              <span>{(issue.category === "Access" && issueTypeExtra.pdfLink) ? <Button type="link" style={{ padding: 0 }}>
-                  <Typography.Link href={issueTypeExtra.pdfLink || ''} target="_blank">
-                    <PaperClipOutlined /> User Guide
-                  </Typography.Link>
-                </Button> : null}</span>
-              <span>{issue.category === "Access" && issueTypeExtra.guidLink.src && 
-                <Button type="link" onClick={() => setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, visible: true } })) } style={{ fontSize: '0.5rem', float: "left", padding: 0 }}>
-                  {approcla_icon}
-                </Button>}</span>
-            </div>
-          }
+    <ConfigProvider theme={{ token: antdCustomTheme }}>
+      <div className='new-it-request-form-container'>
+        <Form 
+          {...{ labelCol: { span: 6 }, wrapperCol: { span: 12 } }}
+          form={form}
+          labelWrap
+          name="new-service-request-form"
+          onFinish={onFinish}
+          onFinishFailed={handleFinishFailed}
+          initialValues={props.initialValues}
         >
-          <Select
-            placeholder="Select Issue Type"
-            size="large"
-            value={issue.type}
-            onChange={(value) => {
-              form.setFieldsValue({ IssueType: value });
-              /* get image src from issuetypes list by filter it using current value issueTypeField */
-              const imgsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.AttachmentFiles?.[0]?.ServerRelativePath?.DecodedUrl;
-              const pdfsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.UserGuideFile;
-              setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, src: imgsrc }, pdfLink: pdfsrc }));
-              setIssue(prev => ({ ...prev, type: value }));
-            }}
+          <Form.Item name="ReceivedDate" label="Date" hidden initialValue={moment().format("MM-DD-YYYY hh:mm")}>
+            <Input placeholder="Date" size="large" disabled />
+          </Form.Item>
+          <Form.Item name="Subject" label="Subject" rules={[{ required: true }]} >
+            <Input placeholder="write breif subject" size="large" />
+          </Form.Item>
+          <Form.Item name="onbehalf" label="On Behalf Of">
+            <AutoCompleteOrgUsers valueRender='mail' size="large" allowClear placeholder="Select User" />
+          </Form.Item>
+
+          <Divider />
+
+          <Form.Item name="CategoryType" label="Issue Category" initialValue="Hardware">
+            <Radio.Group value={issue.category} onChange={({ target: { value } }) => setIssue({ category: value, type: "" })}>
+              <Space direction="vertical">
+                <Radio value="Hardware">
+                  <Typography.Text strong>Hardware & Devices</Typography.Text> <br />
+                  <Typography.Text type="secondary">Hardware problem such as laptop or screen broken</Typography.Text>
+                </Radio>
+                <Radio value="Software">
+                  <Typography.Text strong>Software</Typography.Text> <br />
+                  <Typography.Text type="secondary">Software problem such as application not working</Typography.Text>
+                </Radio>
+                <Radio value="Access">
+                  <Typography.Text strong>Access, Permissions, and Licenses</Typography.Text> <br />
+                  <Typography.Text type="secondary">Access Issues such as Permissions to access a resource</Typography.Text>
+                </Radio>
+                <Radio value="Security">
+                  <Typography.Text strong>Security Incident</Typography.Text> <br />
+                  <Typography.Text type="secondary">Security Incidents such as email phishing.</Typography.Text>
+                </Radio>
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item name="Priority" label="Priority" initialValue="1">
+            <Select placeholder="Priority" size="large">
+              <Select.Option value="1">Normal</Select.Option>
+              <Select.Option value="2">Critical</Select.Option>
+            </Select>
+          </Form.Item>
+          
+          <Form.Item 
+            name="IssueType" 
+            label="Issue Type"
+            style={{ marginBottom: 0 }}
+            extra={
+              <div style={{display: "flex", justifyContent: "space-between"}}>
+                <span>{(issue.category === "Access" && issueTypeExtra.pdfLink) ? <Button type="link" style={{ padding: 0 }}>
+                    <Typography.Link href={issueTypeExtra.pdfLink || ''} target="_blank">
+                      <PaperClipOutlined /> User Guide
+                    </Typography.Link>
+                  </Button> : null}</span>
+                <span>{issue.category === "Access" && issueTypeExtra.guidLink.src && 
+                  <Button type="link" onClick={() => setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, visible: true } })) } style={{ fontSize: '0.5rem', float: "left", padding: 0 }}>
+                    {approcla_icon}
+                  </Button>}</span>
+              </div>
+            }
           >
-            {props.listOfIssue
-              ?.filter((i) => i.Category === issue.category)
-              ?.map((option, i) => <Select.Option key={i} value={option.IssueType}>{option.IssueType}</Select.Option>)}
-            <Select.Option value="Other">Other</Select.Option>
-          </Select>
-        </Form.Item>
+            <Select
+              placeholder="Select Issue Type"
+              size="large"
+              value={issue.type}
+              onChange={(value) => {
+                form.setFieldsValue({ IssueType: value });
+                /* get image src from issuetypes list by filter it using current value issueTypeField */
+                const imgsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.AttachmentFiles?.[0]?.ServerRelativePath?.DecodedUrl;
+                const pdfsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.UserGuideFile;
+                setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, src: imgsrc }, pdfLink: pdfsrc }));
+                setIssue(prev => ({ ...prev, type: value }));
+              }}
+            >
+              {props.listOfIssue
+                ?.filter((i) => i.Category === issue.category)
+                ?.map((option, i) => <Select.Option key={i} value={option.IssueType}>{option.IssueType}</Select.Option>)}
+              <Select.Option value="Other">Other</Select.Option>
+            </Select>
+          </Form.Item>
 
-        {
-          issue.category === "Access" && issue.type !== "" &&
-            <div style={{padding: '15px', borderRadius: '10px', backgroundColor: '#f5f5f5'}}>
-              <IssueTypeForms IssueType={issue.type} />
-            </div>
-        }
+          {
+            issue.category === "Access" && issue.type !== "" &&
+              <div style={{padding: '15px', borderRadius: '10px', backgroundColor: '#f5f5f5'}}>
+                <IssueTypeForms IssueType={issue.type} />
+              </div>
+          }
 
-        <Divider />
+          <Divider />
 
-        <Form.Item name="Description" hidden><TextArea /></Form.Item>
-        <Form.Item label="Descriptions / Justifications" required>
-          {/* <ReactQuill theme="snow" placeholder="write a brief description" style={{ height: 120, marginBottom: 30 }} /> */}
-          <JoditEditor
-            value={props.emailDescription || ""}
-            config={editorConfig}
-            onChange={value => form.setFieldsValue({ Description: value })}
-          />
-        </Form.Item>
+          <Form.Item name="Description" hidden><TextArea /></Form.Item>
+          <Form.Item label="Descriptions / Justifications" required>
+            <JoditEditor
+              value={props.emailDescription || ""}
+              config={editorConfig}
+              onChange={value => form.setFieldsValue({ Description: value })}
+            />
+          </Form.Item>
 
-        <Form.Item label="Documents">
-          <FilesUploader 
-            endpoint={`${apiLink}/uploader/up`}
-            fileList={fileList}
-            GetFilesList={(files: any[]) => setFileList(files)}
-          />
-        </Form.Item>
+          <Form.Item label="Documents">
+            <FilesUploader 
+              endpoint={`${apiLink}/uploader/up`}
+              fileList={fileList}
+              GetFilesList={(files: any[]) => setFileList(files)}
+            />
+          </Form.Item>
 
-        <div style={{ textAlign: "center" }}>
-          <Button type="primary" htmlType="submit" loading={loading} size="large">
-            Submit
-          </Button>
-        </div>
-      </Form>
-      <Image
-        width={200}
-        style={{ display: 'none' }}
-        src={issueTypeExtra.guidLink.src || ""}
-        preview={{
-          visible: issueTypeExtra.guidLink.visible,
-          scaleStep: 0.5,
-          src: issueTypeExtra.guidLink.src || "",
-          onVisibleChange: (value) => setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, visible: value } }))
-        }}
-      />
-    </div>
+          <div style={{ textAlign: "center" }}>
+            <Button type="primary" htmlType="submit" loading={loading} size="large">
+              Submit
+            </Button>
+          </div>
+        </Form>
+        <Image
+          width={200}
+          style={{ display: 'none' }}
+          src={issueTypeExtra.guidLink.src || ""}
+          preview={{
+            visible: issueTypeExtra.guidLink.visible,
+            scaleStep: 0.5,
+            src: issueTypeExtra.guidLink.src || "",
+            onVisibleChange: (value) => setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, visible: value } }))
+          }}
+        />
+      </div>
+    </ConfigProvider>
   );
 }
