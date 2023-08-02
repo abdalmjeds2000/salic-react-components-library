@@ -23,7 +23,9 @@ const initIssueProps = { category: "Hardware", type: "" };
 const initIssueExtra = { guidLink: { src: null, visible: false }, pdfLink: null };
 const approcla_icon = <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20px" height="20px" x="0" y="0" viewBox="0 0 682.667 682.667"><g><defs><clipPath id="b" clipPathUnits="userSpaceOnUse"><path d="M0 512h512V0H0Z" fill="#1890ff"  ></path></clipPath></defs><mask id="a"><rect width="100%" height="100%" fill="#FFFFFF" data-original="#ffffff" ></rect><path d="M0 0c12.98-27.735 20.25-58.656 20.25-91.247 0-119.103-96.897-216-216-216s-216 96.897-216 216c0 119.102 96.897 216 216 216 15.74 0 31.086-1.708 45.877-4.92l32.685 32.684c-25.058 8.045-51.486 12.586-78.562 12.586-68.38 0-132.667-26.979-181.02-75.331-48.351-48.352-74.98-112.639-74.98-181.019 0-68.38 26.629-132.667 74.98-181.02 48.353-48.351 112.64-74.63 181.02-74.63 68.38 0 132.667 26.279 181.02 74.63 48.351 48.353 74.98 112.64 74.98 181.02 0 42.98-10.527 84.341-30.351 121.146z" transform="matrix(1.33333 0 0 -1.33333 602.333 220.137)" fill="#FFFFFF" data-original="#ffffff" ></path></mask><g mask="url(#a)"><g clip-path="url(#b)" transform="matrix(1.33333 0 0 -1.33333 0 682.667)"><path d="M0 0c0 43.823 35.526 79.35 79.35 79.35 43.823 0 79.349-35.527 79.349-79.35 0-43.823-35.526-79.35-79.349-79.35C35.526-79.35 0-43.823 0 0Z" transform="translate(176.65 302.65)" fill="none" stroke="#1890ff" stroke-width="40px" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" ></path><path d="M0 0c0 80.8 65.501 146.301 146.301 146.301 80.8 0 146.301-65.501 146.301-146.301" transform="translate(109.7 77)" fill="none" stroke="#1890ff" stroke-width="40px" stroke-linecap="butt" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" ></path><path d="m0 0-83-83-50 50" transform="translate(484 464)" fill="none" stroke="#1890ff" stroke-width="40px" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" ></path><path d="M0 0c12.98-27.735 20.25-58.656 20.25-91.247 0-119.103-96.897-216-216-216s-216 96.897-216 216c0 119.102 96.897 216 216 216 15.74 0 31.086-1.708 45.877-4.92l32.685 32.684c-25.058 8.045-51.486 12.586-78.562 12.586-68.38 0-132.667-26.979-181.02-75.331-48.351-48.352-74.98-112.639-74.98-181.019 0-68.38 26.629-132.667 74.98-181.02 48.353-48.351 112.64-74.63 181.02-74.63 68.38 0 132.667 26.279 181.02 74.63 48.351 48.353 74.98 112.64 74.98 181.02 0 42.98-10.527 84.341-30.351 121.146z" transform="translate(451.75 346.897)" fill="#1890ff"  ></path></g></g></g></svg>;
 
-
+const formItemsStyle: React.CSSProperties = {
+  marginBottom: 10,
+}
 export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = React.useState(false);
@@ -178,7 +180,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
     <ConfigProvider theme={{ token: antdCustomTheme }}>
       <div className='new-it-request-form-container'>
         <Form 
-          {...{ labelCol: { span: 6 }, wrapperCol: { span: 12 } }}
+          {...{ labelCol: { span: 6, style: { lineHeight: 1 } }, wrapperCol: { span: 12 } }}
           form={form}
           labelWrap
           name="new-service-request-form"
@@ -186,19 +188,19 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           onFinishFailed={handleFinishFailed}
           initialValues={props.initialValues}
         >
-          <Form.Item name="ReceivedDate" label="Date" hidden initialValue={moment().format("MM-DD-YYYY hh:mm")}>
+          <Form.Item name="ReceivedDate" label="Date" hidden initialValue={moment().format("MM-DD-YYYY hh:mm")} style={formItemsStyle}>
             <Input placeholder="Date" size="large" disabled />
           </Form.Item>
-          <Form.Item name="Subject" label="Subject" rules={[{ required: true }]} >
+          <Form.Item name="Subject" label="Subject" rules={[{ required: true }]} style={formItemsStyle}>
             <Input placeholder="write breif subject" size="large" />
           </Form.Item>
-          <Form.Item name="onbehalf" label="On Behalf Of">
+          <Form.Item name="onbehalf" label="On Behalf Of" style={formItemsStyle}>
             <AutoCompleteOrgUsers valueRender='mail' size="large" allowClear placeholder="Select User" />
           </Form.Item>
 
           <Divider />
 
-          <Form.Item name="CategoryType" label="Issue Category" initialValue="Hardware">
+          <Form.Item name="CategoryType" label="Issue Category" initialValue="Hardware" style={formItemsStyle}>
             <Radio.Group value={issue.category} onChange={({ target: { value } }) => setIssue({ category: value, type: "" })}>
               <Space direction="vertical">
                 <Radio value="Hardware">
@@ -221,7 +223,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item name="Priority" label="Priority" initialValue="1">
+          <Form.Item name="Priority" label="Priority" initialValue="1" style={formItemsStyle}>
             <Select placeholder="Priority" size="large">
               <Select.Option value="1">Normal</Select.Option>
               <Select.Option value="2">Critical</Select.Option>
@@ -276,7 +278,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           <Divider />
 
           <Form.Item name="Description" hidden><TextArea /></Form.Item>
-          <Form.Item label="Descriptions / Justifications" required>
+          <Form.Item label="Descriptions / Justifications" required style={formItemsStyle}>
             <JoditEditor
               value={props.emailDescription || ""}
               config={editorConfig}
@@ -284,7 +286,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
             />
           </Form.Item>
 
-          <Form.Item label="Documents">
+          <Form.Item label="Documents" style={formItemsStyle}>
             <FilesUploader 
               endpoint={`${apiLink}/uploader/up`}
               fileList={fileList}
