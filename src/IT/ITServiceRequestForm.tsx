@@ -180,7 +180,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
     <ConfigProvider theme={{ token: antdCustomTheme }}>
       <div className='new-it-request-form-container'>
         <Form 
-          {...{ labelCol: { span: 6, style: { lineHeight: 1 } }, wrapperCol: { span: 12 } }}
+          {...{ labelCol: { span: 6, style: { lineHeight: 1, paddingBottom: 0 } }, wrapperCol: { span: 12 } }}
           form={form}
           labelWrap
           name="new-service-request-form"

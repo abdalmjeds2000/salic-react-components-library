@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Avatar, ConfigProvider, Form, Image, Steps, Timeline, Typography, message } from 'antd';
+import { Avatar, Button, ConfigProvider, Form, Image, Steps, Timeline, Typography, message } from 'antd';
 import moment from 'moment';
-import { CaretRightOutlined, MoreOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, CloseOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
 import { Reply } from '../../components/Reply';
 import { ToggleButton } from '../../components/ToggleButton';
@@ -220,7 +220,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
       <div className='preview-request-container'>
         
         <div className="header">
-          <Typography.Title>IT Service Request: [#{requestData?.Id || '###'}]</Typography.Title>
+          <Typography.Title>IT RE: [#{requestData?.Id || '###'}]</Typography.Title>
           {Object.keys(requestData).length > 0 && <div>
             <ActionsDropdown Email={Email} requestData={requestData} GetRequest={GetRequest} IsAdmin={IsAdmin} />
             <span className='properties-toggle-btn'>
@@ -228,6 +228,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
                 icon={<MoreOutlined />}
                 title="more information"
                 callback={handleShowDetails}
+                btnType="default"
               />
             </span>
           </div>}
@@ -350,81 +351,87 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
           </div>
 
           <div className='properties' ref={propertiesSectionRef}>
-            <UpdateRequestForm IsAdmin={IsAdmin} RequestData={requestData} handleAfterUpdate={GetRequest} IssueTypes={IssueTypes || []} />
-            <Section SectionTitle="Attached Files">
-              <div className='attachments-container'>
-                {requestData?.Files?.map((file:any, i:number) => (
-                  <Typography.Link target='_blank' href={`https://salicapi.com/File/${file.Guid}`} style={{ display: 'flex', alignItems: 'center', gap: 2, padding: 5 }} rel="noreferrer">
-                    <FileIcon
-                      key={i} 
-                      FileType={file.FileName.split(".")[file.FileName.split(".").length-1]}
-                      FileName={file.FileName}
-                      FilePath={`https://salicapi.com/File/${file.Guid}`}
-                      IconWidth='22px'
-                    />
-                    <span style={{ color: '#555'}}>{file.FileName}</span>
-                  </Typography.Link>
-                  )
-                )}
-                {
-                  requestData?.Files?.length === 0
-                  ? <Typography.Text>No attachments for this ticket</Typography.Text>
-                  : null
-                }
-              </div>
-            </Section>
-            <Section SectionTitle="Assignee History">
-              <Steps
-                direction="vertical" size="small"  status="process" 
-                current={requestData.Status == "CLOSED" ? requestData?.referingHistory.length+2 : requestData?.referingHistory.length}
-              >
-                <Steps.Step 
-                  title={<><UserImage email={requestData?.Requester?.Mail} /> Submitted by <b>{requestData?.Requester?.DisplayName}</b></>} 
-                  subTitle={`at ${new Date(requestData.CreatedAt).toLocaleString()}`} style={{paddingBottom: 15}}
-                />
-                {requestData?.referingHistory?.map((assignee:any, i:number) => {
-                  let ruleName = '';
-                  let waitApproveMsg = <></>;
-                  if (assignee?.Rule && assignee?.Rule !== ''){
-                    assignee.Rule = assignee?.Rule.replaceAll('\r\n', '');
-                    ruleName = ` As "${JSON.parse(assignee?.Rule)?.Display}" `;
+          <div className="mobile-overlay" onClick={handleShowDetails} />
+            <div className="properties-container">
+              <Button type="default" shape='circle' onClick={handleShowDetails} className="close-btn">
+                <CloseOutlined />
+              </Button>
+              <UpdateRequestForm IsAdmin={IsAdmin} RequestData={requestData} handleAfterUpdate={GetRequest} IssueTypes={IssueTypes || []} />
+              <Section SectionTitle="Attached Files">
+                <div className='attachments-container'>
+                  {requestData?.Files?.map((file:any, i:number) => (
+                    <Typography.Link target='_blank' href={`https://salicapi.com/File/${file.Guid}`} style={{ display: 'flex', alignItems: 'center', gap: 2, padding: 5 }} rel="noreferrer">
+                      <FileIcon
+                        key={i} 
+                        FileType={file.FileName.split(".")[file.FileName.split(".").length-1]}
+                        FileName={file.FileName}
+                        FilePath={`https://salicapi.com/File/${file.Guid}`}
+                        IconWidth='22px'
+                      />
+                      <span style={{ color: '#555'}}>{file.FileName}</span>
+                    </Typography.Link>
+                    )
+                  )}
+                  {
+                    requestData?.Files?.length === 0
+                    ? <Typography.Text>No attachments for this ticket</Typography.Text>
+                    : null
                   }
-                  if (assignee?.Action === "APPROVE" && assignee?.Response === "PENDING"){
-                    waitApproveMsg = <Typography.Text type='warning' strong>Waiting Approval</Typography.Text>;
-                  }
-                  return (
-                    <Steps.Step 
-                      key={i}
-                      title={
-                        <b>
-                          <UserImage email={assignee.ToUser?.Mail} />
-                          {assignee.ByUser?.DisplayName} 
-                          <CaretRightOutlined />  
-                          {assignee.ToUser?.DisplayName} 
-                          {ruleName}
-                          {waitApproveMsg}
-                        </b>
-                      } 
-                      subTitle={<>at {new Date(assignee.CreatedAt).toLocaleString()}</>}
-                      description={ 
-                        assignee.Response === "APPROVED" 
-                        ? <><Text strong type='success'>{assignee.Response}</Text> at {new Date(assignee.UpdatedAt).toLocaleString()}</> 
-                        : assignee.Response === "REJECTED" 
-                        ? <><Text strong type='danger'>{assignee.Response}</Text> at {new Date(assignee.UpdatedAt).toLocaleString()}</> 
-                        : null
-                      }
-                      style={{paddingBottom: 15}}
-                    />
-                  )
-                })}
-                {requestData?.Status === "CLOSED" ? (
+                </div>
+              </Section>
+              <Section SectionTitle="Assignee History">
+                <Steps
+                  direction="vertical" size="small"  status="process" 
+                  current={requestData.Status == "CLOSED" ? requestData?.referingHistory.length+2 : requestData?.referingHistory.length}
+                >
                   <Steps.Step 
-                    title={<><UserImage email={requestData?.ClosedBy?.Mail} /> Closed By <b>{requestData?.ClosedBy?.DisplayName}</b></>} 
-                    subTitle={`at ${new Date(requestData?.UpdatedAt).toLocaleString()}`} 
-                    style={{paddingBottom: 15}}
-                  /> ) : null}
-              </Steps>
-            </Section>
+                    title={<><UserImage email={requestData?.Requester?.Mail} /> Submitted by <b>{requestData?.Requester?.DisplayName}</b></>} 
+                    subTitle={`at ${new Date(requestData.CreatedAt).toLocaleString()}`} style={{paddingBottom: 15}}
+                  />
+                  {requestData?.referingHistory?.map((assignee:any, i:number) => {
+                    let ruleName = '';
+                    let waitApproveMsg = <></>;
+                    if (assignee?.Rule && assignee?.Rule !== ''){
+                      assignee.Rule = assignee?.Rule.replaceAll('\r\n', '');
+                      ruleName = ` As "${JSON.parse(assignee?.Rule)?.Display}" `;
+                    }
+                    if (assignee?.Action === "APPROVE" && assignee?.Response === "PENDING"){
+                      waitApproveMsg = <Typography.Text type='warning' strong>Waiting Approval</Typography.Text>;
+                    }
+                    return (
+                      <Steps.Step 
+                        key={i}
+                        title={
+                          <b>
+                            <UserImage email={assignee.ToUser?.Mail} />
+                            {assignee.ByUser?.DisplayName} 
+                            <CaretRightOutlined />  
+                            {assignee.ToUser?.DisplayName} 
+                            {ruleName}
+                            {waitApproveMsg}
+                          </b>
+                        } 
+                        subTitle={<>at {new Date(assignee.CreatedAt).toLocaleString()}</>}
+                        description={ 
+                          assignee.Response === "APPROVED" 
+                          ? <><Text strong type='success'>{assignee.Response}</Text> at {new Date(assignee.UpdatedAt).toLocaleString()}</> 
+                          : assignee.Response === "REJECTED" 
+                          ? <><Text strong type='danger'>{assignee.Response}</Text> at {new Date(assignee.UpdatedAt).toLocaleString()}</> 
+                          : null
+                        }
+                        style={{paddingBottom: 15}}
+                      />
+                    )
+                  })}
+                  {requestData?.Status === "CLOSED" ? (
+                    <Steps.Step 
+                      title={<><UserImage email={requestData?.ClosedBy?.Mail} /> Closed By <b>{requestData?.ClosedBy?.DisplayName}</b></>} 
+                      subTitle={`at ${new Date(requestData?.UpdatedAt).toLocaleString()}`} 
+                      style={{paddingBottom: 15}}
+                    /> ) : null}
+                </Steps>
+              </Section>
+            </div>
           </div>
         </div>
 

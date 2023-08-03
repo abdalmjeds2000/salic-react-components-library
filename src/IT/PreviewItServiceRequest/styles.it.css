@@ -94,6 +94,9 @@
   .preview-request-container .content .properties {
     width: 25%;
   }
+  .preview-request-container .content .properties .properties-container .close-btn {
+    display: none;
+  }
   .preview-request-container .content .properties h1.section-title {
     color: #000 !important;
     font-size: 1.2rem;
@@ -183,17 +186,44 @@
   }
   .preview-request-container .content .properties {
     display: none;
-    position: absolute;
-    background-color: #fff;
-    left: 1%;
+    position: fixed;
+    left: 0;
     top: 0;
-    padding: 15px;
-    border-radius: 0 0 15px 15px;
-    overflow: auto;
-    height: calc(100vh - 30vh);
-    width: 94%;
-    box-shadow: 0 10px 15px rgba(0 0 0 / 24%);
+    width: 100%;
   }
+  .preview-request-container .content .properties .properties-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 10px 15px rgba(0 0 0 / 24%);
+    padding: 10px 25px;
+    border-radius: 15px;
+    background-color: #fff;
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    width: fit-content;
+    position: relative;
+    overflow: auto;
+    margin: 12px;
+    z-index: 99;
+  }
+  .preview-request-container .content .properties .mobile-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+    z-index: 98;
+  }
+  .preview-request-container .content .properties .properties-container .close-btn {
+    display: block;
+    position: absolute;
+    right: 25px;
+    top: 5px;
+  }
+
+  
   .preview-request-container .content .properties::-webkit-scrollbar {
     display: none;
     width: 5px;
