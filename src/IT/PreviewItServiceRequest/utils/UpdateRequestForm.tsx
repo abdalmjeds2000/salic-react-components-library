@@ -70,7 +70,7 @@ function UpdateRequestForm(props: Props) {
       onFinish={UpdateItServiceRequest}
       onFinishFailed={() => message.error("Please, fill out the form correctly.") }
       disabled={!props.IsAdmin || IsClosed}
-      onValuesChange={(changedValues, allValues) => setFormValues(allValues)}
+      onValuesChange={(changedValues, allValues) => { setFormValues(allValues); console.log(changedValues); }}
     >
       <div>
         <Section SectionTitle="Issue Category" className="-mt-10">
