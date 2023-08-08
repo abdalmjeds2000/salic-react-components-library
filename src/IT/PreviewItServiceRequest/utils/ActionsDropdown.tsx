@@ -124,6 +124,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin }: any) => {
       }
       {IsAdmin && (!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) &&
         <CloseAction
+          RequestData={requestData}
           Email={Email}
           openModal={modalsStatuses.close}
           onCancel={handleCloseModals}

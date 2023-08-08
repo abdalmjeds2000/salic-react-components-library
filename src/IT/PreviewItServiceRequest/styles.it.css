@@ -1,10 +1,9 @@
 
 .preview-request-container {
   position: relative;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
   .preview-request-container .header {
-    background-color: var(--main-color);
+    background-color: #0c508c;
     padding: 10px 25px;
     border-radius: 10px 10px 0 0;
     display: flex;
@@ -18,6 +17,7 @@
     font-size: 1.3rem;
     line-height: 1;
     font-weight: 400;
+    margin: 0;
   }
   .preview-request-container .header div {
     display: flex;
@@ -151,25 +151,27 @@
 
 
 
-
+  .preview-request-container .reply-container > h3 {
+    font-size: 1.2rem !important;
+    line-height: 1.2;
+  }
 
 
 .properties-toggle-btn {
   display: none;
 }
 @media screen and (max-width: 992px) {
-  .preview-request-container {
-    padding: 20px 10px;
-  }
-
   .preview-request-container .header {
     padding: 10px 15px;
   }
   .preview-request-container .header h1 {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .preview-request-container .header div {
     gap: 3px;
+  }
+  .preview-request-container .reply-container > h3 {
+    font-size: 1rem !important;
   }
   .preview-request-container .header button.ant-btn:not(.ant-btn-circle) {
     padding: 3px 6px !important;
@@ -180,6 +182,7 @@
   .preview-request-container .content {
     flex-direction: column;
     padding: 15px;
+    padding-left: 5px;
   }
   .preview-request-container .content .timeline {
     width: 100%;
@@ -188,7 +191,7 @@
     display: none;
     position: fixed;
     left: 0;
-    top: 0;
+    top: 65px;
     width: 100%;
   }
   .preview-request-container .content .properties .properties-container {
@@ -204,7 +207,7 @@
     width: fit-content;
     position: relative;
     overflow: auto;
-    margin: 12px;
+    margin: 24px 10px;
     z-index: 99;
   }
   .preview-request-container .content .properties .mobile-overlay {
@@ -242,9 +245,13 @@
   .preview-request-container .content .properties::-webkit-scrollbar-thumb:hover {
     background: rgb(153, 153, 153); 
   }
-  .preview-request-container .content .timeline .ant-timeline-item-content {
+  .preview-request-container .content .timeline .request-reply .ant-timeline-item-content,
+  .preview-request-container .content .timeline .ant-timeline-item-content,
+  .preview-request-container .content .timeline .my-reply .ant-timeline-item-content,
+  .preview-request-container .content .timeline .add-reply .ant-timeline-item-content,
+  .preview-request-container .content .timeline .return-asset-reply .ant-timeline-item-content {
     padding: 10px !important;
-    margin: 0 0 0 40px !important;
+    margin: 0 0 0 30px !important;
     width: auto !important;
   }
 

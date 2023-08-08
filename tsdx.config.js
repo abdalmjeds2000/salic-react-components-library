@@ -21,8 +21,11 @@ module.exports = {
     config.plugins.push(
       postcss({
         modules: true,
+        inject: true,
+        extract: false
       })
     );
     return config;
   },
 };
+

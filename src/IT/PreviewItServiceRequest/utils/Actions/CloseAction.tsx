@@ -24,14 +24,11 @@ const CustomAntdFileUploder = ({ FileType, GetFilesList }: any) => {
 }
 
 
-function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel }: any) {
+function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openModal, onCancel }: any) {
   const [selectedType, setSelectedType] = React.useState(null);
-  const [classification, setClassification] = React.useState("Major");
   const [closeReason, setCloseReason] = React.useState("");
   const [fileList, setFileList] = React.useState([]);
 
-  const [BIAFiles, setBIAFiles] = React.useState([]);
-  const [SCRFiles, setSCRFiles] = React.useState([]);
   const [CONFFiles, setCONFFiles] = React.useState([]);
   const [UATiles, setUATiles] = React.useState([]);
   const [UGFiles, setUGFiles] = React.useState([]);
@@ -50,7 +47,7 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
     });
     // check if there files is uploading...
     let isCRFilesFinishUpload = true;
-    const _CRFiles = [...BIAFiles, ...SCRFiles, ...CONFFiles, ...UATiles, ...UGFiles];
+    const _CRFiles = [...CONFFiles, ...UATiles, ...UGFiles];
     const CRAttachmentsList = _CRFiles.map((file: any) => {
       if(file.status === "uploading") isCRFilesFinishUpload = false
       return {
@@ -61,7 +58,7 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
 
     let isAllTypesHavAttachments = true;
     if(selectedType === "CR") {
-      const _CRFilesLists = [BIAFiles, SCRFiles, CONFFiles, UATiles, UGFiles];
+      const _CRFilesLists = [CONFFiles, UATiles, UGFiles];
       _CRFilesLists.forEach(list => {
         if(list.length == 0) isAllTypesHavAttachments = false
       });
@@ -69,7 +66,7 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
 
     if(isFilesFinishUpload && isCRFilesFinishUpload) {
       if(closeReason.length !== 0 && selectedType) {
-        if(isAllTypesHavAttachments && classification) {
+        if(isAllTypesHavAttachments) {
           const payload = {
             Email: Email,
             ServiceRequestId: RequestId,
@@ -77,7 +74,6 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
             Files: attachmentsList.join(), 
             CRFiles: JSON.stringify(CRAttachmentsList),
             request_type: selectedType,
-            change_classification: classification
           }
           await fetch("https://salicapi.com/api/tracking/CloseServiceRequest", {
             method: "POST",
@@ -89,7 +85,7 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
           message.success("Service request has been closed");
           if(handelAfterAction) handelAfterAction();
           // reset modal fields
-          setSelectedType(null); setClassification("Major"); setCloseReason(""); setFileList([]); setBIAFiles([]); setSCRFiles([]); setCONFFiles([]); setUATiles([]); setUGFiles([]);
+          setSelectedType(null); setCloseReason(""); setFileList([]); setCONFFiles([]); setUATiles([]); setUGFiles([]);
           setIsShowing(false);
         } else message.error("Please Attach files for all Documents");
       } else message.error("Fill Field Correctly");
@@ -137,8 +133,8 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
                 selectedType === "CR"
                 ? (
                   <>
-                    <Typography.Text strong>Change Classification</Typography.Text>
-                    <Select defaultValue="Major" value={classification} size="large" placeholder="Select Change Classification Type" onChange={value => setClassification(value)} style={{width: '100%'}}>
+                    <Typography.Text strong>Classification</Typography.Text>
+                    <Select defaultValue="Major" disabled value={RequestData?.ChangeClassification} size="large" placeholder="Select Classification Type" style={{width: '100%'}}>
                       <Select.Option value="Major">Major</Select.Option>
                       <Select.Option value="Medium">Medium</Select.Option>
                       <Select.Option value="Minor">Minor</Select.Option>
@@ -156,23 +152,28 @@ function CloseAction({ Email, RequestId, handelAfterAction, openModal, onCancel 
                         { 
                           key: '1', 
                           DocumentName: 'BIA', 
-                          File: <CustomAntdFileUploder FileType="bia_file" GetFilesList={(files: any) => setBIAFiles(files)} />},
+                          File: !["", "[]"].includes(RequestData?.BIA) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.BIA}`} target='_blank'>{RequestData?.BIA}</Typography.Link> : " - "
+                        },
                         { 
                           key: '2', 
                           DocumentName: 'Signed Change request', 
-                          File: <CustomAntdFileUploder FileType="scr_file" GetFilesList={(files: any) => setSCRFiles(files)} />},
+                          File: !["", "[]"].includes(RequestData?.SCR) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.SCR}`} target='_blank'>{RequestData?.SCR}</Typography.Link> : " - "
+                        },
                         { 
                           key: '3', 
                           DocumentName: 'configuration Document', 
-                          File: <CustomAntdFileUploder FileType="conf_file" GetFilesList={(files: any) => setCONFFiles(files)} />},
+                          File: <CustomAntdFileUploder FileType="conf_file" GetFilesList={(files: any) => setCONFFiles(files)} />
+                        },
                         { 
                           key: '4', 
                           DocumentName: 'UAT', 
-                          File: <CustomAntdFileUploder FileType="uat_file" GetFilesList={(files: any) => setUATiles(files)} />},
+                          File: <CustomAntdFileUploder FileType="uat_file" GetFilesList={(files: any) => setUATiles(files)} />
+                        },
                         { 
                           key: '5', 
                           DocumentName: 'User Guide', 
-                          File: <CustomAntdFileUploder FileType="user_guide_file" GetFilesList={(files: any) => setUGFiles(files)} />},
+                          File: <CustomAntdFileUploder FileType="user_guide_file" GetFilesList={(files: any) => setUGFiles(files)} />
+                        },
                       ]}
                     />
                   </>

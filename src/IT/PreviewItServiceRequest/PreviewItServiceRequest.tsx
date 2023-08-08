@@ -30,9 +30,9 @@ const UserImage = ({ email }: { email: string }) => {
       style={{marginRight: 8}}
       src={
         <Image
-          // src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${email}`}
-          // preview={{src: `https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=L&username=${email}`,}}
-          src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
+          src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${email}`}
+          preview={{src: `https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=L&username=${email}`,}}
+          // src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
           title={email}
         />
       }
@@ -366,7 +366,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
                       FilePath={`https://salicapi.com/File/${file.Guid}`}
                       IconWidth='22px'
                     />
-                    <span style={{ color: '#555'}}>{file.FileName}</span>
+                    <Typography.Link style={{ color: '#555'}}>{file.FileName}</Typography.Link>
                   </Typography.Link>
                   )
                 )}
