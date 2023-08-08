@@ -40,9 +40,9 @@ module.exports = {
             preset: 'default',
           }),
         ],
-        inject: false,
-        // only write out CSS for the first bundle (avoids pointless extra files):
-        extract: !!options.writeMeta,
+        modules: true,
+        inject: true,
+        extract: false
       })
     );
     return config;

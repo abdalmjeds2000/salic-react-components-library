@@ -99,9 +99,9 @@ function UpdateRequestForm(props: Props) {
               placeholder="Select Issue Type"
               size="large"
             >
-              {props.IssueTypes &&
+            {props.IssueTypes &&
               props.IssueTypes
-                .filter((item: any) => item.Category === formValues.CategoryType)
+                .filter((item: any) => item.Category === (formValues.CategoryType || formValues.Category))
                 .map((option, i) => (
                   <Select.Option key={option.Id || i} value={option.IssueType}>{option.IssueType}</Select.Option>
                 ))}
@@ -119,7 +119,7 @@ function UpdateRequestForm(props: Props) {
         </Section>
         <Section SectionTitle="Request Type">
           <Form.Item name="RequestType" initialValue={props.RequestData?.RequestType} style={{marginBottom: 0}}>
-            <Select placeholder="Select Request Type">
+            <Select placeholder="Select Request Type" size="large">
               <Select.Option value="CR">Change Request</Select.Option>
               <Select.Option value="ER">Enhancement Request</Select.Option>
               <Select.Option value="HelpDesk">Help Desk</Select.Option>
