@@ -380,7 +380,12 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
             <Button type="default" shape='circle' onClick={handleShowDetails} className="close-btn">
               <CloseOutlined />
             </Button>
-            <UpdateRequestForm IsAdmin={IsAdmin} RequestData={requestData} handleAfterUpdate={GetRequest} IssueTypes={IssueTypes || []} />
+            <UpdateRequestForm 
+              IsAdmin={IsAdmin} 
+              RequestData={requestData} 
+              IssueTypes={IssueTypes || []} 
+              onFinish={GetRequest}
+            />
             <Section SectionTitle="Attached Files">
               <div className='attachments-container'>
                 {requestData?.Files?.map((file:any, i:number) => (

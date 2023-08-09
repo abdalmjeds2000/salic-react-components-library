@@ -7,8 +7,8 @@ import { UploadOutlined } from '@ant-design/icons';
 type Props = {
   RequestData: any;
   IssueTypes?: any[];
-  handleAfterUpdate: any;
   IsAdmin: boolean;
+  onFinish?: () => void;
 }
 function UpdateRequestForm(props: Props) {
   const [form] = Form.useForm();
@@ -54,6 +54,7 @@ function UpdateRequestForm(props: Props) {
           'Content-Type': 'application/json'
         }
       })
+      if(props.onFinish) props.onFinish();
       message.success("IT Request has been Updated Successfully!");
     } catch (error) {
       message.error("Something went wrong, please try again later!");

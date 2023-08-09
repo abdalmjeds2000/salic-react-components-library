@@ -25,7 +25,7 @@ const CustomAntdFileUploder = ({ FileType, GetFilesList }: any) => {
 
 
 function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openModal, onCancel }: any) {
-  const [selectedType, setSelectedType] = React.useState(null);
+  const requestType = RequestData.RequestType;
   const [closeReason, setCloseReason] = React.useState("");
   const [fileList, setFileList] = React.useState([]);
 
@@ -57,7 +57,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
     });
 
     let isAllTypesHavAttachments = true;
-    if(selectedType === "CR") {
+    if(requestType === "CR") {
       const _CRFilesLists = [CONFFiles, UATiles, UGFiles];
       _CRFilesLists.forEach(list => {
         if(list.length == 0) isAllTypesHavAttachments = false
@@ -65,7 +65,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
     }
 
     if(isFilesFinishUpload && isCRFilesFinishUpload) {
-      if(closeReason.length !== 0 && selectedType) {
+      if(closeReason.length !== 0 && requestType) {
         if(isAllTypesHavAttachments) {
           const payload = {
             Email: Email,
@@ -73,7 +73,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
             close_reason: closeReason,
             Files: attachmentsList.join(), 
             CRFiles: JSON.stringify(CRAttachmentsList),
-            request_type: selectedType,
+            request_type: requestType,
           }
           await fetch("https://salicapi.com/api/tracking/CloseServiceRequest", {
             method: "POST",
@@ -85,7 +85,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
           message.success("Service request has been closed");
           if(handelAfterAction) handelAfterAction();
           // reset modal fields
-          setSelectedType(null); setCloseReason(""); setFileList([]); setCONFFiles([]); setUATiles([]); setUGFiles([]);
+          setCloseReason(""); setFileList([]); setCONFFiles([]); setUATiles([]); setUGFiles([]);
           setIsShowing(false);
         } else message.error("Please Attach files for all Documents");
       } else message.error("Fill Field Correctly");
@@ -119,7 +119,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
 
 
               <Typography.Text strong>Request Type</Typography.Text>
-              <Select value={selectedType} size="large" placeholder="Select Request Type" onChange={value => setSelectedType(value)} style={{width: '100%'}}>
+              <Select value={requestType} size="large" placeholder="Select Request Type" disabled style={{width: '100%'}}>
                 <Select.Option value="CR">Change Request</Select.Option>
                 <Select.Option value="ER">Enhancement Request</Select.Option>
                 <Select.Option value="HelpDesk">Help Desk</Select.Option>
@@ -130,7 +130,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
 
 
               {
-                selectedType === "CR"
+                requestType === "CR"
                 ? (
                   <>
                     <Typography.Text strong>Classification</Typography.Text>
