@@ -11,6 +11,7 @@ function SoftwareFields() {
           <Select.Option value="Thinkcell">Thinkcell</Select.Option>
           <Select.Option value="Power BI">Power BI</Select.Option>
           <Select.Option value="Grammerly">Grammerly</Select.Option>
+          <Select.Option value="Other">Other</Select.Option>
         </Select>
       </Form.Item>
     </>

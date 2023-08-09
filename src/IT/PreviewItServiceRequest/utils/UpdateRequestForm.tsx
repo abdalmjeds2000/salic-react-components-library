@@ -13,9 +13,9 @@ type Props = {
 function UpdateRequestForm(props: Props) {
   const [form] = Form.useForm();
   const [formValues, setFormValues] = React.useState(props.RequestData);
-  const defaultBIA = !["", "[]"].includes(props.RequestData?.BIA) ? [{ uid: props.RequestData?.BIA?.split(".")?.[0], name: props.RequestData?.BIA, status: "done", url: `https://salicapi.com/File/${props.RequestData?.BIA}` }] : [];
+  const defaultBIA = !props.RequestData?.BIA || ["", "[]"].includes(props.RequestData?.BIA) ? [] : [{ uid: props.RequestData?.BIA?.split(".")?.[0], name: props.RequestData?.BIA, status: "done", url: `https://salicapi.com/File/${props.RequestData?.BIA}` }];
   const [BIAFiles, setBIAFiles] = React.useState<any[]>(defaultBIA);
-  const defaultSCR = !["", "[]"].includes(props.RequestData?.SCR) ? [{ uid: props.RequestData?.SCR?.split(".")?.[0], name: props.RequestData?.SCR, status: "done", url: `https://salicapi.com/File/${props.RequestData?.SCR}` }] : [];
+  const defaultSCR = !props.RequestData?.SCR || ["", "[]"].includes(props.RequestData?.SCR) ? [] : [{ uid: props.RequestData?.SCR?.split(".")?.[0], name: props.RequestData?.SCR, status: "done", url: `https://salicapi.com/File/${props.RequestData?.SCR}` }];
   const [SCRFiles, setSCRFiles] = React.useState<any[]>(defaultSCR);
 
   const UpdateItServiceRequest = async (values: any) => {
