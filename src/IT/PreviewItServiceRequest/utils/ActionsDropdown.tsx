@@ -11,7 +11,7 @@ import ReAssignApprovalAction from './Actions/ReAssignApprovalAction';
 
 
 const initialmodalsStatuses = { reopen: false, cancel: false, assign: false, close: false, askapproval: false, reassign: false };
-const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin }: any) => {
+const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel }: any) => {
   const [modalsStatuses, setModalsStatuses] = React.useState<any>(initialmodalsStatuses);
 
   var requester = requestData.Requester;
@@ -29,10 +29,6 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin }: any) => {
     })
   }
 
-  let disableAssignClose = false;
-  if(!requestData?.Category || requestData?.Category === "" || requestData?.Category === "Other" || !requestData?.IssueType || requestData?.IssueType === "") {
-    disableAssignClose = true;
-  }
   let lastRefering: any = {};
   if(Object.keys(requestData).length > 0) {
     lastRefering = requestData?.referingHistory[requestData?.referingHistory?.length - 1];
@@ -62,9 +58,10 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin }: any) => {
     } : null),
     (Email === 'abdulmohsen.alaiban@salic.com' ? {
       key: 'cancel',
-      label: 'Cancel',
+      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Cancel</Tooltip>,
       danger: true,
       icon: <CloseSquareOutlined />,
+      disabled: !IsAllowAssignCloseCancel,
     } : null),
     ((requestData.Status === "CLOSED" && IfRequester) ? {
       key: 'reopen',
@@ -74,16 +71,16 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin }: any) => {
 
     (IsAdmin && ((!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) ? {
       key: 'assign',
-      label: <Tooltip title={disableAssignClose ? 'Please Update Ticket Information' : null}>Assign</Tooltip>,
-      disabled: disableAssignClose,
-      icon: <SendOutlined />
+      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Assign</Tooltip>,
+      icon: <SendOutlined />,
+      disabled: !IsAllowAssignCloseCancel,
     } : null),
     (IsAdmin && (!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) ? {
       key: 'close',
-      label: <Tooltip title={disableAssignClose ? 'Please Update Ticket Information' : null}>Close</Tooltip>,
-      disabled: disableAssignClose,
+      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Close</Tooltip>,
       icon: <FileDoneOutlined />,
       danger: true,
+      disabled: !IsAllowAssignCloseCancel,
     } : null),
     // (IsAdmin && (!["CLOSED"].includes(requestData?.Status)) ? {
     //   key: 'askapproval',

@@ -212,6 +212,26 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
     return <div dangerouslySetInnerHTML={{ __html: replacedText }} />;
   }
 
+
+  
+  // disable on (one of ticket data is empty)
+  const isFormIncompleted = !requestData?.Category || !requestData?.IssueType || !requestData?.Priority || !requestData?.Priority || !requestData?.RequestType;
+  // Get Pending Assignee based on current user
+  let pendingApprover: any = null;
+  if(Object.keys(requestData).length > 0) {
+    requestData?.referingHistory?.forEach((row: any) => {
+      if(requestData?.Status !== "CLOSED" && row?.Action === "APPROVE" && row?.Response === "PENDING" && row?.ToUser?.Mail?.toLowerCase() === Email?.toLowerCase()) {
+        pendingApprover = row;
+      }
+    })
+  }
+  // is allow user to reply (if form is incompleted => just allow requester and pending approver to reply)
+  const isAllowReply = (requestData?.Status !== "CLOSED" && (!isFormIncompleted || pendingApprover?.ToUser?.Mail?.toLowerCase() === Email?.toLowerCase() || requestData?.Requester?.Mail?.toLowerCase() === Email?.toLowerCase()));
+  // is allow user to (assign, close, cancel) based on form is incompleted
+  const isAllowActions = requestData?.Status !== "CLOSED" && !isFormIncompleted;
+
+
+
   if (Object.keys(requestData)?.length === 0) {
     return <Loader />;
   }
@@ -220,7 +240,12 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
       <div className="header">
         <Typography.Title>IT RE: [#{requestData?.Id || '###'}]</Typography.Title>
         {Object.keys(requestData).length > 0 && <div>
-          <ActionsDropdown Email={Email} requestData={requestData} GetRequest={GetRequest} IsAdmin={IsAdmin} />
+          <ActionsDropdown 
+            Email={Email} 
+            requestData={requestData} 
+            GetRequest={GetRequest} 
+            IsAdmin={IsAdmin} 
+            IsAllowAssignCloseCancel={isAllowActions} />
           <span className='properties-toggle-btn'>
             <ToggleButton
               icon={<MoreOutlined />}
@@ -342,6 +367,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
                   replyForm={replyForm}
                   btnLoader={loading}
                   onFinish={AddReply}
+                  isDisable={!isAllowReply}
                 />
               </Timeline.Item>
             }

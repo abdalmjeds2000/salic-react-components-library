@@ -74,7 +74,7 @@ function UpdateRequestForm(props: Props) {
     >
       <div>
         <Section SectionTitle="Issue Category" className="-mt-10">
-          <Form.Item name="CategoryType" initialValue={props.RequestData?.Category} style={{marginBottom: 5}}>
+          <Form.Item name="CategoryType" initialValue={props.RequestData?.Category} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
             <Radio.Group size='large'>
               <Space direction="vertical">
                 <Radio value="Hardware">
@@ -94,7 +94,7 @@ function UpdateRequestForm(props: Props) {
           </Form.Item>
         </Section>
         <Section SectionTitle="Issue Type">
-          <Form.Item name="IssueType" initialValue={props.RequestData?.IssueType}  style={{marginBottom: 5}}>
+          <Form.Item name="IssueType" initialValue={props.RequestData?.IssueType} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
             <Select
               placeholder="Select Issue Type"
               size="large"
@@ -110,7 +110,7 @@ function UpdateRequestForm(props: Props) {
           </Form.Item>
         </Section>
         <Section SectionTitle="Priority">
-          <Form.Item name="Priority" initialValue={props.RequestData?.Priority} style={{marginBottom: 5}}>
+          <Form.Item name="Priority" initialValue={props.RequestData?.Priority} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
             <Select placeholder="Priority" size="large">
               <Select.Option value="1">Normal</Select.Option>
               <Select.Option value="2">Critical</Select.Option>
@@ -118,7 +118,7 @@ function UpdateRequestForm(props: Props) {
           </Form.Item>
         </Section>
         <Section SectionTitle="Request Type">
-          <Form.Item name="RequestType" initialValue={props.RequestData?.RequestType} style={{marginBottom: 0}}>
+          <Form.Item name="RequestType" initialValue={props.RequestData?.RequestType} rules={[{required: true, message: ""}]} style={{marginBottom: 0}}>
             <Select placeholder="Select Request Type" size="large">
               <Select.Option value="CR">Change Request</Select.Option>
               <Select.Option value="ER">Enhancement Request</Select.Option>
