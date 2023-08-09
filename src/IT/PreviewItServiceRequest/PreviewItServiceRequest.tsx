@@ -228,7 +228,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
   // is allow user to reply (if form is incompleted => just allow requester and pending approver to reply)
   const isAllowReply = (requestData?.Status !== "CLOSED" && (!isFormIncompleted || pendingApprover?.ToUser?.Mail?.toLowerCase() === Email?.toLowerCase() || requestData?.Requester?.Mail?.toLowerCase() === Email?.toLowerCase()));
   // is allow user to (assign, close, cancel) based on form is incompleted
-  const isAllowActions = requestData?.Status !== "CLOSED" && !isFormIncompleted;
+  const isAllowActions = !isFormIncompleted;
 
 
 
