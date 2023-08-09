@@ -6,41 +6,25 @@ import mentionsInputStyle from './mentionsInputStyle';
 
 
 
-type Porps = {
-  isDisable?: boolean;
-  fileList?: any[];
-  setFileList?: any;
-  btnLoader?: boolean;
-  onFinish?: (values: any) => void;
-  replyForm?: any;
-  usersList?: { email: string, displayname: string }[]
-}
-
-const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
+const ReplyForm = ({ isDisable, fileList, setFileList, btnLoader, onFinish, replyForm }: any) => {
   const [textboxVal, setTextboxVal] = React.useState('');
 
-  // const controller = new AbortController();
-  // const signal = controller.signal;
-
+  const controller = new AbortController();
+  const signal = controller.signal;
   var data = async function(query: any, callback: any) {
-    if(query.length < 3) return;
+    if(query.length < 2) return;
     try {
-      // let response = await fetch(`https://salicapi.com/api/User/AutoComplete?term=${query}&_type=query&q=${query}&_=1667805757891`, { signal: signal });
-      // const data = await response.json();
-      // const _usrs = data.Data.value.map((item: any) => ({ id: item.mail, display: item.displayName }))
-      // callback(_usrs);
-
-      // instead of fetching from api, we will use the usersList prop
-      const _usrs = usersList?.filter((item: any) => item.displayname.toLowerCase().includes(query.toLowerCase())).map((item: any) => ({ id: item.email, display: item.displayname }))
+      let response = await fetch(`https://salicapi.com/api/User/AutoComplete?term=${query}&_type=query&q=${query}&_=1667805757891`, { signal: signal });
+      const data = await response.json();
+      const _usrs = data.Data.value.map((item: any) => ({ id: item.mail, display: item.displayName }))
       callback(_usrs);
     } catch(err) {
       console.log(err);
     }
   };
-
-  // React.useEffect(() => {
-    // return () => controller.abort();
-  // }, [textboxVal]);
+  React.useEffect(() => {
+    return () => controller.abort();
+  }, [textboxVal]);
 
 
   
@@ -54,6 +38,7 @@ const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onF
         disabled={isDisable}> 
         <Space direction='vertical' style={{width: '100%'}}>
           <Form.Item name="reply_body" rules={[{required: true, message: ""}]} style={{ margin: 0 }}>
+            {/* <TextArea rows={4} placeholder="Add Reply" maxLength={500} /> */}
             <MentionsInput
               rows={4}
               placeholder="Write Your Reply. Use '@' for mention"
@@ -72,8 +57,8 @@ const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onF
                   console.log(entry, search, highlightedDisplay);
                   return (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} />
-                      {/* <img alt="" src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`} width={20} style={{ borderRadius: 99 }} /> */}
+                      {/* <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} /> */}
+                      <img alt="" src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`} width={20} style={{ borderRadius: 99 }} />
                       <span>{highlightedDisplay}</span>
                     </div>
                   )

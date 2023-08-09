@@ -68,9 +68,10 @@ type Props = {
   Email: string;
   IsAdmin: boolean;
   IssueTypes: any[];
+  organizationUsers?: { email: string, displayname: string }[];
 }
 
-export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }: Props) => {
+export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, organizationUsers }: Props) => {
   const [requestData, setRequestData] = React.useState<any>({});
   const [loading, setLoading] = React.useState<any>(true);
   const [fileList, setFileList] = React.useState<any>([]);
@@ -368,6 +369,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes }
                   btnLoader={loading}
                   onFinish={AddReply}
                   isDisable={!isAllowReply}
+                  usersList={organizationUsers || []}
                 />
               </Timeline.Item>
             }
