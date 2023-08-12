@@ -75,7 +75,7 @@ function UpdateRequestForm(props: Props) {
     >
       <div>
         <Section SectionTitle="Subject">
-          <Form.Item name="Subject" initialValue={props.RequestData?.Subject} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
+          <Form.Item name="Subject" initialValue={props.RequestData?.Subject} rules={[{required: true, message: ""}]}>
             <Input placeholder="Write Subject" size="large" />
           </Form.Item>
         </Section>
@@ -152,7 +152,7 @@ function UpdateRequestForm(props: Props) {
                 onChange={({ fileList: newFileList }: any) => setBIAFiles(newFileList)}
                 // disabled={BIAFiles.length > 0}
               >
-                <Button icon={<UploadOutlined />} disabled={BIAFiles.length > 0}>Upload</Button>
+                <Button icon={<UploadOutlined />} disabled={BIAFiles.length > 0 || !props.IsAdmin || IsClosed}>Upload</Button>
               </Upload>
             </Form.Item>
             {
@@ -165,7 +165,7 @@ function UpdateRequestForm(props: Props) {
                     onChange={({ fileList: newFileList }: any) => setSCRFiles(newFileList)}
                     // disabled={SCRFiles.length > 0}
                   >
-                    <Button icon={<UploadOutlined />} disabled={SCRFiles.length > 0}>Upload</Button>
+                    <Button icon={<UploadOutlined />} disabled={SCRFiles.length > 0 || !props.IsAdmin || IsClosed}>Upload</Button>
                   </Upload>
                 </Form.Item>
               )
@@ -178,7 +178,7 @@ function UpdateRequestForm(props: Props) {
               <DatePicker format="MM/DD/YYYY" placeholder="Expected End Date" style={{ width: "100%" }} />
             </Form.Item>
             <Form.Item name="Progress" label="Progress" style={{marginBottom:0}} initialValue={props?.RequestData?.Progress || 0} rules={[{required: true, message: ""}]}>
-              <Slider marks={{ 0: '0%', 20: '20%', 40: '40%', 60: '60%', 80: '80%', 100: '100%' }} />
+              <Slider marks={{ 0: '0%', 20: '20%', 40: '40%', 60: '60%', 80: '80%', 100: '100%' }} disabled={!props.IsAdmin || IsClosed} />
             </Form.Item>
           </div>
         ) : null}
