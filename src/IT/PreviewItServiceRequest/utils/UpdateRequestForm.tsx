@@ -1,6 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
-import { Button, DatePicker, Form, message, Radio, Select, Slider, Space, Upload } from 'antd';
+import { Button, DatePicker, Form, Input, message, Radio, Select, Slider, Space, Upload } from 'antd';
 import { Section } from '../../../components/Section';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -74,6 +74,11 @@ function UpdateRequestForm(props: Props) {
       onValuesChange={(changedValues, allValues) => { setFormValues(allValues); console.log(changedValues); }}
     >
       <div>
+        <Section SectionTitle="Subject">
+          <Form.Item name="Subject" initialValue={props.RequestData?.Subject} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
+            <Input placeholder="Write Subject" size="large" />
+          </Form.Item>
+        </Section>
         <Section SectionTitle="Issue Category" className="-mt-10">
           <Form.Item name="CategoryType" initialValue={props.RequestData?.Category} rules={[{required: true, message: ""}]} style={{marginBottom: 5}}>
             <Radio.Group size='large'>
