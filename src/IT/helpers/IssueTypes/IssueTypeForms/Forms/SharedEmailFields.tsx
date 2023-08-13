@@ -10,7 +10,7 @@ function SharedEmailFields() {
         <DropdownSelectUser name="BusinessOwner" placeholder="Employee Name" required={true} isDisabled={false} />
       </Form.Item> */}
       <Form.Item name="BusinessOwner" label="Business Owner" rules={[{ required: true, message: "" }]}>
-        <AutoCompleteOrgUsers valueRender='mail' mode='tags' placeholder="Employee Name" />
+        <AutoCompleteOrgUsers valueRender='mail' /* mode='tags' */ placeholder="Employee Name" />
       </Form.Item>
       <Form.Item name="SenderName" label="Email Name" rules={[{ required: true, message: "" }]}>
         <Input placeholder="Sender Name" />
