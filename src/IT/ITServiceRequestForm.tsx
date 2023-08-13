@@ -179,7 +179,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
   return (
     <div className='new-it-request-form-container'>
       <Form 
-        {...{ labelCol: { span: 6, style: { lineHeight: 1, paddingBottom: 0 } }, wrapperCol: { span: 12 } }}
+        {...{ labelCol: { xs: {span:24}, md: 24, lg: 24, xl: 6, style: { lineHeight: 1, paddingBottom: 0 } }, wrapperCol: { xs: {span:24}, xl: 12 } }}
         form={form}
         labelWrap
         name="new-service-request-form"

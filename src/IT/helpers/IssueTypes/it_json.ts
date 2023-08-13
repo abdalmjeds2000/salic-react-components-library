@@ -34,6 +34,7 @@ export const Mapping_under_FSLI =[
     {'FinancialStatement':'Balance Sheet','Value':'Investment in Subsidiary'},
     {'FinancialStatement':'Balance Sheet','Value':'Intercompany loan receivable'},
     {'FinancialStatement':'Balance Sheet','Value':'Intercompany loan payable'},
+    {'FinancialStatement':'Balance Sheet','Value':'FV reserve for Financial Assets at FVTOCI'},
     {'FinancialStatement':'Profit & Loss and Other comprehensive income','Value':'Revenue - external'},
     {'FinancialStatement':'Profit & Loss and Other comprehensive income','Value':'Revenue - intercompany'},
     {'FinancialStatement':'Profit & Loss and Other comprehensive income','Value':'Cost of Sales - intercompany'},
@@ -53,7 +54,7 @@ export const Mapping_under_FSLI =[
     {'FinancialStatement':'Profit & Loss and Other comprehensive income','Value':'Foreign currency translation - Current year OCI'},
     {'FinancialStatement':'Profit & Loss and Other comprehensive income','Value':'Net gain/(loss) on financial assets measured at FVTPL'},
     {'FinancialStatement':'Cash Flow','Value':'NA'},
-    {'FinancialStatement':'NA','Value':'NA'}
+    {'FinancialStatement':'NA','Value':'NA'},
 ];
 
 

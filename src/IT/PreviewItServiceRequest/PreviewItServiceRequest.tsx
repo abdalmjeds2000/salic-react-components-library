@@ -239,7 +239,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
   return (
     <div className='preview-request-container'>
       <div className="header">
-        <Typography.Title>IT RE: [#{requestData?.Id || '###'}]</Typography.Title>
+        <Typography.Title>IT SR: [#{requestData?.Id || '###'}]</Typography.Title>
         {Object.keys(requestData).length > 0 && <div>
           <ActionsDropdown 
             Email={Email} 
@@ -263,7 +263,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
           <Timeline>
             <Timeline.Item dot={<UserImage email={requester?.Mail} />} className='request-reply'>
               <Reply
-                Title={<>RE: {requestData?.Subject}</>}
+                Title={requestData?.Subject}
                 Description={<><Typography.Link href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requester?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.Requester?.DisplayName}</Typography.Link> (Ext: {requestData.Requester?.Ext}) {requestData.OnBehalfOf && <><Typography.Text type="danger" strong>on behalf of</Typography.Text> <a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requestData?.OnBehalfOf?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.OnBehalfOf?.DisplayName}</a></>} @ {moment(requestData?.CreatedAt).format('MM/DD/YYYY hh:mm:ss')}</>} 
               >
                 <div>
