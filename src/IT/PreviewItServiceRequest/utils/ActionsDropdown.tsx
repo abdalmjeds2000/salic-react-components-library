@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Dropdown, Tooltip } from 'antd';
-import { CheckOutlined, CloseOutlined, CloseSquareOutlined, DownOutlined, FileDoneOutlined, RetweetOutlined, SendOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseCircleOutlined, CloseOutlined, DeleteOutlined, DownOutlined, FileDoneOutlined, RetweetOutlined, SendOutlined } from '@ant-design/icons';
 import { ApproveAction, RejectAction } from './Actions/ApproveAction';
 import ReOpenAction from './Actions/ReOpenAction';
 import DeleteAction from './Actions/DeleteAction';
@@ -67,7 +67,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
           <span>Reject</span>
         </RejectAction>
       ),
-      icon: <CloseOutlined />,
+      icon: <CloseCircleOutlined />,
     } : null),
     ((requestData.Status === "CLOSED" && IfRequester) ? {
       key: 'reopen',
@@ -93,7 +93,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       key: 'cancel',
       label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Cancel</Tooltip>,
       danger: true,
-      icon: <CloseSquareOutlined />,
+      icon: <CloseOutlined />,
       disabled: !IsAllowAssignCloseCancel,
     } : null),
 
@@ -102,7 +102,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       key: 'delete',
       label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Delete</Tooltip>,
       danger: true,
-      icon: <CloseSquareOutlined />,
+      icon: <DeleteOutlined />,
       disabled: !IsAllowAssignCloseCancel,
     } : null),
 
