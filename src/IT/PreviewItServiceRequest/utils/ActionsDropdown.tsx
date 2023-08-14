@@ -97,13 +97,13 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       disabled: !IsAllowAssignCloseCancel,
     } : null),
 
-    (Email === 'abdulmohsen.alaiban@salic.com' ? {
-      key: 'delete',
-      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Delete</Tooltip>,
-      danger: true,
-      icon: <DeleteOutlined />,
-      disabled: !IsAllowAssignCloseCancel,
-    } : null),
+    // (Email === 'abdulmohsen.alaiban@salic.com' ? {
+    //   key: 'delete',
+    //   label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Delete</Tooltip>,
+    //   danger: true,
+    //   icon: <DeleteOutlined />,
+    //   disabled: !IsAllowAssignCloseCancel,
+    // } : null),
 
     
     // (IsAdmin && (!["CLOSED"].includes(requestData?.Status)) ? {
@@ -153,9 +153,9 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
           handelAfterAction={GetRequest} 
         />
       }
-      {Email === 'abdulmohsen.alaiban@salic.com' ?
+      {/* {Email === 'abdulmohsen.alaiban@salic.com' ?
         <DeleteAction RequestId={requestData.Id} handelAfterAction={handleAfterDeleteRequest} openModal={modalsStatuses.delete} onCancel={handleCloseModals} /> : null}
-      
+       */}
       {Email === 'abdulmohsen.alaiban@salic.com' && !["CANCELLED", "CLOSED"].includes(requestData.Status) ?
         <CancelAction RequestId={requestData.Id} onFinish={GetRequest} Email={Email} openModal={modalsStatuses.cancel} onCancel={handleCloseModals} /> : null}
 
