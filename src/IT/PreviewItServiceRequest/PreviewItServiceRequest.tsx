@@ -69,9 +69,10 @@ type Props = {
   IsAdmin: boolean;
   IssueTypes: any[];
   organizationUsers?: { email: string, displayname: string }[];
+  handleAfterDeleteRequest?: () => void;
 }
 
-export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, organizationUsers }: Props) => {
+export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, organizationUsers, handleAfterDeleteRequest }: Props) => {
   const [requestData, setRequestData] = React.useState<any>({});
   const [loading, setLoading] = React.useState<any>(true);
   const [fileList, setFileList] = React.useState<any>([]);
@@ -246,7 +247,8 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
             requestData={requestData} 
             GetRequest={GetRequest} 
             IsAdmin={IsAdmin} 
-            IsAllowAssignCloseCancel={isAllowActions} />
+            IsAllowAssignCloseCancel={isAllowActions}
+            handleAfterDeleteRequest={handleAfterDeleteRequest} />
           <span className='properties-toggle-btn'>
             <ToggleButton
               icon={<MoreOutlined />}

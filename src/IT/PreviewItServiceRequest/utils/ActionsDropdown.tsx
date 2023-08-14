@@ -8,10 +8,23 @@ import AssignAction from './Actions/AssignAction';
 import CloseAction from './Actions/CloseAction';
 import AskForApprovalAction from './Actions/AskForApprovalAction';
 import ReAssignApprovalAction from './Actions/ReAssignApprovalAction';
+import CancelAction from './Actions/CancelAction';
 
 
-const initialmodalsStatuses = { reopen: false, cancel: false, assign: false, close: false, askapproval: false, reassign: false };
-const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel }: any) => {
+type Props = {
+  Email: string,
+  requestData: any,
+  GetRequest: () => void,
+  IsAdmin: boolean,
+  IsAllowAssignCloseCancel: boolean,
+  handleAfterDeleteRequest?: () => void,
+}
+
+
+
+const initialmodalsStatuses = { reopen: false, delete: false, assign: false, close: false, askapproval: false, reassign: false, cancel: false };
+
+const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel, handleAfterDeleteRequest }: Props) => {
   const [modalsStatuses, setModalsStatuses] = React.useState<any>(initialmodalsStatuses);
 
   var requester = requestData.Requester;
@@ -56,13 +69,6 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       ),
       icon: <CloseOutlined />,
     } : null),
-    (Email === 'abdulmohsen.alaiban@salic.com' ? {
-      key: 'cancel',
-      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Cancel</Tooltip>,
-      danger: true,
-      icon: <CloseSquareOutlined />,
-      disabled: !IsAllowAssignCloseCancel,
-    } : null),
     ((requestData.Status === "CLOSED" && IfRequester) ? {
       key: 'reopen',
       label: 'Re-Open',
@@ -82,6 +88,25 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       danger: true,
       disabled: !IsAllowAssignCloseCancel,
     } : null),
+
+    (Email === 'abdulmohsen.alaiban@salic.com' ? {
+      key: 'cancel',
+      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Cancel</Tooltip>,
+      danger: true,
+      icon: <CloseSquareOutlined />,
+      disabled: !IsAllowAssignCloseCancel,
+    } : null),
+
+
+    (Email === 'abdulmohsen.alaiban@salic.com' ? {
+      key: 'delete',
+      label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Delete</Tooltip>,
+      danger: true,
+      icon: <CloseSquareOutlined />,
+      disabled: !IsAllowAssignCloseCancel,
+    } : null),
+
+    
     // (IsAdmin && (!["CLOSED"].includes(requestData?.Status)) ? {
     //   key: 'askapproval',
     //   label: 'Ask For Approval',
@@ -130,7 +155,11 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
         />
       }
       {Email === 'abdulmohsen.alaiban@salic.com' ?
-        <DeleteAction RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.cancel} onCancel={handleCloseModals} /> : null}
+        <DeleteAction RequestId={requestData.Id} handelAfterAction={handleAfterDeleteRequest} openModal={modalsStatuses.delete} onCancel={handleCloseModals} /> : null}
+      
+      {Email === 'abdulmohsen.alaiban@salic.com' ?
+        <CancelAction RequestId={requestData.Id} onFinish={GetRequest} Email={Email} openModal={modalsStatuses.cancel} onCancel={handleCloseModals} /> : null}
+
       {(requestData.Status === "CLOSED" && IfRequester) ? 
         <ReOpenAction Email={Email} RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.reopen} onCancel={handleCloseModals} /> : null}
       

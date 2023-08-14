@@ -33,17 +33,17 @@ function DeleteAction({ openModal, RequestId, handelAfterAction, onCancel }: any
     <>
       {isShowing && (
         <Modal
-          title={<><DeleteOutlined /> Cancel Request #{RequestId}</>}
+          title={<><DeleteOutlined /> Delete Request #{RequestId}</>}
           open={openModal} 
           onOk={deleteAction} 
           cancelButtonProps={{style: {display: 'none'}}}
           onCancel={onCancel}
-          okButtonProps={{type: 'primary', disabled: btnLoading}} 
-          okText="Cancel Request"
+          okButtonProps={{type: 'primary', danger: true, loading: btnLoading}} 
+          okText="Delete Request"
           destroyOnClose
         >
           <div>
-            <Typography.Text strong>Write Cancel Reason</Typography.Text>
+            <Typography.Text strong>Write Delete Reason</Typography.Text>
             <TextArea rows={4} placeholder="write here" value={reasonValue} onChange={e => setReasonValue(e.target.value)} />
           </div>
         </Modal>
