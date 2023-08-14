@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, Dropdown, Tooltip } from 'antd';
-import { CheckOutlined, CloseCircleOutlined, CloseOutlined, DeleteOutlined, DownOutlined, FileDoneOutlined, RetweetOutlined, SendOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseCircleOutlined, CloseOutlined, DownOutlined, FileDoneOutlined, RetweetOutlined, SendOutlined } from '@ant-design/icons';
 import { ApproveAction, RejectAction } from './Actions/ApproveAction';
 import ReOpenAction from './Actions/ReOpenAction';
-import DeleteAction from './Actions/DeleteAction';
+// import DeleteAction from './Actions/DeleteAction';
 import AssignAction from './Actions/AssignAction';
 import CloseAction from './Actions/CloseAction';
 // import AskForApprovalAction from './Actions/AskForApprovalAction';
