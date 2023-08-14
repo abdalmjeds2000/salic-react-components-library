@@ -12,7 +12,7 @@ function DeleteAction({ openModal, RequestId, handelAfterAction, onCancel }: any
   const deleteAction = async () => {
     setBtnLoading(true);
     if(reasonValue.length >= 3) {
-      await fetch(`https://salic.com/api/tracking/DeleteServiceRequest/${RequestId}`, {
+      await fetch(`https://salicapi.com/api/tracking/DeleteServiceRequest/${RequestId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
