@@ -362,7 +362,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
               </Timeline.Item>
             }
             {
-              requestData?.Status != "CLOSED" &&
+              !["CLOSED", "CANCELLED"].includes(requestData?.Status) &&
               <Timeline.Item dot={<UserImage email={Email} />} className='add-reply'>
                 <ReplyForm
                   fileList={fileList}

@@ -75,13 +75,13 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       icon: <RetweetOutlined />,
     } : null),
 
-    (IsAdmin && ((!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) ? {
+    (IsAdmin && ((!["CLOSED", "Waiting For Approval", "CANCELLED"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) ? {
       key: 'assign',
       label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Assign</Tooltip>,
       icon: <SendOutlined />,
       disabled: !IsAllowAssignCloseCancel,
     } : null),
-    (IsAdmin && (!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) ? {
+    (IsAdmin && (!["CLOSED", "Waiting For Approval", "CANCELLED"].includes(requestData?.Status)) ? {
       key: 'close',
       label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Close</Tooltip>,
       icon: <FileDoneOutlined />,
@@ -96,7 +96,6 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       icon: <CloseOutlined />,
       disabled: !IsAllowAssignCloseCancel,
     } : null),
-
 
     (Email === 'abdulmohsen.alaiban@salic.com' ? {
       key: 'delete',
@@ -134,7 +133,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       </Dropdown>
 
 
-      {IsAdmin && ((!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) &&
+      {IsAdmin && ((!["CLOSED", "Waiting For Approval", "CANCELLED"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) &&
         <AssignAction
           Email={Email}
           openModal={modalsStatuses.assign}
@@ -144,7 +143,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
           handelAfterAction={GetRequest} 
         />
       }
-      {IsAdmin && (!["CLOSED", "Waiting For Approval"].includes(requestData?.Status)) &&
+      {IsAdmin && (!["CLOSED", "Waiting For Approval", "CANCELLED"].includes(requestData?.Status)) &&
         <CloseAction
           RequestData={requestData}
           Email={Email}
@@ -163,10 +162,10 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       {(requestData.Status === "CLOSED" && IfRequester) ? 
         <ReOpenAction Email={Email} RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.reopen} onCancel={handleCloseModals} /> : null}
       
-      {IsAdmin && (!["CLOSED"].includes(requestData?.Status)) ? 
+      {/* {IsAdmin && (!["CLOSED"].includes(requestData?.Status)) ? 
         <AskForApprovalAction Email={Email} RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.askapproval} onCancel={handleCloseModals} /> : null}
       {IsAdmin && ["Waiting For Approval"].includes(requestData?.Status) ? 
-        <ReAssignApprovalAction Email={Email} RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.reassign} onCancel={handleCloseModals} /> : null}
+        <ReAssignApprovalAction Email={Email} RequestId={requestData.Id} handelAfterAction={GetRequest} openModal={modalsStatuses.reassign} onCancel={handleCloseModals} /> : null} */}
     </div>
   )
 }

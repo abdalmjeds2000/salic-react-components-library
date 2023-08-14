@@ -62,6 +62,7 @@ function UpdateRequestForm(props: Props) {
   }
 
   const IsClosed = props.RequestData?.Status === "CLOSED";
+  const IsCancelled = props.RequestData?.Status === "CANCELLED";
 
   return (
     <Form
@@ -70,7 +71,7 @@ function UpdateRequestForm(props: Props) {
       layout='vertical'
       onFinish={UpdateItServiceRequest}
       onFinishFailed={() => message.error("Please, fill out the form correctly.") }
-      disabled={!props.IsAdmin || IsClosed}
+      disabled={!props.IsAdmin || IsClosed || IsCancelled}
       onValuesChange={(changedValues, allValues) => { setFormValues(allValues); console.log(changedValues); }}
     >
       <div>
