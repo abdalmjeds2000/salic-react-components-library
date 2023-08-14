@@ -43,6 +43,7 @@ function CancelAction({ Email, RequestId, onFinish, openModal, onCancel }: Props
         body: JSON.stringify(payload)
       });
       if(onFinish) onFinish();
+      if(onCancel) onCancel();
       setCancelReason(""); setFileList([]); setBtnLoading(false);
       message.success("Service request has been canceled successfully");
     } catch (error) {

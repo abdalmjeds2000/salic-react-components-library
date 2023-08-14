@@ -26,6 +26,7 @@ function ReOpenAction({ Email, RequestId, handelAfterAction, openModal, onCancel
       });
       message.success("Service request has been re-opened")
       if(handelAfterAction) handelAfterAction();
+      onCancel();
       setIsShowing(false);
     } else {
       message.error("Write Re-Open Reason")

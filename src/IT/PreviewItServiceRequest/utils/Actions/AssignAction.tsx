@@ -26,6 +26,7 @@ function AssignAction({ Email, RequestId, EmployeesList, handelAfterAction, open
       if(handelAfterAction) handelAfterAction();
       setIsShowing(false);
       setSelectedEmp(null);
+      onCancel();
     } else {
       message.error("Select Employee First!")
     }

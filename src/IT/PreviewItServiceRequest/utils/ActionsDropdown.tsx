@@ -89,7 +89,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       disabled: !IsAllowAssignCloseCancel,
     } : null),
 
-    (Email === 'abdulmohsen.alaiban@salic.com' ? {
+    (Email === 'abdulmohsen.alaiban@salic.com' && !["CANCELLED", "CLOSED"].includes(requestData.Status) ? {
       key: 'cancel',
       label: <Tooltip color="red" title={!IsAllowAssignCloseCancel ? 'Please Update Ticket Information' : null}>Cancel</Tooltip>,
       danger: true,
@@ -157,7 +157,7 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
       {Email === 'abdulmohsen.alaiban@salic.com' ?
         <DeleteAction RequestId={requestData.Id} handelAfterAction={handleAfterDeleteRequest} openModal={modalsStatuses.delete} onCancel={handleCloseModals} /> : null}
       
-      {Email === 'abdulmohsen.alaiban@salic.com' ?
+      {Email === 'abdulmohsen.alaiban@salic.com' && !["CANCELLED", "CLOSED"].includes(requestData.Status) ?
         <CancelAction RequestId={requestData.Id} onFinish={GetRequest} Email={Email} openModal={modalsStatuses.cancel} onCancel={handleCloseModals} /> : null}
 
       {(requestData.Status === "CLOSED" && IfRequester) ? 

@@ -20,6 +20,7 @@ function DeleteAction({ openModal, RequestId, handelAfterAction, onCancel }: any
         body: JSON.stringify({ message: reasonValue })
       });
       if(handelAfterAction) handelAfterAction();
+      if(onCancel) onCancel();
       notification.success({message: 'Service request has been deleted successfully'});
       setReasonValue(false);
       setIsShowing(false);

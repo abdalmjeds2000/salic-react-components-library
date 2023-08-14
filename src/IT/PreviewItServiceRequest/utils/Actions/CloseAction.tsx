@@ -86,6 +86,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
           if(handelAfterAction) handelAfterAction();
           // reset modal fields
           setCloseReason(""); setFileList([]); setCONFFiles([]); setUATiles([]); setUGFiles([]);
+          onCancel();
           setIsShowing(false);
         } else message.error("Please Attach files for all Documents");
       } else message.error("Fill Field Correctly");
