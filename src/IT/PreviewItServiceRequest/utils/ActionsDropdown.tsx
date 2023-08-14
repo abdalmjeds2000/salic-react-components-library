@@ -24,7 +24,7 @@ type Props = {
 
 const initialmodalsStatuses = { reopen: false, delete: false, assign: false, close: false, askapproval: false, reassign: false, cancel: false };
 
-const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel, handleAfterDeleteRequest }: Props) => {
+const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel/* , handleAfterDeleteRequest */ }: Props) => {
   const [modalsStatuses, setModalsStatuses] = React.useState<any>(initialmodalsStatuses);
 
   var requester = requestData.Requester;
