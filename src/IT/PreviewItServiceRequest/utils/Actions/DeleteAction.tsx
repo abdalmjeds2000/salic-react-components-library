@@ -13,7 +13,7 @@ function DeleteAction({ openModal, RequestId, handelAfterAction, onCancel }: any
     setBtnLoading(true);
     if(reasonValue.length >= 3) {
       await fetch(`https://salicapi.com/api/tracking/DeleteServiceRequest/${RequestId}`, {
-        method: 'DELETE',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
