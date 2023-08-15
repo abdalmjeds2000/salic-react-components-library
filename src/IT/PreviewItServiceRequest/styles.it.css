@@ -71,6 +71,11 @@
     background: linear-gradient(194deg,#c0ffee,#85dec7);
     border: 1px solid #85dec7;
   }
+  .preview-request-container .content .timeline .danger-reply .ant-timeline-item-content {
+    margin: 0 0 0 40px !important;
+    background: linear-gradient(194deg,#ffe4e4,#ffcfcf);
+    border: 1px solid #ffcfcf;
+  }
 
   .preview-request-container .content .timeline .ant-timeline-item-content::before {
     content: "";
@@ -182,7 +187,6 @@
   .preview-request-container .content {
     flex-direction: column;
     padding: 15px;
-    padding-left: 5px;
   }
   .preview-request-container .content .timeline {
     width: 100%;
@@ -199,16 +203,19 @@
     flex-direction: column;
     gap: 10px;
     box-shadow: 0 10px 15px rgba(0 0 0 / 24%);
-    padding: 10px 25px;
+    padding: 25px;
     border-radius: 15px;
     background-color: #fff;
     height: fit-content;
     max-height: calc(100vh - 100px);
-    width: fit-content;
+    max-width: 500px;
     position: relative;
     overflow: auto;
-    margin: 24px 10px;
+    margin: 24px auto;
     z-index: 99;
+  }
+  .preview-request-container .content .properties .properties-container::-webkit-scrollbar {
+    display: none;
   }
   .preview-request-container .content .properties .mobile-overlay {
     position: fixed;
@@ -249,7 +256,8 @@
   .preview-request-container .content .timeline .ant-timeline-item-content,
   .preview-request-container .content .timeline .my-reply .ant-timeline-item-content,
   .preview-request-container .content .timeline .add-reply .ant-timeline-item-content,
-  .preview-request-container .content .timeline .return-asset-reply .ant-timeline-item-content {
+  .preview-request-container .content .timeline .return-asset-reply .ant-timeline-item-content,
+  .preview-request-container .content .timeline .danger-reply .ant-timeline-item-content {
     padding: 10px !important;
     margin: 0 0 0 30px !important;
     width: auto !important;

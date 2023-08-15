@@ -328,8 +328,16 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                 }
                 const text = JSON.parse(reply.Body).Body;
                 const processedText = processTextWithLink(text);
+                const isCancelledReply = requestData?.Status === "CANCELLED" && i === requestData?.Conversation?.length-1;
                 return (
-                  <Timeline.Item key={i} dot={<UserImage email={reply.CreatedBy?.Mail} />} className={(reply.CreatedBy?.Mail?.toLowerCase() === Email?.toLowerCase()) ? "my-reply" : ""}>
+                  <Timeline.Item 
+                    key={i} 
+                    dot={<UserImage email={reply.CreatedBy?.Mail} />} 
+                    className={
+                      isCancelledReply ? "danger-reply" :
+                      (reply.CreatedBy?.Mail?.toLowerCase() === Email?.toLowerCase()) ? "my-reply" : ""
+                    }
+                  >
                     <Reply 
                       Title={<a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${reply.CreatedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{reply.CreatedBy?.DisplayName}</a>} 
                       Description={`(Ext: ${reply.CreatedBy?.Ext}) ${new Date(reply.CreatedAt).toLocaleString()}`}
