@@ -13,21 +13,38 @@ type Props = {
 function UpdateRequestForm(props: Props) {
   const [form] = Form.useForm();
   const [formValues, setFormValues] = React.useState(props.RequestData);
-  const defaultBIA = !props.RequestData?.BIA || ["", "[]"].includes(props.RequestData?.BIA) ? [] : [{ uid: props.RequestData?.BIA?.split(".")?.[0], name: props.RequestData?.BIA, status: "done", url: `https://salicapi.com/File/${props.RequestData?.BIA}` }];
-  const [BIAFiles, setBIAFiles] = React.useState<any[]>(defaultBIA);
-  const defaultSCR = !props.RequestData?.SCR || ["", "[]"].includes(props.RequestData?.SCR) ? [] : [{ uid: props.RequestData?.SCR?.split(".")?.[0], name: props.RequestData?.SCR, status: "done", url: `https://salicapi.com/File/${props.RequestData?.SCR}` }];
-  const [SCRFiles, setSCRFiles] = React.useState<any[]>(defaultSCR);
+  const [BIAFiles, setBIAFiles] = React.useState<any[]>([]);
+  const [SCRFiles, setSCRFiles] = React.useState<any[]>([]);
+
+  // handle read BIA & SCR files
+  React.useEffect(() => {
+    try {
+      if(props.RequestData?.BIA) {
+        const file = JSON.parse(props.RequestData?.BIA?.Body);
+        const uploaderFiles = [{ uid: props.RequestData?.BIA?.Id, name: file?.OriginalName, guidName: file?.Name, status: "done", url: file?.Path }];
+        setBIAFiles(uploaderFiles);
+      }
+      if(props.RequestData?.SCR) {
+        const file = JSON.parse(props.RequestData?.SCR?.Body);
+        const uploaderFiles = [{ uid: props.RequestData?.SCR?.Id, name: file?.OriginalName, guidName: file?.Name, status: "done", url: file?.Path }];
+        setSCRFiles(uploaderFiles);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [JSON.stringify(props.RequestData)])
+
 
   const UpdateItServiceRequest = async (values: any) => {
     let isUploaded1 = true;
     const attachmentsBIA = BIAFiles.map(file => {
       if(file.status === "uploading") isUploaded1 = false
-      return file.response?.uploadedFiles[0]?.Name || file?.name
+      return file.response?.uploadedFiles[0]?.Name || file?.guidName
     });
     let isUploaded2 = true;
     const attachmentsSCR = SCRFiles.map(file => {
       if(file.status === "uploading") isUploaded2 = false
-      return file.response?.uploadedFiles[0]?.Name || file?.name
+      return file.response?.uploadedFiles[0]?.Name || file?.guidName
     });
     if(values.RequestType === "CR" && (BIAFiles?.length === 0 || SCRFiles?.length === 0)) {
       message.error("Please, upload required files.");
