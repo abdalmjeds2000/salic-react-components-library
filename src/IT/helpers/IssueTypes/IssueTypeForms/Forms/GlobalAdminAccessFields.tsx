@@ -22,13 +22,13 @@ function GlobalAdminAccessFields() {
       >
         <Input placeholder="Enter Duration" />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         name="GlobalAdminAccess_Reason"
         label="Reason"
         rules={[ {required: true, message: ''} ]}
       >
         <Input.TextArea rows={3} placeholder="Enter Reason" />
-      </Form.Item>
+      </Form.Item> */}
     </>
   );
 }

@@ -139,7 +139,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           FormData.FormData = JSON.stringify(BackupRestoreFormDataProp);
           break;
         case 'Global Admin Access Request':
-          var GlobalAdminAccess_FormDataProp = { Date: moment(FormData.GlobalAdminAccess_Date).format('MM/DD/YYYY'), Duration: FormData.GlobalAdminAccess_Duration, Reason: FormData.GlobalAdminAccess_Reason };
+          var GlobalAdminAccess_FormDataProp = { Date: moment(FormData.GlobalAdminAccess_Date).format('MM/DD/YYYY'), Duration: FormData.GlobalAdminAccess_Duration, /* Reason: FormData.GlobalAdminAccess_Reason */ };
           FormData.FormData = JSON.stringify(GlobalAdminAccess_FormDataProp);
           break;
       }

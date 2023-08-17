@@ -292,7 +292,7 @@ export function GetFormDataGlobalAdminAccess({ request }: any) {
       <Descriptions bordered title="" size="default" column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }} >
         <Descriptions.Item label="Date">{formDate?.Date || ' - '}</Descriptions.Item>
         <Descriptions.Item label="Duration">{formDate?.Duration || ' - '}</Descriptions.Item>
-        <Descriptions.Item label="Reason">{formDate?.Reason || ' - '}</Descriptions.Item>
+        {/* <Descriptions.Item label="Reason">{formDate?.Reason || ' - '}</Descriptions.Item> */}
       </Descriptions>
     </div>
   )
