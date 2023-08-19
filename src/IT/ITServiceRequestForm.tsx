@@ -254,7 +254,8 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
             onChange={(value) => {
               form.setFieldsValue({ IssueType: value });
               /* get image src from issuetypes list by filter it using current value issueTypeField */
-              const imgsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.AttachmentFiles?.[0]?.ServerRelativePath?.DecodedUrl;
+              // const imgsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.AttachmentFiles?.[0]?.ServerRelativePath?.DecodedUrl;
+              const imgsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.FormModalImage;
               const pdfsrc = props.listOfIssue?.filter((v) => v.IssueType === value && v.Category === "Access")[0]?.UserGuideFile;
               setIssueTypeExtra(prev => ({ ...prev, guidLink: { ...prev.guidLink, src: imgsrc }, pdfLink: pdfsrc }));
               setIssue(prev => ({ ...prev, type: value }));
