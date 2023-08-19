@@ -6,7 +6,7 @@ import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataD
 import { Reply } from '../../components/Reply';
 import { ToggleButton } from '../../components/ToggleButton';
 import { Section } from '../../components/Section';
-import { FileIcon } from '../../index';
+import { FileIcon, apiLink } from '../../index';
 import ReplyForm from './utils/ReplyForm';
 import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
@@ -30,9 +30,9 @@ const UserImage = ({ email }: { email: string }) => {
       style={{marginRight: 8}}
       src={
         <Image
-          src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${email}`}
-          preview={{src: `https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=L&username=${email}`,}}
-          // src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
+          src={`${apiLink}/user/photo?id=${email}`}
+          preview={{src: `${apiLink}/user/photo?id=${email}`,}}
+          onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
           title={email}
         />
       }

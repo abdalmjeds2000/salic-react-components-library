@@ -20,9 +20,9 @@ const OptionCard = ({ DisplayName, Email }: any) => {
         size='small'
         src={
           <Image
-            src={`https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=S&username=${Email}`}
-            preview={{src: `https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=L&username=${Email}`,}}
-            // src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
+            src={`${apiLink}/user/photo?id=${Email}`}
+            preview={{src: `${apiLink}/user/photo?id=${Email}`,}}
+            onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
             title={Email}
           />
         }

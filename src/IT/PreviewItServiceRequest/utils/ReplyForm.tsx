@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, message, Space, Tooltip, Upload } from 'antd';
+import { Button, Form, Image, message, Space, Tooltip, Upload } from 'antd';
 import { Mention, MentionsInput } from 'react-mentions';
 import mentionsInputStyle from './mentionsInputStyle';
+import { apiLink } from '../../../index';
 
 
 
@@ -72,8 +73,12 @@ const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onF
                   console.log(entry, search, highlightedDisplay);
                   return (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <img alt="" src={`https://salic.sharepoint.com/sites/Portal/_layouts/15/userphoto.aspx?size=s&username=${entry.id}`} width={20} style={{ borderRadius: 99 }} />
-                      {/* <img alt="" src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`} width={20} style={{ borderRadius: 99 }} /> */}
+                      <Image
+                        src={`${apiLink}/user/photo?id=${entry.id}`}
+                        preview={{src: `${apiLink}/user/photo?id=${entry.id}`,}}
+                        onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
+                        width={20} style={{ borderRadius: 99 }}
+                      />
                       <span>{highlightedDisplay}</span>
                     </div>
                   )

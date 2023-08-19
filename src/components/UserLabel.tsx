@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Avatar, Image, Typography } from 'antd';
+import { apiLink } from '../index';
 
 
 export const UserLabel = (props: { Mail: string, DisplayName: string, NameDescription?: string }) => {
@@ -11,9 +12,9 @@ export const UserLabel = (props: { Mail: string, DisplayName: string, NameDescri
           style={{minWidth: 32}}
           src={
             <Image
-              src={`https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=s&username=${props.Mail}`}
-              preview={{src: `https://salic.sharepoint.com/sites/portal/_layouts/15/userphoto.aspx?size=L&username=${props.Mail}`,}}
-              // src={`https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
+              src={`${apiLink}/user/photo?id=${props.Mail}`}
+              preview={{src: `${apiLink}/user/photo?id=${props.Mail}`,}}
+              onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
             />
           }
         />}
