@@ -143,7 +143,7 @@ function UpdateRequestForm(props: Props) {
         </Section>
         <Section SectionTitle="Request Type">
           <Form.Item name="RequestType" initialValue={props.RequestData?.RequestType} rules={[{required: true, message: ""}]} style={{marginBottom: 0}}>
-            <Select placeholder="Select Request Type" size="large">
+            <Select placeholder="Select Request Type" size="large" disabled={!!props.RequestData?.RequestType}>
               <Select.Option value="CR">Change Request</Select.Option>
               <Select.Option value="ER">Enhancement Request</Select.Option>
               <Select.Option value="HelpDesk">Help Desk</Select.Option>
@@ -157,7 +157,7 @@ function UpdateRequestForm(props: Props) {
         {(formValues.RequestType === "CR" || formValues.RequestType === "ER") ? (
           <div style={{padding:"8px 12px", backgroundColor: "#efefef"}}>
             <Form.Item name="change_classification" label="Classification" initialValue={props.RequestData?.ChangeClassification} style={{marginBottom: 7}} rules={[{required: true, message: ""}]}>
-              <Select placeholder="Select Change Classification Type">
+              <Select placeholder="Select Change Classification Type" disabled={!!props?.RequestData?.ChangeClassification}>
                 <Select.Option value="Major">Major</Select.Option>
                 <Select.Option value="Medium">Medium</Select.Option>
                 <Select.Option value="Minor">Minor</Select.Option>
@@ -168,7 +168,7 @@ function UpdateRequestForm(props: Props) {
                 action="https://salicapi.com/api/uploader/up"
                 fileList={BIAFiles}
                 onChange={({ fileList: newFileList }: any) => setBIAFiles(newFileList)}
-                // disabled={BIAFiles.length > 0}
+                disabled={props.RequestData?.BIA || !props.IsAdmin || IsClosed}
               >
                 <Button icon={<UploadOutlined />} disabled={BIAFiles.length > 0 || !props.IsAdmin || IsClosed}>Upload</Button>
               </Upload>
@@ -181,7 +181,7 @@ function UpdateRequestForm(props: Props) {
                     action="https://salicapi.com/api/uploader/up"
                     fileList={SCRFiles}
                     onChange={({ fileList: newFileList }: any) => setSCRFiles(newFileList)}
-                    // disabled={SCRFiles.length > 0}
+                    disabled={props.RequestData?.SCR || !props.IsAdmin || IsClosed}
                   >
                     <Button icon={<UploadOutlined />} disabled={SCRFiles.length > 0 || !props.IsAdmin || IsClosed}>Upload</Button>
                   </Upload>
@@ -190,13 +190,13 @@ function UpdateRequestForm(props: Props) {
             }
 
             <Form.Item name="StartDate" label="Start Date" initialValue={props?.RequestData?.StartDate ? moment(props?.RequestData?.StartDate) : null} style={{marginBottom: 7}} rules={[{required: true, message: ""}]}>
-              <DatePicker format="MM/DD/YYYY" placeholder="Start Date" style={{ width: "100%" }} />
+              <DatePicker format="MM/DD/YYYY" placeholder="Start Date" style={{ width: "100%" }} disabled={!!props?.RequestData?.StartDate} />
             </Form.Item>
             <Form.Item name="ExpectedEndDate" label="Expected End Date" initialValue={props?.RequestData?.ExpectedEndDate ? moment(props?.RequestData?.ExpectedEndDate) : null} style={{marginBottom: 7}} rules={[{required: true, message: ""}]}>
-              <DatePicker format="MM/DD/YYYY" placeholder="Expected End Date" style={{ width: "100%" }} />
+              <DatePicker format="MM/DD/YYYY" placeholder="Expected End Date" style={{ width: "100%" }} disabled={!!props?.RequestData?.ExpectedEndDate} />
             </Form.Item>
             <Form.Item name="Progress" label="Progress" style={{marginBottom:0}} initialValue={props?.RequestData?.Progress || 0} rules={[{required: true, message: ""}]}>
-              <Slider marks={{ 0: '0%', 20: '20%', 40: '40%', 60: '60%', 80: '80%', 100: '100%' }} disabled={!props.IsAdmin || IsClosed} />
+              <Slider marks={{ 0: '0%', 20: '20%', 40: '40%', 60: '60%', 80: '80%', 100: '100%' }} disabled={!props.IsAdmin || IsClosed || IsCancelled} />
             </Form.Item>
           </div>
         ) : null}
