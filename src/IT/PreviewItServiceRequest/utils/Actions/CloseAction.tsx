@@ -95,6 +95,14 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
     setBtnLoading(false);
   }
 
+  let biafile;
+  if(RequestData?.BIA) {
+    biafile=JSON.parse(RequestData?.BIA?.Body)
+  }
+  let scrfile;
+  if(RequestData?.SCR) {
+    scrfile=JSON.parse(RequestData?.SCR?.Body)
+  }
 
   return (
     <>
@@ -150,15 +158,25 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
                         {title: 'File', dataIndex: 'File'}
                       ]}
                       dataSource={[
+                        // { 
+                        //   key: '1', 
+                        //   DocumentName: 'BIA', 
+                        //   File: !["", "[]"].includes(RequestData?.BIA) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.BIA}`} target='_blank'>{RequestData?.BIA}</Typography.Link> : " - "
+                        // },
+                        // { 
+                        //   key: '2', 
+                        //   DocumentName: 'Signed Change request', 
+                        //   File: !["", "[]"].includes(RequestData?.SCR) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.SCR}`} target='_blank'>{RequestData?.SCR}</Typography.Link> : " - "
+                        // },
                         { 
                           key: '1', 
                           DocumentName: 'BIA', 
-                          File: !["", "[]"].includes(RequestData?.BIA) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.BIA}`} target='_blank'>{RequestData?.BIA}</Typography.Link> : " - "
+                          File: biafile ? <Typography.Link href={biafile?.Path} target='_blank'>{biafile?.OriginalName}</Typography.Link> : " - "
                         },
                         { 
                           key: '2', 
                           DocumentName: 'Signed Change request', 
-                          File: !["", "[]"].includes(RequestData?.SCR) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.SCR}`} target='_blank'>{RequestData?.SCR}</Typography.Link> : " - "
+                          File: scrfile ? <Typography.Link href={scrfile?.Path} target='_blank'>{scrfile?.OriginalName}</Typography.Link> : " - "
                         },
                         { 
                           key: '3', 
