@@ -143,7 +143,7 @@ function UpdateRequestForm(props: Props) {
         </Section>
         <Section SectionTitle="Request Type">
           <Form.Item name="RequestType" initialValue={props.RequestData?.RequestType} rules={[{required: true, message: ""}]} style={{marginBottom: 0}}>
-            <Select placeholder="Select Request Type" size="large" disabled={!!props.RequestData?.RequestType}>
+            <Select placeholder="Select Request Type" size="large" /* disabled={!!props.RequestData?.RequestType} */>
               <Select.Option value="CR">Change Request</Select.Option>
               <Select.Option value="ER">Enhancement Request</Select.Option>
               <Select.Option value="HelpDesk">Help Desk</Select.Option>
