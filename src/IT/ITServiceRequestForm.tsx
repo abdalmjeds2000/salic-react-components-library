@@ -96,7 +96,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           FormData.FormData = JSON.stringify(NewAccountFormDataProp);
           break;
         case 'Shared Email':
-          var SharedEmailFormDataProp = { SenderName: FormData.SenderName, EmailAddress: FormData.EmailAddress, BusinessOwner: FormData.BusinessOwner, Members: FormData.Members.join() };
+          var SharedEmailFormDataProp = { SenderName: FormData.SenderName, EmailAddress: FormData.EmailAddress, BusinessOwner: FormData.BusinessOwner, Members: FormData.Members?.join() };
           FormData.FormData = JSON.stringify(SharedEmailFormDataProp);
           break;
         case 'GL Account':
@@ -104,13 +104,13 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           FormData.FormData = JSON.stringify(GLAccountFormDataProp);
           break;
         case 'Create Group email':
-          FormData.GroupOwners = FormData.GroupOwners?.map((item: any) => item.value)?.join(",");
-          FormData.GroupMembers = FormData.GroupMembers?.map((item: any) => item.value)?.join(",");
+          FormData.GroupOwners = FormData.GroupOwners?.join(",");
+          FormData.GroupMembers = FormData.GroupMembers?.join(",");
           var CreateGroupEmailFormDataProp = { GroupName: FormData.GroupName, GroupType: FormData.GroupType, GroupOwners: FormData.GroupOwners, GroupMembers: FormData.GroupMembers, GroupEmail: FormData.GroupEmail, AllowOutside: FormData.AllowOutside };
           FormData.FormData = JSON.stringify(CreateGroupEmailFormDataProp);
           break;
         case 'Add Users to A Group':
-          FormData.GroupMembers = FormData.GroupMembers?.map((item: any) => item.value)?.join(",");
+          FormData.GroupMembers = FormData.GroupMembers?.join(",");
           var AddUserstoAGroupFormDataProp = { GroupName: FormData.GroupName, EmailAddress: FormData.EmailAddress, GroupMembers: FormData.GroupMembers };
           FormData.FormData = JSON.stringify(AddUserstoAGroupFormDataProp);
           break;
