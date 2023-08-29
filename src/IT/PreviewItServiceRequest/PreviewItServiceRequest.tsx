@@ -365,7 +365,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                     : []
                   }
                 >
-                  {JSON.parse(requestData.CloseReason)?.Body}
+                  <div dangerouslySetInnerHTML={{ __html: processTextWithLink(JSON.parse(requestData.CloseReason)?.Body) }} />
                 </Reply>
               </Timeline.Item>
             }
