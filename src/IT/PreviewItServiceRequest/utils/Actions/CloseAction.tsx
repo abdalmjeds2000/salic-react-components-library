@@ -58,7 +58,8 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
 
     let isAllTypesHavAttachments = true;
     if(requestType === "CR") {
-      const _CRFilesLists = [CONFFiles, UATiles, UGFiles];
+      // const _CRFilesLists = [CONFFiles, UATiles, UGFiles];
+      const _CRFilesLists = [UATiles, UGFiles];
       _CRFilesLists.forEach(list => {
         if(list.length == 0) isAllTypesHavAttachments = false
       });
@@ -158,16 +159,6 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
                         {title: 'File', dataIndex: 'File'}
                       ]}
                       dataSource={[
-                        // { 
-                        //   key: '1', 
-                        //   DocumentName: 'BIA', 
-                        //   File: !["", "[]"].includes(RequestData?.BIA) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.BIA}`} target='_blank'>{RequestData?.BIA}</Typography.Link> : " - "
-                        // },
-                        // { 
-                        //   key: '2', 
-                        //   DocumentName: 'Signed Change request', 
-                        //   File: !["", "[]"].includes(RequestData?.SCR) ? <Typography.Link href={`https://salicapi.com/File/${RequestData?.SCR}`} target='_blank'>{RequestData?.SCR}</Typography.Link> : " - "
-                        // },
                         { 
                           key: '1', 
                           DocumentName: 'BIA', 
