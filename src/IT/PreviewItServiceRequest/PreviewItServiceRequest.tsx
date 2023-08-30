@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, Button, Form, Image, Steps, Timeline, Typography, message } from 'antd';
+import { Avatar, Button, Descriptions, Form, Image, Steps, Timeline, Typography, message } from 'antd';
 import moment from 'moment';
 import { CaretRightOutlined, CloseOutlined, MoreOutlined } from '@ant-design/icons';
 import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
@@ -233,6 +233,15 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
   const isAllowActions = !isFormIncompleted;
 
 
+  let biafile;
+  if(requestData?.BIA) {
+    biafile=JSON.parse(requestData?.BIA?.Body)
+  }
+  let scrfile;
+  if(requestData?.SCR) {
+    scrfile=JSON.parse(requestData?.SCR?.Body)
+  }
+
 
   if (Object.keys(requestData)?.length === 0) {
     return <Loader />;
@@ -366,6 +375,67 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                   }
                 >
                   <div dangerouslySetInnerHTML={{ __html: processTextWithLink(JSON.parse(requestData.CloseReason)?.Body) }} />
+                  {
+                    (JSON.parse(requestData.CloseReason).CRFiles && typeof JSON.parse(requestData.CloseReason).CRFiles != 'undefined' && Object.keys(JSON.parse(requestData.CloseReason).CRFiles).length != 0)
+                    ? (
+                      <Descriptions bordered size='small' style={{marginTop: 10}} column={{ xxl: 2, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }} >
+                        {
+                          biafile
+                          &&
+                          <Descriptions.Item label="BIA File">
+                            <Typography.Link href={biafile?.Path} target='_blank'>{biafile?.OriginalName}</Typography.Link>
+                          </Descriptions.Item>
+                        }
+                        {
+                          scrfile
+                          &&
+                          <Descriptions.Item label="Signed Change File">
+                            <Typography.Link href={scrfile?.Path} target='_blank'>{scrfile?.OriginalName}</Typography.Link>
+                          </Descriptions.Item>
+                        }
+                        {
+                          JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name
+                          &&
+                          <Descriptions.Item label="Configuration Document">
+                            <Typography.Link
+                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name}`}
+                              target='_blank'
+                              rel="noreferrer"
+                            >
+                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name}
+                            </Typography.Link>
+                          </Descriptions.Item>
+                        }
+                        {
+                          JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name
+                          &&
+                          <Descriptions.Item label="UAT File">
+                            <Typography.Link
+                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name}`}
+                              target='_blank'
+                              rel="noreferrer"
+                            >
+                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name}
+                            </Typography.Link>
+                          </Descriptions.Item>
+                        }
+                        {
+                          JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name
+                          &&
+                          <Descriptions.Item label="User Guide File">
+                            <Typography.Link
+                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name}`}
+                              target='_blank'
+                              rel="noreferrer"
+                            >
+                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name}
+                            </Typography.Link>
+                          </Descriptions.Item>
+                        }
+                      </Descriptions>
+                    )
+                    : null
+                  }
                 </Reply>
               </Timeline.Item>
             }
