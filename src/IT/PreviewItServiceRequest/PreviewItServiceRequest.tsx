@@ -402,7 +402,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                               target='_blank'
                               rel="noreferrer"
                             >
-                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name}
+                              {JSON.parse(JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.File?.Body)?.OriginalName}
                             </Typography.Link>
                           </Descriptions.Item>
                         }
@@ -415,7 +415,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                               target='_blank'
                               rel="noreferrer"
                             >
-                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name}
+                              {JSON.parse(JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.File?.Body)?.OriginalName}
                             </Typography.Link>
                           </Descriptions.Item>
                         }
@@ -428,7 +428,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                               target='_blank'
                               rel="noreferrer"
                             >
-                              {JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name}
+                              {JSON.parse(JSON.parse(requestData.CloseReason || "{}")?.CRFiles?.filter((file: any) => file.Type === "user_guide_file")?.[0]?.File?.Body)?.OriginalName}
                             </Typography.Link>
                           </Descriptions.Item>
                         }
