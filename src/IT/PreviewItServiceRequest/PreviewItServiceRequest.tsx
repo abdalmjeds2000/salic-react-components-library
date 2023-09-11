@@ -360,7 +360,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
             }
             {
               requestData.Status === "CLOSED" && requestData.CloseReason && 
-              <Timeline.Item dot={<UserImage email={requestData.ClosedBy?.Mail} />} className='close-reply'>
+              <Timeline.Item dot={<UserImage email={requestData.ClosedBy?.Mail} />} className={requestData?.referingHistory?.filter((action: any) => action.Action==="APPROVE"&&action.Response==="REJECTED")?.length>0 ? "danger-reply" : "close-reply"}>
                 <Reply
                   Title={<a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requestData.ClosedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData.ClosedBy?.DisplayName}</a>}
                   Description={`(Ext: ${requestData?.ClosedBy?.Ext}) ${moment(requestData?.UpdatedAt || requestData?.CreatedAt).format('MM/DD/YYYY hh:mm:ss')}`} 
@@ -537,7 +537,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
                 {requestData?.Status === "CLOSED" ? (
                   <Steps.Step 
                     title={<><UserImage email={requestData?.ClosedBy?.Mail} /> Closed By <b>{requestData?.ClosedBy?.DisplayName}</b></>} 
-                    subTitle={`at ${new Date(requestData?.UpdatedAt).toLocaleString()}`} 
+                    subTitle={requestData?.UpdatedAt ? `at ${new Date(requestData?.UpdatedAt).toLocaleString()}` : null} 
                     style={{paddingBottom: 15}}
                   /> ) : null}
               </Steps>
