@@ -40,7 +40,8 @@ export const RejectAction = ({ children, ActionId, handelAfterAction }: any) => 
           <div>
             <TextArea
               placeholder="Enter the reason of rejection"
-              rows={2}
+              rows={4}
+              style={{width: 300}}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
             />
