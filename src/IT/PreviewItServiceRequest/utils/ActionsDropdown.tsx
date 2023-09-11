@@ -22,7 +22,7 @@ type Props = {
 
 
 
-const initialmodalsStatuses = { reopen: false, delete: false, assign: false, close: false, askapproval: false, reassign: false, cancel: false };
+const initialmodalsStatuses = { reopen: false, delete: false, assign: false, close: false, askapproval: false, reassign: false, cancel: false, reject: false };
 
 const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssignCloseCancel/* , handleAfterDeleteRequest */ }: Props) => {
   const [modalsStatuses, setModalsStatuses] = React.useState<any>(initialmodalsStatuses);
@@ -47,6 +47,12 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
     lastRefering = requestData?.referingHistory[requestData?.referingHistory?.length - 1];
   }
 
+  const onClick = ({ key }: any) => {
+    const newModalStatuses = { ...initialmodalsStatuses, [key]: true };
+    setModalsStatuses(newModalStatuses);
+  };
+  const handleCloseModals = () => setModalsStatuses(initialmodalsStatuses);
+
   const items = [
     (pendingApprove !== null ? {
       key: 'approve',
@@ -60,13 +66,8 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
     } : null),
     (pendingApprove !== null ? {
       key: 'reject',
-      isModal: false,
       danger: true,
-      label: (
-        <RejectAction ActionId={pendingApprove?.Id} handelAfterAction={GetRequest}>
-          <span>Reject</span>
-        </RejectAction>
-      ),
+      label: 'Reject',
       icon: <CloseCircleOutlined />,
     } : null),
     ((requestData.Status === "CLOSED" && IfRequester) ? {
@@ -119,19 +120,21 @@ const ActionsDropdown = ({ Email, requestData, GetRequest, IsAdmin, IsAllowAssig
     // } : null)
   ];
 
-  const onClick = ({ key }: any) => {
-    const newModalStatuses = { ...initialmodalsStatuses, [key]: true };
-    setModalsStatuses(newModalStatuses);
-  };
-
-
-  const handleCloseModals = () => setModalsStatuses(initialmodalsStatuses);
   return (
     <div>
       <Dropdown trigger={['click']} menu={{ items, onClick }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
         <Button>Actions <DownOutlined /></Button>
       </Dropdown>
 
+      {
+        pendingApprove !== null && (
+          <RejectAction
+            openModal={modalsStatuses.reject}
+            onCancel={handleCloseModals} 
+            ActionId={pendingApprove?.Id} 
+            handelAfterAction={GetRequest} />
+        )
+      }
 
       {IsAdmin && ((!["CLOSED", "Waiting For Approval", "CANCELLED"].includes(requestData?.Status)) || (requestData?.Status === "Waiting For Approval" && lastRefering?.Action === "APPROVE" && lastRefering?.Response === "APPROVED")) &&
         <AssignAction
