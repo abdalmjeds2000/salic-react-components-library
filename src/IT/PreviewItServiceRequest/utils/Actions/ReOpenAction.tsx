@@ -2,12 +2,14 @@ import * as React from 'react';
 import { message, Modal, Space, Typography } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
+import { useAppConfig } from '../../../../ConfigProvider';
 
 
 function ReOpenAction({ Email, RequestId, handelAfterAction, openModal, onCancel }: any) {
   const [btnLoading, setBtnLoading] = React.useState<any>(false);
   const [isShowing, setIsShowing] = React.useState<any>(true);
   const [reOpenReason, setReOpenReason] = React.useState<any>("");
+  const { apiUrl } = useAppConfig();
 
   const reOpenAction = async () => {
     setBtnLoading(true);
@@ -17,7 +19,7 @@ function ReOpenAction({ Email, RequestId, handelAfterAction, openModal, onCancel
       ServiceRequestId: RequestId,
     };
     if(reOpenReason.length > 0) {
-      await fetch('https://salicapi.com/api/tracking/ReOpenServiceRequest', {
+      await fetch(`${apiUrl}/tracking/ReOpenServiceRequest`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -6,7 +6,7 @@ import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataD
 import { Reply } from '../../components/Reply';
 import { ToggleButton } from '../../components/ToggleButton';
 import { Section } from '../../components/Section';
-import { FileIcon, apiLink } from '../../index';
+import { FileIcon, useAppConfig } from '../../index';
 import ReplyForm from './utils/ReplyForm';
 import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
@@ -25,14 +25,16 @@ function isEmpty(obj: any) {
   return JSON.stringify(obj) === JSON.stringify({});
 }
 const UserImage = ({ email }: { email: string }) => {
+  const { apiUrl, filesUrl } = useAppConfig();
+
   return (
     <Avatar
       style={{marginRight: 8}}
       src={
         <Image
-          src={`${apiLink}/user/photo?id=${email}`}
-          preview={{src: `${apiLink}/user/photo?id=${email}`,}}
-          onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
+          src={`${apiUrl}/user/photo?id=${email}`}
+          preview={{src: `${apiUrl}/user/photo?id=${email}`,}}
+          onError={e => e.currentTarget.src = `${filesUrl}/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
           title={email}
         />
       }
@@ -81,6 +83,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
   const [fileList, setFileList] = React.useState<any>([]);
   const [imageViewData, setImageViewData] = React.useState<any>({ src: null, visible: false });
   const [replyForm] = Form.useForm();
+  const { apiUrl, filesUrl, tenantUrl } = useAppConfig();
   
   var requester = requestData?.Requester;
   var onbehalf = requestData?.OnBehalfOf;
@@ -90,9 +93,9 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
   async function GetRequest() {
     try {
       setLoading(true);
-      const response = await fetch(`https://salicapi.com/api/Tracking/GetById?Email=${Email}&Id=${TicketId}`);
+      const response = await fetch(`${apiUrl}/Tracking/GetById?Email=${Email}&Id=${TicketId}`);
       const data = await response.json();
-      document.title = `.:: SALIC Gate | ${data.Data.Subject} ::.`;
+      document.title = `.:: Gate | ${data.Data.Subject} ::.`;
       setRequestData(data.Data);
     } catch (error) {
       message.error('Failed load ticket');
@@ -122,7 +125,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
         ListOfMentions: extractMentions(formValues.reply_body),
         ...formValues
       };
-      await fetch('https://salicapi.com/api/tracking/AddComment', {
+      await fetch(`${apiUrl}/tracking/AddComment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -203,7 +206,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
 
   // to replace @mention with link
   function textComponent(text: string) {
-    const replacedText = text.replace(/@{display: (.*?), id: (.*?)}/g, '<a target="_blank" href="https://salic.sharepoint.com/_layouts/15/me.aspx/?p=$2&v=work">@$1</a>');
+    const replacedText = text.replace(/@{display: (.*?), id: (.*?)}/g, `<a target="_blank" href="${tenantUrl}/_layouts/15/me.aspx/?p=$2&v=work">@$1</a>`);
     return <div dangerouslySetInnerHTML={{ __html: replacedText }} />;
   }
 
@@ -279,7 +282,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
             <Timeline.Item dot={<UserImage email={requester?.Mail} />} className='request-reply'>
               <Reply
                 Title={requestData?.Subject}
-                Description={<><Typography.Link href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requester?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.Requester?.DisplayName}</Typography.Link> (Ext: {requestData.Requester?.Ext}) {requestData.OnBehalfOf && <><Typography.Text type="danger" strong>on behalf of</Typography.Text> <a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requestData?.OnBehalfOf?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.OnBehalfOf?.DisplayName}</a></>} @ {moment(requestData?.CreatedAt).format('MM/DD/YYYY hh:mm:ss')}</>} 
+                Description={<><Typography.Link href={`${tenantUrl}/_layouts/15/me.aspx/?p=${requester?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.Requester?.DisplayName}</Typography.Link> (Ext: {requestData.Requester?.Ext}) {requestData.OnBehalfOf && <><Typography.Text type="danger" strong>on behalf of</Typography.Text> <a href={`${tenantUrl}/_layouts/15/me.aspx/?p=${requestData?.OnBehalfOf?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData?.OnBehalfOf?.DisplayName}</a></>} @ {moment(requestData?.CreatedAt).format('MM/DD/YYYY hh:mm:ss')}</>} 
               >
                 <div>
                   {
@@ -335,7 +338,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                     Attachments.push({
                       fileType: file?.File?.split(".")[(file?.File?.split(".")?.length||0)-1],
                       fileName: file.OriginalFile,
-                      filePath: `https://salicapi.com/File/${file?.File}`
+                      filePath: `${filesUrl}/${file?.File}`
                     })
                   })
                 }
@@ -352,7 +355,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                     }
                   >
                     <Reply 
-                      Title={<a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${reply.CreatedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{reply.CreatedBy?.DisplayName}</a>} 
+                      Title={<a href={`${tenantUrl}/_layouts/15/me.aspx/?p=${reply.CreatedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{reply.CreatedBy?.DisplayName}</a>} 
                       Description={`(Ext: ${reply.CreatedBy?.Ext}) ${new Date(reply.CreatedAt).toLocaleString()}`}
                       Files={Attachments}
                     >
@@ -366,14 +369,14 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
               requestData.Status === "CLOSED" && requestData.CloseReason && 
               <Timeline.Item dot={<UserImage email={requestData.ClosedBy?.Mail} />} className={requestData?.referingHistory?.filter((action: any) => action.Action==="APPROVE"&&action.Response==="REJECTED")?.length>0 ? "danger-reply" : "close-reply"}>
                 <Reply
-                  Title={<a href={`https://salic.sharepoint.com/_layouts/15/me.aspx/?p=${requestData.ClosedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData.ClosedBy?.DisplayName}</a>}
+                  Title={<a href={`${tenantUrl}/_layouts/15/me.aspx/?p=${requestData.ClosedBy?.Mail}`} target="_blank" style={{color:"var(--main-color)"}} rel="noreferrer">{requestData.ClosedBy?.DisplayName}</a>}
                   Description={`(Ext: ${requestData?.ClosedBy?.Ext}) ${moment(requestData?.UpdatedAt || requestData?.CreatedAt).format('MM/DD/YYYY hh:mm:ss')}`} 
                   Files={
                     (typeof JSON.parse(requestData.CloseReason).Attachment != 'undefined' && Object.keys(JSON.parse(requestData.CloseReason).Attachment).length != 0)
                     ? JSON.parse(requestData.CloseReason).Attachment.map((file: any) => ({
                         fileType: file.File.split(".")[file.File.split(".").length-1],
                         fileName: file.OriginalFile,
-                        filePath: `https://salicapi.com/File/${file.File}`
+                        filePath: `${filesUrl}/${file.File}`
                       }))
                     : []
                   }
@@ -402,7 +405,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                           &&
                           <Descriptions.Item label="Configuration Document">
                             <Typography.Link
-                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name}`}
+                              href={`${filesUrl}/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "conf_file")?.[0]?.Name}`}
                               target='_blank'
                               rel="noreferrer"
                             >
@@ -415,7 +418,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                           &&
                           <Descriptions.Item label="UAT File">
                             <Typography.Link
-                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name}`}
+                              href={`${filesUrl}/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "uat_file")?.[0]?.Name}`}
                               target='_blank'
                               rel="noreferrer"
                             >
@@ -428,7 +431,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                           &&
                           <Descriptions.Item label="User Guide File">
                             <Typography.Link
-                              href={`https://salicapi.com/File/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name}`}
+                              href={`${filesUrl}/${JSON.parse(requestData.CloseReason)?.CRFiles.filter((file: any) => file.Type === "user_guide_file")?.[0]?.Name}`}
                               target='_blank'
                               rel="noreferrer"
                             >
@@ -475,12 +478,12 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
             <Section SectionTitle="Attached Files">
               <div className='attachments-container'>
                 {requestData?.Files?.map((file:any, i:number) => (
-                  <Typography.Link target='_blank' href={`https://salicapi.com/File/${file.Guid}`} style={{ display: 'flex', alignItems: 'center', gap: 2, padding: 5 }} rel="noreferrer">
+                  <Typography.Link target='_blank' href={`${filesUrl}/${file.Guid}`} style={{ display: 'flex', alignItems: 'center', gap: 2, padding: 5 }} rel="noreferrer">
                     <FileIcon
                       key={i} 
                       FileType={file.FileName.split(".")[file.FileName.split(".").length-1]}
                       FileName={file.FileName}
-                      FilePath={`https://salicapi.com/File/${file.Guid}`}
+                      FilePath={`${filesUrl}/${file.Guid}`}
                       IconWidth='22px'
                     />
                     <Typography.Link style={{ color: '#555'}}>{file.FileName}</Typography.Link>

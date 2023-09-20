@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Button, message, Modal, Select, Typography } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
+import { useAppConfig } from '../../../../ConfigProvider';
 
 
 function AssignAction({ Email, RequestId, EmployeesList, handelAfterAction, openModal, onCancel }: any) {
   const [selectedEmp, setSelectedEmp] = React.useState(null);
   const [isShowing, setIsShowing] = React.useState(true);
+  const { apiUrl } = useAppConfig();
 
   const assignAction = async () => {
     if(selectedEmp) {
@@ -15,7 +17,7 @@ function AssignAction({ Email, RequestId, EmployeesList, handelAfterAction, open
         ByUser: Email,
         ServiceRequestId: RequestId
       };
-      await fetch(`https://salicapi.com/api/tracking/Assign`, {
+      await fetch(`${apiUrl}/tracking/Assign`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

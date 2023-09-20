@@ -17,7 +17,7 @@ function ReAssignApprovalAction({ Email, RequestId, handelAfterAction, openModal
         ...form_data 
       };
       console.log(payload);
-      // await axios.post('https://salicapi.com/api/tracking/ReAssignApproval', payload);
+      // await axios.post(`${apiUrl}/tracking/ReAssignApproval`, payload);
       if(handelAfterAction) handelAfterAction();
       notification.success({message: 'Done!'});
       form.resetFields();

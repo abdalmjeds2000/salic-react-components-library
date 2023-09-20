@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Avatar, Image, Select, SelectProps } from 'antd';
-import { apiLink } from '../index';
+import { useAppConfig } from '../index';
 
 const fetchUsers = async (value: string) => {
+  const { apiUrl } = useAppConfig();
+  
   try {
-    const response = await fetch(`${apiLink}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
+    const response = await fetch(`${apiUrl}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -13,6 +15,7 @@ const fetchUsers = async (value: string) => {
 }
 
 const OptionCard = ({ DisplayName, Email }: any) => {
+  const { apiUrl, filesUrl } = useAppConfig();
 
   return(
     <div style={{display: 'flex', alignItems: 'center', gap: 2}}>
@@ -20,9 +23,9 @@ const OptionCard = ({ DisplayName, Email }: any) => {
         size='small'
         src={
           <Image
-            src={`${apiLink}/user/photo?id=${Email}`}
-            preview={{src: `${apiLink}/user/photo?id=${Email}`,}}
-            onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
+            src={`${apiUrl}/user/photo?id=${Email}`}
+            preview={{src: `${apiUrl}/user/photo?id=${Email}`,}}
+            onError={e => e.currentTarget.src = `${filesUrl}/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
             title={Email}
           />
         }

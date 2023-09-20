@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Form, Image, message, Space, Tooltip } from 'antd';
 import { Mention, MentionsInput } from 'react-mentions';
 import mentionsInputStyle from './mentionsInputStyle';
-import { apiLink, uploaderUrl } from '../../../index';
+import { apiLink, uploaderUrl, useAppConfig } from '../../../index';
 import { Uploader } from '../../../components/Uploader';
 
 
@@ -19,6 +19,8 @@ type Porps = {
 
 const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
   const [textboxVal, setTextboxVal] = React.useState('');
+  const { filesUrl } = useAppConfig();
+
   // const  { activeUploaderArea } = usePreviewItSRContext();
 
   // const controller = new AbortController();
@@ -27,7 +29,7 @@ const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, rep
   var data = async function(query: any, callback: any) {
     if(query.length < 3) return;
     try {
-      // let response = await fetch(`https://salicapi.com/api/User/AutoComplete?term=${query}&_type=query&q=${query}&_=1667805757891`, { signal: signal });
+      // let response = await fetch(`{apiUrl}/User/AutoComplete?term=${query}&_type=query&q=${query}&_=1667805757891`, { signal: signal });
       // const data = await response.json();
       // const _usrs = data.Data.value.map((item: any) => ({ id: item.mail, display: item.displayName }))
       // callback(_usrs);
@@ -77,7 +79,7 @@ const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, rep
                       <Image
                         src={`${apiLink}/user/photo?id=${entry.id}`}
                         preview={{src: `${apiLink}/user/photo?id=${entry.id}`,}}
-                        onError={e => e.currentTarget.src = "https://salicapi.com/File/7961d7c4-decf-42aa-8010-4a34d4178970.png"}
+                        onError={e => e.currentTarget.src = `${filesUrl}/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
                         width={20} style={{ borderRadius: 99 }}
                       />
                       <span>{highlightedDisplay}</span>
@@ -89,7 +91,7 @@ const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, rep
           </Form.Item>
 
           {/* <Upload
-            action="https://salicapi.com/api/uploader/up"
+            action={uploaderUrl}
             fileList={fileList}
             onChange={({ fileList: newFileList }) => setFileList(newFileList)}
           >

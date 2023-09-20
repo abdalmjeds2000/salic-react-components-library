@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, message, Modal, Space, Typography, Upload } from 'antd';
 import { SendOutlined, UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
+import { useAppConfig } from '../../../../ConfigProvider';
 
 type Props = {
   Email: string,
@@ -15,6 +16,7 @@ function CancelAction({ Email, RequestId, onFinish, openModal, onCancel }: Props
   const [cancelReason, setCancelReason] = React.useState("");
   const [fileList, setFileList] = React.useState([]);
   const [btnLoading, setBtnLoading] = React.useState(false);
+  const { apiUrl, uploaderUrl } = useAppConfig();
 
 
   const cancelAction = async () => {
@@ -35,7 +37,7 @@ function CancelAction({ Email, RequestId, onFinish, openModal, onCancel }: Props
         cancel_reason: cancelReason,
         Files: attachmentsList.join(), 
       }
-      await fetch("https://salicapi.com/api/tracking/CancelServiceRequest", {
+      await fetch(`${apiUrl}/tracking/CancelServiceRequest`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -71,7 +73,7 @@ function CancelAction({ Email, RequestId, onFinish, openModal, onCancel }: Props
         <TextArea rows={4} placeholder="HelpDesk Technical Feedback" value={cancelReason} onChange={e => setCancelReason(e.target.value)} />
 
         <Upload
-          action="https://salicapi.com/api/uploader/up"
+          action={uploaderUrl}
           fileList={fileList}
           onChange={({ fileList: newFileList }: any) => setFileList(newFileList)}
         >

@@ -2,17 +2,19 @@ import * as React from 'react';
 import { message, Modal, notification, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
+import { useAppConfig } from '../../../../ConfigProvider';
 
 
 function DeleteAction({ openModal, RequestId, handelAfterAction, onCancel }: any) {
   const [btnLoading, setBtnLoading] = React.useState<any>(false);
   const [reasonValue, setReasonValue] = React.useState<any>('');
   const [isShowing, setIsShowing] = React.useState<any>(true);
+  const { apiUrl } = useAppConfig();
   
   const deleteAction = async () => {
     setBtnLoading(true);
     if(reasonValue.length >= 3) {
-      await fetch(`https://salicapi.com/api/tracking/DeleteServiceRequest/${RequestId}`, {
+      await fetch(`${apiUrl}/tracking/DeleteServiceRequest/${RequestId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

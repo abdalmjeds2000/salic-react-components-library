@@ -16,7 +16,7 @@ function SharedEmailFields() {
         <Input placeholder="Sender Name" />
       </Form.Item>
       <Form.Item name="EmailAddress" label="Email Address" rules={[{ required: true, message: "" }]}>
-        <Input placeholder="email@salic.com" />
+        <Input placeholder="email@example.com" />
       </Form.Item>
       <Form.Item name="Members" label="Members" rules={[{ required: true, message: "" }]}>
         <Select mode="tags" style={{width: '100%',}} placeholder="email@sali..., email@sali..., email@sali..." />

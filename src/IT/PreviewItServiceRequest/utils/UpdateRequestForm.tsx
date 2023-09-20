@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Button, DatePicker, Form, Input, message, Radio, Select, Slider, Space, Upload } from 'antd';
 import { Section } from '../../../components/Section';
 import { UploadOutlined } from '@ant-design/icons';
+import { useAppConfig } from '../../../ConfigProvider';
 
 type Props = {
   RequestData: any;
@@ -15,6 +16,7 @@ function UpdateRequestForm(props: Props) {
   const [formValues, setFormValues] = React.useState(props.RequestData);
   const [BIAFiles, setBIAFiles] = React.useState<any[]>([]);
   const [SCRFiles, setSCRFiles] = React.useState<any[]>([]);
+  const { apiUrl, uploaderUrl } = useAppConfig();
 
   // handle read BIA & SCR files
   React.useEffect(() => {
@@ -64,7 +66,7 @@ function UpdateRequestForm(props: Props) {
       values.SCR = attachmentsSCR;
       values.Id = props.RequestData?.Id;
 
-      await fetch('https://salicapi.com/api/tracking/UpdateServiceRequest', {
+      await fetch(`${apiUrl}/tracking/UpdateServiceRequest`, {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
@@ -165,7 +167,7 @@ function UpdateRequestForm(props: Props) {
             </Form.Item>
             <Form.Item label="BIA" style={{marginBottom: 7}} required>
               <Upload 
-                action="https://salicapi.com/api/uploader/up"
+                action={uploaderUrl}
                 fileList={BIAFiles}
                 onChange={({ fileList: newFileList }: any) => setBIAFiles(newFileList)}
                 disabled={props.RequestData?.BIA || !props.IsAdmin || IsClosed || IsCancelled}
@@ -178,7 +180,7 @@ function UpdateRequestForm(props: Props) {
               && (
                 <Form.Item label="Signed Change request" style={{marginBottom: 7}} required>
                   <Upload 
-                    action="https://salicapi.com/api/uploader/up"
+                    action={uploaderUrl}
                     fileList={SCRFiles}
                     onChange={({ fileList: newFileList }: any) => setSCRFiles(newFileList)}
                     disabled={props.RequestData?.SCR || !props.IsAdmin || IsClosed || IsCancelled}

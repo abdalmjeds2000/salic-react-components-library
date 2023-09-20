@@ -3,16 +3,17 @@ import { Button, message, Modal, Select, Space, Table, Typography, Upload } from
 import { SendOutlined, UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 import { Uploader } from '../../../../components/Uploader';
-import { uploaderUrl, usePreviewItSRContext } from '../../../..';
+import { useAppConfig, usePreviewItSRContext } from '../../../../index';
 
 
 // FileUploderComponent
 const CustomAntdFileUploder = ({ FileType, GetFilesList }: any) => {
   const [fileList, setFileList] = React.useState([]);
+  const { uploaderUrl } = useAppConfig();
   
   return (
     <Upload
-      action="https://salicapi.com/api/uploader/up"
+      action={uploaderUrl}
       fileList={fileList}
       onChange={({ fileList: newFileList }: any) => {
         setFileList(newFileList);
@@ -37,6 +38,8 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
 
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [isShowing, setIsShowing] = React.useState(true);
+
+  const { apiUrl, uploaderUrl } = useAppConfig();
 
   const { /* activeUploaderArea,  */updateActiveUploaderArea } = usePreviewItSRContext();
 
@@ -79,7 +82,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
             CRFiles: JSON.stringify(CRAttachmentsList),
             request_type: requestType,
           }
-          await fetch("https://salicapi.com/api/tracking/CloseServiceRequest", {
+          await fetch(`${apiUrl}/tracking/CloseServiceRequest`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -203,7 +206,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
 
 
               {/* <Upload
-                action="https://salicapi.com/api/uploader/up"
+                action={uploaderUrl}
                 fileList={fileList}
                 onChange={({ fileList: newFileList }: any) => setFileList(newFileList)}
               >
