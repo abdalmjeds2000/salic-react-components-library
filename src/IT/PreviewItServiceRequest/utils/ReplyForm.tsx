@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Form, Image, message, Space, Tooltip } from 'antd';
 import { Mention, MentionsInput } from 'react-mentions';
 import mentionsInputStyle from './mentionsInputStyle';
-import { apiLink, uploaderUrl, usePreviewItSRContext } from '../../../index';
+import { apiLink, uploaderUrl } from '../../../index';
 import { Uploader } from '../../../components/Uploader';
 
 
@@ -19,7 +19,7 @@ type Porps = {
 
 const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
   const [textboxVal, setTextboxVal] = React.useState('');
-  const  { activeUploaderArea } = usePreviewItSRContext();
+  // const  { activeUploaderArea } = usePreviewItSRContext();
 
   // const controller = new AbortController();
   // const signal = controller.signal;

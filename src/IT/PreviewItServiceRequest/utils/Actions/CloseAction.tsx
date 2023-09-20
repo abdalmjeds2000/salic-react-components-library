@@ -38,7 +38,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [isShowing, setIsShowing] = React.useState(true);
 
-  const { activeUploaderArea, updateActiveUploaderArea } = usePreviewItSRContext();
+  const { /* activeUploaderArea,  */updateActiveUploaderArea } = usePreviewItSRContext();
 
   const closeAction = async () => {
     setBtnLoading(true);
