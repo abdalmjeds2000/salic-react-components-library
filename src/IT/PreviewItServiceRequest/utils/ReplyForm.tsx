@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Image, message, Space, Tooltip, Upload } from 'antd';
+import { Button, Form, Image, message, Space, Tooltip } from 'antd';
 import { Mention, MentionsInput } from 'react-mentions';
 import mentionsInputStyle from './mentionsInputStyle';
-import { apiLink } from '../../../index';
+import { apiLink, uploaderUrl, usePreviewItSRContext } from '../../../index';
+import { Uploader } from '../../../components/Uploader';
 
 
 
 type Porps = {
   isDisable?: boolean;
-  fileList?: any[];
+  // fileList?: any[];
   setFileList?: any;
   btnLoader?: boolean;
   onFinish?: (values: any) => void;
@@ -17,8 +17,9 @@ type Porps = {
   usersList?: { email: string, displayname: string }[]
 }
 
-const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
+const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
   const [textboxVal, setTextboxVal] = React.useState('');
+  const  { activeUploaderArea } = usePreviewItSRContext();
 
   // const controller = new AbortController();
   // const signal = controller.signal;
@@ -87,14 +88,20 @@ const ReplyForm = ({ usersList, isDisable, fileList, setFileList, btnLoader, onF
             </MentionsInput>
           </Form.Item>
 
-          <Upload
+          {/* <Upload
             action="https://salicapi.com/api/uploader/up"
             fileList={fileList}
             onChange={({ fileList: newFileList }) => setFileList(newFileList)}
           >
             <Button type='default' size='middle' icon={<UploadOutlined />}>Attach Files</Button>
-          </Upload>
-
+          </Upload> */}
+          <Uploader
+            action={uploaderUrl}
+            onChange={(fileList):any => setFileList(fileList)}
+            // allowPasteImages={activeUploaderArea === "reply"}
+            allowPasteImages={false}
+            mode='button'
+          />
 
           <Button htmlType="submit" type='primary' loading={btnLoader}>
             Add Feedback

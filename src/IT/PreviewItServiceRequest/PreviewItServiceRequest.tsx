@@ -71,8 +71,11 @@ type Props = {
   organizationUsers?: { email: string, displayname: string }[];
   handleAfterDeleteRequest?: () => void;
 }
+type activeUploaderAreaTypes = "reply" | "close" | "bia" | "scr" | null;
 
-export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, organizationUsers, handleAfterDeleteRequest }: Props) => {
+
+
+export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, organizationUsers, handleAfterDeleteRequest }: Props) => {
   const [requestData, setRequestData] = React.useState<any>({});
   const [loading, setLoading] = React.useState<any>(true);
   const [fileList, setFileList] = React.useState<any>([]);
@@ -97,16 +100,6 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
       setLoading(false);
     }
   }
-  React.useEffect(() => {
-    if(TicketId) {
-      GetRequest();
-    }
-  }, []);
-  React.useEffect(() => {
-    if(Object.keys(requestData).length > 0) {
-      correctImgs();
-    }
-  }, [requestData])
   
   // post reply
   async function AddReply(formValues: any) {
@@ -217,7 +210,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
 
   
   // disable on (one of ticket data is empty)
-  const isFormIncompleted = !requestData?.Category || !requestData?.IssueType || !requestData?.Priority || !requestData?.Priority || !requestData?.RequestType;
+  const isFormIncompleted = !requestData?.Category || !requestData?.IssueType || !requestData?.Priority || !requestData?.RequestType;
   // Get Pending Assignee based on current user
   let pendingApprover: any = null;
   if(Object.keys(requestData).length > 0) {
@@ -242,6 +235,17 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
     scrfile=JSON.parse(requestData?.SCR?.Body)
   }
 
+  React.useEffect(() => {
+    if(TicketId) {
+      GetRequest();
+    }
+  }, []);
+  React.useEffect(() => {
+    if(Object.keys(requestData).length > 0) {
+      correctImgs();
+    }
+  }, [requestData]);
+  
 
   if (Object.keys(requestData)?.length === 0) {
     return <Loader />;
@@ -443,7 +447,7 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
               !["CLOSED", "CANCELLED"].includes(requestData?.Status) &&
               <Timeline.Item dot={<UserImage email={Email} />} className='add-reply'>
                 <ReplyForm
-                  fileList={fileList}
+                  // fileList={fileList}
                   setFileList={setFileList}
                   replyForm={replyForm}
                   btnLoader={loading}
@@ -561,3 +565,28 @@ export const PreviewItServiceRequest = ({ TicketId, Email, IsAdmin, IssueTypes, 
     </div>
   )
 }
+
+
+
+const PreviewItSRContext = React.createContext<any>(null);
+
+export const PreviewItServiceRequest = (props: Props) => {
+  // "activeUploaderArea" is used to know which uploader area is active (reply, close, bia, scr)
+  const [activeUploaderArea, setActiveUploaderArea] = React.useState<activeUploaderAreaTypes>("reply");
+
+  const updateActiveUploaderArea = (area: activeUploaderAreaTypes) => {
+    setActiveUploaderArea(area || "reply"); // if area is null, set it to "reply"
+  }
+
+  const contextObj = {
+    activeUploaderArea,
+    updateActiveUploaderArea
+  }
+  return (
+    <PreviewItSRContext.Provider value={contextObj}>
+      <PreviewItSRComponent {...props} />
+    </PreviewItSRContext.Provider>
+  )
+}
+
+export const usePreviewItSRContext = () => React.useContext(PreviewItSRContext);

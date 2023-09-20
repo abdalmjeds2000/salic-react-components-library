@@ -111,7 +111,7 @@ function UpdateRequestForm(props: Props) {
                   <span>Access, Permissions, and Licenses</span> <br />
                 </Radio>
                 <Radio value="Security">
-                  <span>Security Incident</span> <br />
+                  <span>Security</span> <br />
                 </Radio>
               </Space>
             </Radio.Group>
@@ -149,7 +149,7 @@ function UpdateRequestForm(props: Props) {
               <Select.Option value="HelpDesk">Help Desk</Select.Option>
               <Select.Option value="BUG">Bugs Fixing</Select.Option>
               <Select.Option value="Permission">Permissions</Select.Option>
-              <Select.Option value="Incident">Incident</Select.Option>
+              <Select.Option value="Security">Security</Select.Option>
             </Select>
           </Form.Item>
         </Section>

@@ -215,8 +215,8 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
                 <Typography.Text type="secondary">Access Issues such as Permissions to access a resource</Typography.Text>
               </Radio>
               <Radio value="Security">
-                <Typography.Text strong>Security Incident</Typography.Text> <br />
-                <Typography.Text type="secondary">Security Incidents such as email phishing.</Typography.Text>
+                <Typography.Text strong>Security</Typography.Text> <br />
+                <Typography.Text type="secondary">Security such as email phishing.</Typography.Text>
               </Radio>
             </Space>
           </Radio.Group>

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Button, message, Modal, Select, Space, Table, Typography, Upload } from 'antd';
 import { SendOutlined, UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
+import { Uploader } from '../../../../components/Uploader';
+import { uploaderUrl, usePreviewItSRContext } from '../../../..';
 
 
 // FileUploderComponent
@@ -27,15 +29,16 @@ const CustomAntdFileUploder = ({ FileType, GetFilesList }: any) => {
 function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openModal, onCancel }: any) {
   const requestType = RequestData.RequestType;
   const [closeReason, setCloseReason] = React.useState("");
-  const [fileList, setFileList] = React.useState([]);
+  const [fileList, setFileList] = React.useState<any[]>([]);
 
-  const [CONFFiles, setCONFFiles] = React.useState([]);
-  const [UATiles, setUATiles] = React.useState([]);
-  const [UGFiles, setUGFiles] = React.useState([]);
+  const [CONFFiles, setCONFFiles] = React.useState<any[]>([]);
+  const [UATiles, setUATiles] = React.useState<any[]>([]);
+  const [UGFiles, setUGFiles] = React.useState<any[]>([]);
 
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [isShowing, setIsShowing] = React.useState(true);
 
+  const { activeUploaderArea, updateActiveUploaderArea } = usePreviewItSRContext();
 
   const closeAction = async () => {
     setBtnLoading(true);
@@ -105,6 +108,14 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
     scrfile=JSON.parse(RequestData?.SCR?.Body)
   }
 
+  React.useEffect(() => {
+    if(openModal) {
+      updateActiveUploaderArea("close");
+    } else {
+      updateActiveUploaderArea(null);
+    }
+  }, [openModal]);
+
   return (
     <>
       {
@@ -135,7 +146,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
                 <Select.Option value="HelpDesk">Help Desk</Select.Option>
                 <Select.Option value="BUG">Bugs Fixing</Select.Option>
                 <Select.Option value="Permission">Permissions</Select.Option>
-                <Select.Option value="Incident">Incident</Select.Option>
+                <Select.Option value="Security">Security</Select.Option>
               </Select>
 
 
@@ -191,13 +202,20 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
               }
 
 
-              <Upload
+              {/* <Upload
                 action="https://salicapi.com/api/uploader/up"
                 fileList={fileList}
                 onChange={({ fileList: newFileList }: any) => setFileList(newFileList)}
               >
                 <Button type='dashed' size='middle' icon={<UploadOutlined />}>Attach Files</Button>
-              </Upload>
+              </Upload> */}
+              <Uploader
+                action={uploaderUrl}
+                onChange={(fileList):any => setFileList(fileList)}
+                // allowPasteImages={activeUploaderArea === "close"}
+                allowPasteImages={false}
+                mode='button'
+              />
             </Space>
           </Modal>
       }

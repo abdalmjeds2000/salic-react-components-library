@@ -13,3 +13,4 @@ export * from './utils/antd-custom-theme';
 
 // export const apiLink = 'https://dev.salic.com/api';
 export const apiLink = 'https://salicapi.com/api';
+export const uploaderUrl = apiLink+'/uploader/up';
