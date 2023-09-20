@@ -146,7 +146,7 @@ function CloseAction({ RequestData, Email, RequestId, handelAfterAction, openMod
                 <Select.Option value="HelpDesk">Help Desk</Select.Option>
                 <Select.Option value="BUG">Bugs Fixing</Select.Option>
                 <Select.Option value="Permission">Permissions</Select.Option>
-                <Select.Option value="Security">Security</Select.Option>
+                <Select.Option value="Incident">Security</Select.Option>
               </Select>
 
 
