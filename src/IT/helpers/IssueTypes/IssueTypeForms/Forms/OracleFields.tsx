@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DatePicker, Form, Radio, Select } from "antd";
-import { apiLink } from '../../../../../index';
+import { useAppConfig } from "../../../../../ConfigProvider";
 
 function OracleFields() {
   const [oracleFormData, setOracleFormData] = useState([] as any[]);
   const [selectedModule, setSelectedModule] = useState("");
   const [loading, setLoading] = useState(false);
+  const { apiUrl } = useAppConfig();
 
   let _data = oracleFormData.filter((r) => r.Process === "Oracle");
   const moduels = new Set();
@@ -21,7 +22,7 @@ function OracleFields() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${apiLink}/Tracking/GetOracleFormData`);
+      const response = await fetch(`${apiUrl}/Tracking/GetOracleFormData`);
       const data = await response.json();
       setOracleFormData(data?.Data);
     } catch (error) {

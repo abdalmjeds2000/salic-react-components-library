@@ -1,15 +1,16 @@
 import React from 'react';
 import { Form, Select } from 'antd';
 import { AutoCompleteOrgUsers } from '../../../../../components/AutoCompleteOrgUsers';
-import { apiLink } from '../../../../../index';
+import { useAppConfig } from '../../../../../index';
 
 
 const MASARFields = () => {
   const [departments, setDepartments] = React.useState([]);
+  const { apiUrl } = useAppConfig();
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(`${apiLink}/user/departments`);
+      const response = await fetch(`${apiUrl}/user/departments`);
       const data = await response.json();
       setDepartments(data.Data);
     } catch (error) {

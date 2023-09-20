@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Form, Image, message, Space, Tooltip } from 'antd';
 import { Mention, MentionsInput } from 'react-mentions';
 import mentionsInputStyle from './mentionsInputStyle';
-import { apiLink, uploaderUrl, useAppConfig } from '../../../index';
+import { useAppConfig } from '../../../index';
 import { Uploader } from '../../../components/Uploader';
 
 
@@ -19,7 +19,7 @@ type Porps = {
 
 const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, replyForm }: Porps) => {
   const [textboxVal, setTextboxVal] = React.useState('');
-  const { filesUrl } = useAppConfig();
+  const { apiUrl, uploaderUrl, filesUrl } = useAppConfig();
 
   // const  { activeUploaderArea } = usePreviewItSRContext();
 
@@ -77,8 +77,8 @@ const ReplyForm = ({ usersList, isDisable, setFileList, btnLoader, onFinish, rep
                   return (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                       <Image
-                        src={`${apiLink}/user/photo?id=${entry.id}`}
-                        preview={{src: `${apiLink}/user/photo?id=${entry.id}`,}}
+                        src={`${apiUrl}/user/photo?id=${entry.id}`}
+                        preview={{src: `${apiUrl}/user/photo?id=${entry.id}`,}}
                         onError={e => e.currentTarget.src = `${filesUrl}/7961d7c4-decf-42aa-8010-4a34d4178970.png`}
                         width={20} style={{ borderRadius: 99 }}
                       />

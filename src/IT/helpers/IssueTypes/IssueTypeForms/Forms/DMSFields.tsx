@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Form, Select } from "antd";
-import { apiLink } from '../../../../../index';
+import { useAppConfig } from "../../../../../ConfigProvider";
 
 function DMSFields() {
   const [oracleFormData, setOracleFormData] = useState([] as any[]);
   const [loading, setLoading] = useState(false);
+  const { apiUrl } = useAppConfig();
 
   let _dmsFolders = oracleFormData.filter((r) => r.Process === "DMS");
   const _dmsFoldersList = new Set();
@@ -13,7 +14,7 @@ function DMSFields() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${apiLink}/Tracking/GetOracleFormData`);
+      const response = await fetch(`${apiUrl}/Tracking/GetOracleFormData`);
       const data = await response.json();
       setOracleFormData(data?.Data);
     } catch (error) {

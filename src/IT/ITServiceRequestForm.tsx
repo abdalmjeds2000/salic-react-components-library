@@ -6,10 +6,9 @@ import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
 import { AutoCompleteOrgUsers } from '../components/AutoCompleteOrgUsers';
 import IssueTypeForms from './helpers/IssueTypes/IssueTypeForms/IssueTypeForms';
-import { apiLink } from '../index';
 import "jodit/build/jodit.min.css";
 import JoditEditor from "jodit-react";
-import { editorConfig } from "../index";
+import { editorConfig, useAppConfig } from "../index";
 
 export interface ITServiceRequestFormProps {
   listOfIssue: any[];
@@ -32,6 +31,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
   const [issue, setIssue] = React.useState(initIssueProps);
   const [issueTypeExtra, setIssueTypeExtra] = React.useState(initIssueExtra);
   const [fileList, setFileList] = React.useState<any[]>(props.initialFiles || []);
+  const { apiUrl, uploaderUrl } = useAppConfig();
 
   const onFinish = async (FormData: any) => {
     // Get Files Nemes Uploaded & check if all files finish uploading
@@ -154,7 +154,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
     try {
       setLoading(true);
-      const response = await fetch(`${apiLink}/tracking/Add`, {
+      const response = await fetch(`${apiUrl}/tracking/Add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -288,7 +288,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
 
         <Form.Item label="Documents" style={formItemsStyle}>
           <FilesUploader 
-            endpoint={`${apiLink}/uploader/up`}
+            endpoint={uploaderUrl}
             fileList={fileList}
             GetFilesList={(files: any[]) => setFileList(files)}
           />
