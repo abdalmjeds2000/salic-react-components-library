@@ -2,21 +2,11 @@ import * as React from 'react';
 import { Avatar, Image, Select, SelectProps } from 'antd';
 import { useAppConfig } from '../index';
 
-const fetchUsers = async (value: string) => {
-  const { apiUrl } = useAppConfig();
-  
-  try {
-    const response = await fetch(`${apiUrl}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+
 
 const OptionCard = ({ DisplayName, Email }: any) => {
   const { apiUrl, filesUrl } = useAppConfig();
-
+  
   return(
     <div style={{display: 'flex', alignItems: 'center', gap: 2}}>
       <Avatar
@@ -44,6 +34,17 @@ type Props = {
 export const AutoCompleteOrgUsers = (props: Props) => {
   const [options, setOptions] = React.useState([]);
   const [value, setValue] = React.useState();
+  const { apiUrl } = useAppConfig();
+
+  const fetchUsers = async (value: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const fetch = async (value: string) => {
     if(value.length >= 3) {
