@@ -12,7 +12,18 @@ import UpdateRequestForm from './utils/UpdateRequestForm';
 import ActionsDropdown from './utils/ActionsDropdown';
 import { Loader } from "../../index";
 import "./styles.it.css";
+import { Rating } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
+import { HappyFace, NeutralFace, SadFace, SmilingFace, VeryHappyFace } from "./utils/faces-icons";
 
+
+const CUSTOM_GROUP_LABEL_ID = 'group_label';
+const CUSTOM_ITEM_LABELS_IDS = ['label_1', 'label_2', 'label_3', 'label_4', 'label_4'];
+const customStyles = {
+  itemShapes: [SadFace, NeutralFace, SmilingFace, HappyFace, VeryHappyFace],
+  activeFillColor: ['#D33535', '#DF7A11', '#F7B801', '#339BD6', '#2A7C62'],
+  inactiveFillColor: '#a8a8a8',
+};
 
 
 const { Text } = Typography;
@@ -459,6 +470,33 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                   usersList={organizationUsers || []}
                 />
               </Timeline.Item>
+            }
+            {
+              requestData.Status === "CLOSED" && requestData?.Rate && (
+                <Timeline.Item dot={<UserImage email={requester?.Mail} />} className="extra-card">
+                  <Typography.Title level={4} style={{margin: 0, marginBottom: 15}}>Requester Feedback: {requestData?.Rate?.Rate || 5}/5</Typography.Title>
+                  <div style={{ maxWidth: 350, margin: "10px auto" }}>
+                    <Rating
+                      value={requestData?.Rate?.Rate || 5}
+                      items={5}
+                      visibleLabelId={CUSTOM_GROUP_LABEL_ID}
+                      visibleItemLabelIds={CUSTOM_ITEM_LABELS_IDS}
+                      itemStyles={customStyles}
+                      highlightOnlySelected
+                      transition="none"
+                      className='rating-component'
+                      readOnly
+                    />
+                  </div>
+                  <Descriptions bordered size='small' layout='vertical'>
+                    {
+                      requestData?.Rate?.Comment
+                      ? <Descriptions.Item label="Comment" span={24} style={{ whiteSpace: "break-spaces" }}>{requestData?.Rate?.Comment}</Descriptions.Item>
+                      : null
+                    }
+                  </Descriptions>
+                </Timeline.Item>
+              )
             }
           </Timeline>
         </div>

@@ -76,6 +76,14 @@
     background: linear-gradient(194deg,#ffe4e4,#ffcfcf);
     border: 1px solid #ffcfcf;
   }
+  .preview-request-container .content .timeline .extra-card .ant-timeline-item-content {
+    margin: 0 0 0 70px !important;
+    background: #f4f4f4 !important;
+    border: 1px solid #ddd;
+  }
+  .preview-request-container .content .timeline .extra-card .ant-timeline-item-content::before {
+    display: none !important;
+  }
 
   .preview-request-container .content .timeline .ant-timeline-item-content::before {
     content: "";

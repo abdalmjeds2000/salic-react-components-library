@@ -2,7 +2,15 @@ import * as React from 'react';
 import { Avatar, Image, Select, SelectProps } from 'antd';
 import { useAppConfig } from '../index';
 
-
+const fetchUsers = async (value: string, apiUrl: string) => {
+  try {
+    const response = await fetch(`${apiUrl}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 const OptionCard = ({ DisplayName, Email }: any) => {
   const { apiUrl, filesUrl } = useAppConfig();
@@ -36,19 +44,11 @@ export const AutoCompleteOrgUsers = (props: Props) => {
   const [value, setValue] = React.useState();
   const { apiUrl } = useAppConfig();
 
-  const fetchUsers = async (value: string) => {
-    try {
-      const response = await fetch(`${apiUrl}/User/AutoComplete?term=${value}&_type=query&q=${value}&_=1667805757891`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  
 
   const fetch = async (value: string) => {
     if(value.length >= 3) {
-      const response: any = await fetchUsers(value);
+      const response: any = await fetchUsers(value, apiUrl);
       const values = response?.Data?.value;
       const selectOptions = values?.map((value: any) => ({
         value: props.valueRender === "mail" ? value.mail : props.valueRender === "displayName" ? value.displayName : value.mail, 
