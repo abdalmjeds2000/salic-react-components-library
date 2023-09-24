@@ -13,7 +13,7 @@ import ActionsDropdown from './utils/ActionsDropdown';
 import { Loader } from "../../index";
 import "./styles.it.css";
 import { Rating } from '@smastrom/react-rating';
-import '@smastrom/react-rating/style.css';
+// import '@smastrom/react-rating/style.css';
 import { HappyFace, NeutralFace, SadFace, SmilingFace, VeryHappyFace } from "./utils/faces-icons";
 
 
