@@ -84,7 +84,7 @@ export const HappyFace = (
 );
 
 export const VeryHappyFace = (
-  <svg width="60" version="1.1" id="5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="Face_5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3S90.4,0.8,200.4,0.8C310.5,0.8,400,90.3,400,200.3S310.5,399.9,200.4,399.9z
