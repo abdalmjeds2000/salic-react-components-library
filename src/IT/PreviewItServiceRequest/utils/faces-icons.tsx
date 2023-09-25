@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export const SadFace = (
-  <svg version="1.1" id="Face_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="Face_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3C0.8,90.3,90.4,0.8,200.4,0.8S400,90.3,400,200.3
@@ -26,7 +26,7 @@ export const SadFace = (
 );
 
 export const NeutralFace = (
-  <svg version="1.1" id="Face_2" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="Face_2" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3C0.8,90.3,90.4,0.8,200.4,0.8C310.5,0.8,400,90.3,400,200.3
@@ -51,7 +51,7 @@ export const NeutralFace = (
 );
 
 export const SmilingFace = (
-  <svg version="1.1" id="Face_3" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="Face_3" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3C0.8,90.3,90.4,0.8,200.4,0.8S400,90.3,400,200.3
@@ -68,7 +68,7 @@ export const SmilingFace = (
 );
 
 export const HappyFace = (
-  <svg version="1.1" id="Face_4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="Face_4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3S90.4,0.8,200.4,0.8C310.5,0.8,400,90.3,400,200.3S310.5,399.9,200.4,399.9zM200.4,33c-92.3,0-167.3,75.1-167.3,167.3c0,92.3,75.1,167.3,167.3,167.3s167.3-75.1,167.3-167.3C367.8,108.1,292.7,33,200.4,33z"/>
@@ -84,7 +84,7 @@ export const HappyFace = (
 );
 
 export const VeryHappyFace = (
-  <svg version="1.1" id="5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
+  <svg width="60" version="1.1" id="5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 400 400">
     <g>
       <g>
         <path d="M200.4,399.9C90.4,399.9,0.8,310.4,0.8,200.3S90.4,0.8,200.4,0.8C310.5,0.8,400,90.3,400,200.3S310.5,399.9,200.4,399.9z
