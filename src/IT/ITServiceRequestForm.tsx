@@ -1,6 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
-import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image } from 'antd';
+import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image, Descriptions } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
@@ -32,6 +32,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
   const [issueTypeExtra, setIssueTypeExtra] = React.useState(initIssueExtra);
   const [fileList, setFileList] = React.useState<any[]>(props.initialFiles || []);
   const { apiUrl, uploaderUrl } = useAppConfig();
+  const descriptionRef = React.useRef<any>(null);
 
   const onFinish = async (FormData: any) => {
     // Get Files Nemes Uploaded & check if all files finish uploading
@@ -151,7 +152,6 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
       FileNames: files.join(","),
       ...FormData,
     };
-
     try {
       setLoading(true);
       const response = await fetch(`${apiUrl}/tracking/Add`, {
@@ -160,17 +160,15 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log(data);
-      
       message.success("Your request has been submitted successfully.");
-      form.resetFields();
-      setIssue(initIssueProps);
+      form.resetFields(); // to clear the form after submit
+      descriptionRef.current.value = ""; // to clear the editor after submit
+      setIssue(initIssueProps); // to reset issue category & type
       setIssueTypeExtra(initIssueExtra);
       setFileList([]);
     } catch (error) {
       message.error("Something went wrong, please try again.");
     } finally {
-      console.log('Received values of form: ', formData);
       setLoading(false);
     }
   };
@@ -280,6 +278,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
         <Form.Item name="Description" hidden><TextArea /></Form.Item>
         <Form.Item label="Descriptions / Justifications" required style={formItemsStyle}>
           <JoditEditor
+            ref={descriptionRef}
             value={props.emailDescription || ""}
             config={editorConfig}
             onChange={value => form.setFieldsValue({ Description: value })}
