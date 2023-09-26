@@ -1,6 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
-import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image, Descriptions } from 'antd';
+import { Form, message, Button, Input, Divider, Radio, Space, Select, Typography, Image } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { PaperClipOutlined } from '@ant-design/icons';
 import { FilesUploader } from '../components/CustomAntUploader';
@@ -160,9 +160,16 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+      console.log("Response: ", data);
       message.success("Your request has been submitted successfully.");
       form.resetFields(); // to clear the form after submit
-      descriptionRef.current.value = ""; // to clear the editor after submit
+
+      // to clear the editor after submit
+      descriptionRef.current.value = ""; 
+      const xx = document.getElementsByClassName("jodit-wysiwyg");
+      if(xx.length > 0) xx[0].innerHTML = "";
+      form.setFieldValue("Description", "");
+
       setIssue(initIssueProps); // to reset issue category & type
       setIssueTypeExtra(initIssueExtra);
       setFileList([]);
