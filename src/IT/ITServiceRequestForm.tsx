@@ -17,6 +17,7 @@ export interface ITServiceRequestFormProps {
   initialFiles?: any[];
   emailDescription?: string;
   Source?: "Web" | "ADD-IN" | string;
+  afterSubmit?: () => void;
 }
 const initIssueProps = { category: "Hardware", type: "" };
 const initIssueExtra = { guidLink: { src: null, visible: false }, pdfLink: null };
@@ -173,6 +174,8 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
       setIssue(initIssueProps); // to reset issue category & type
       setIssueTypeExtra(initIssueExtra);
       setFileList([]);
+
+      if (props.afterSubmit) props.afterSubmit();
     } catch (error) {
       message.error("Something went wrong, please try again.");
     } finally {
