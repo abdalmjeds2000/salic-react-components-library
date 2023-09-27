@@ -286,7 +286,8 @@
 
 
 .it-request-access-table {
-  padding: 10px;
+  /* padding: 10px; */
+  margin-bottom: 10px;
 }
 .it-request-access-table .ant-descriptions-item-label {
   width: 20% !important;

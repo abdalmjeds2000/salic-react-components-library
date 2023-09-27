@@ -326,7 +326,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                     ) : null
                   }
                 </div>
-                <div style={{fontSize: '1rem', padding: "0 10px 10px 10px"}} dangerouslySetInnerHTML={{__html: requestData?.Description}}></div>
+                <div style={{fontSize: '1rem'}} dangerouslySetInnerHTML={{__html: requestData?.Description}}></div>
               </Reply>
             </Timeline.Item>
             {

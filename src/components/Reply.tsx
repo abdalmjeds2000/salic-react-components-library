@@ -15,6 +15,7 @@ const replyAttachmentContainer = {
   padding: "5px 10px",
   backgroundColor: "#f5f5f5",
   borderTop: "1px solid #e4e4e4",
+  marginTop: "10px",
 }
 
 type Props = {
@@ -41,7 +42,7 @@ export const Reply = (props: Props) => {
           ? <div style={{display: 'block'}}><Tag color="#277c62">Approved Note</Tag></div>
           : null
         }
-        <div style={{marginBottom: props?.Files ? 10 : 0, padding: props?.Files ? 15 : 0}}>
+        <div style={{padding: 15}}>
           {props.children}
         </div>
         {
