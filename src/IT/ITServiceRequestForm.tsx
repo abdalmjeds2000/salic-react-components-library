@@ -144,6 +144,14 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           var GlobalAdminAccess_FormDataProp = { Date: moment(FormData.GlobalAdminAccess_Date).format('MM/DD/YYYY'), Duration: FormData.GlobalAdminAccess_Duration, /* Reason: FormData.GlobalAdminAccess_Reason */ };
           FormData.FormData = JSON.stringify(GlobalAdminAccess_FormDataProp);
           break;
+        case 'VPN Access':
+          var VPNAccess_FormDataProp = { From: moment(new Date(FormData?.VPNAccess_Duration[0])).format('MM/DD/YYYY'), To: moment(new Date(FormData?.VPNAccess_Duration[1])).format('MM/DD/YYYY') };
+          FormData.FormData = JSON.stringify(VPNAccess_FormDataProp);
+          break;
+        case 'Resend eSign Invitation':
+          var ResendESignInvitation_FormDataProp = { Id: FormData?.resendEsignInvitation_Id, Subject: FormData?.resendEsignInvitation_Subject, Users: FormData?.resendEsignInvitation_UsersList };
+          FormData.FormData = JSON.stringify(ResendESignInvitation_FormDataProp);
+          break;
       }
     }
     const formData = { 
@@ -208,7 +216,10 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
         <Divider />
 
         <Form.Item name="CategoryType" label="Issue Category" initialValue="Hardware" style={formItemsStyle}>
-          <Radio.Group value={issue.category} onChange={({ target: { value } }) => setIssue({ category: value, type: "" })}>
+          <Radio.Group value={issue.category} onChange={({ target: { value } }) => {
+            setIssue({ category: value, type: "" });
+            form.setFieldsValue({ IssueType: "" });
+          }}>
             <Space direction="vertical">
               <Radio value="Hardware">
                 <Typography.Text strong>Hardware & Devices</Typography.Text> <br />
@@ -279,7 +290,11 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
         {
           issue.category === "Access" && issue.type !== "" &&
             <div style={{padding: '15px', borderRadius: '10px', backgroundColor: '#f5f5f5'}}>
-              <IssueTypeForms IssueType={issue.type} />
+              <IssueTypeForms 
+                IssueType={issue.type} 
+                CurrentUserEmail={props.Email}
+                form={form}
+              />
             </div>
         }
 

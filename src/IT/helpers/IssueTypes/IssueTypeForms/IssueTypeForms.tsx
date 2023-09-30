@@ -16,11 +16,13 @@ import NewEmailAccountFields from "./Forms/NewEmailAccountFields";
 import InstallProgramToolFields from "./Forms/InstallProgramToolFields";
 import BackupRestoreFields from "./Forms/BackupRestoreFields";
 import GlobalAdminAccessFields from "./Forms/GlobalAdminAccessFields";
+import VPNAccessFields from "./Forms/VPNAccessFields";
+import ResendESignInvitationFields from "./Forms/ResendESignInvitationFields";
 import { Empty } from "antd";
 
 
 
-function IssueTypeForms({ IssueType }: { IssueType: string }) {
+function IssueTypeForms({ IssueType, CurrentUserEmail, form }: { IssueType: string, CurrentUserEmail: string, form: any }) {
 
   if (IssueType === "Oracle") {
     return <OracleFields />;
@@ -56,6 +58,10 @@ function IssueTypeForms({ IssueType }: { IssueType: string }) {
     return <BackupRestoreFields />;
   } else if(IssueType === "Global Admin Access Request"){
     return <GlobalAdminAccessFields />;
+  } else if(IssueType === "VPN Access"){
+    return <VPNAccessFields />;
+  } else if(IssueType === "Resend eSign Invitation"){
+    return <ResendESignInvitationFields currentUserEmail={CurrentUserEmail} form={form} />;
   }
   return <div style={{textAlign: 'center'}}><Empty description="There is no form for this issue type yet." /></div>;
 }

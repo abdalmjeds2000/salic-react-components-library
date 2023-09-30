@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Button, Descriptions, Form, Image, Steps, Timeline, Typography, message } from 'antd';
 import moment from 'moment';
 import { CaretRightOutlined, CloseOutlined, MoreOutlined } from '@ant-design/icons';
-import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess } from './utils/RequestTabels';
+import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess, GetFormDataVPNAccess, GetFormDataResendESignInvitation } from './utils/RequestTabels';
 import { Reply } from '../../components/Reply';
 import { ToggleButton } from '../../components/ToggleButton';
 import { Section } from '../../components/Section';
@@ -322,6 +322,10 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                         ? <GetFormDataBackupRestore request={requestData} />
                       : requestData.IssueType === "Global Admin Access Request"
                         ? <GetFormDataGlobalAdminAccess request={requestData} />
+                      : requestData.IssueType === "VPN Access"
+                        ? <GetFormDataVPNAccess request={requestData} />
+                      : requestData.IssueType === "Resend eSign Invitation"
+                        ? <GetFormDataResendESignInvitation request={requestData} />
                         : null
                     ) : null
                   }

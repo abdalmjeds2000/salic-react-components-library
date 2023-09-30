@@ -298,4 +298,35 @@ export function GetFormDataGlobalAdminAccess({ request }: any) {
   )
 }
 
+export function GetFormDataVPNAccess({ request }: any) {
+  const formDate = request.FormData;
+  return (
+    <div className="it-request-access-table">
+      <Descriptions bordered title="" size="default" column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }} >
+        <Descriptions.Item label="From">{formDate.From || ' - '}</Descriptions.Item>
+        <Descriptions.Item label="To">{formDate.To || ' - '}</Descriptions.Item>
+      </Descriptions>
+    </div>
+  )
+}
+
+
+export function GetFormDataResendESignInvitation({ request }: any) {
+  const formDate = request.FormData;
+  return (
+    <div className="it-request-access-table">
+      <Descriptions bordered title="" size="default" column={1}>
+        <Descriptions.Item label="Subject">{formDate.Subject || ' - '}</Descriptions.Item>
+        <Descriptions.Item label="Users to re-invite">
+          <List
+            size="small"
+            dataSource={formDate?.Users || []}
+            renderItem={(item: any) => <List.Item>{(item?.InviteeName && item?.InviteeName?.trim()!=="") ? item?.InviteeName : item?.EmailAddress}</List.Item>}
+          />
+        </Descriptions.Item>
+      </Descriptions>
+    </div>
+  )
+}
+
 
