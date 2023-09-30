@@ -16,7 +16,7 @@ function ResendESignInvitationFields({ form, currentUserEmail }: { form: FormIns
   const fetchInvitations = async () => {
     if (!currentUserEmail) return;
     try {
-      const response = await fetch(`${apiUrl}/Signaturev3/GetUserDocumentsByEmail?Email=${currentUserEmail}`);
+      const response = await fetch(`${apiUrl}/Signaturev2/GetUserDocumentsByEmail?Email=${currentUserEmail}`);
       const data = await response.json();
       setInvitationState({ loading: false, data: data?.Data || [] });
     } catch (error) {
@@ -26,7 +26,7 @@ function ResendESignInvitationFields({ form, currentUserEmail }: { form: FormIns
   const fetchInvitationUsers = async (id: number | null | undefined) => {
     try {
       setUsersState(prev => ({ ...prev, loading: true }));
-      const response = await fetch(`${apiUrl}/Signaturev3/DocumentPendingInvitations?documentId=${id}`);
+      const response = await fetch(`${apiUrl}/Signaturev2/DocumentPendingInvitations?documentId=${id}`);
       const data = await response.json();
       setUsersState({ loading: false, data: data?.Data || [] });
     } catch (error) {
