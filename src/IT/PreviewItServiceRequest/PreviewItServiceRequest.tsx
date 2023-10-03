@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Button, Descriptions, Form, Image, Steps, Timeline, Typography, message } from 'antd';
 import moment from 'moment';
 import { CaretRightOutlined, CloseOutlined, MoreOutlined } from '@ant-design/icons';
-import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess, GetFormDataVPNAccess, GetFormDataResendESignInvitation } from './utils/RequestTabels';
+import { GetFormDataOracle, GetFormDataSharedEmail, GetFormDataUSB, GetFormDataDMS, GetFormDataPhone, GetFormDataSoftwareLic, GetFormDataNewAccount, GetFormDataGLAccount, GetFormDataCreateGroupemail, GetFormDataAddUserstoAGroup, GetFormDataChangeLineManager, GetFormDataChangeJobTitle, GetFormDataMASAR, GetFormDataNewEmailAccount, GetFormDataInstallProgramTool, GetFormDataBackupRestore, GetFormDataGlobalAdminAccess, GetFormDataVPNAccess, GetFormDataResendESignInvitation, GetFormDataRemoveUsersFromAGroup } from './utils/RequestTabels';
 import { Reply } from '../../components/Reply';
 import { ToggleButton } from '../../components/ToggleButton';
 import { Section } from '../../components/Section';
@@ -308,6 +308,8 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                         ? <GetFormDataCreateGroupemail request={requestData} />
                       : requestData.IssueType === "Add Users to A Group"
                         ? <GetFormDataAddUserstoAGroup request={requestData} />
+                      : requestData.IssueType === "Remove Users from A Group"
+                        ? <GetFormDataRemoveUsersFromAGroup request={requestData} />
                       : requestData.IssueType === "Change Line Manager"
                         ? <GetFormDataChangeLineManager request={requestData} />
                       : requestData.IssueType === "Change Job Title"
@@ -324,7 +326,7 @@ export const PreviewItSRComponent = ({ TicketId, Email, IsAdmin, IssueTypes, org
                         ? <GetFormDataGlobalAdminAccess request={requestData} />
                       : requestData.IssueType === "VPN Access"
                         ? <GetFormDataVPNAccess request={requestData} />
-                      : requestData.IssueType === "Resend eSign Invitation"
+                      : requestData.IssueType === "Invite User To Sign Document"
                         ? <GetFormDataResendESignInvitation request={requestData} />
                         : null
                     ) : null

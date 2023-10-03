@@ -19,6 +19,7 @@ import GlobalAdminAccessFields from "./Forms/GlobalAdminAccessFields";
 import VPNAccessFields from "./Forms/VPNAccessFields";
 import ResendESignInvitationFields from "./Forms/ResendESignInvitationFields";
 import { Empty } from "antd";
+import RemoveUsersFromAGroup from "./Forms/RemoveUsersFromAGroup";
 
 
 
@@ -44,6 +45,8 @@ function IssueTypeForms({ IssueType, CurrentUserEmail, form }: { IssueType: stri
     return <CreateGroupEmailFields />;
   } else if (IssueType === "Add Users to A Group") {
     return <AddUserstoAGroupFields />;
+  } else if (IssueType === "Remove Users from A Group") {
+    return <RemoveUsersFromAGroup />;
   } else if (IssueType === "Change Line Manager") {
     return <ChangeLineManagerFields />;
   } else if (IssueType === "Change Job Title") {
@@ -60,7 +63,7 @@ function IssueTypeForms({ IssueType, CurrentUserEmail, form }: { IssueType: stri
     return <GlobalAdminAccessFields />;
   } else if(IssueType === "VPN Access"){
     return <VPNAccessFields />;
-  } else if(IssueType === "Resend eSign Invitation"){
+  } else if(IssueType === "Invite User To Sign Document"){
     return <ResendESignInvitationFields currentUserEmail={CurrentUserEmail} form={form} />;
   }
   return <div style={{textAlign: 'center'}}><Empty description="There is no form for this issue type yet." /></div>;

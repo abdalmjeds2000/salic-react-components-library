@@ -116,6 +116,11 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           var AddUserstoAGroupFormDataProp = { GroupName: FormData.GroupName, EmailAddress: FormData.EmailAddress, GroupMembers: FormData.GroupMembers };
           FormData.FormData = JSON.stringify(AddUserstoAGroupFormDataProp);
           break;
+        case 'Remove Users from A Group':
+          FormData.removeUsersFromAGroup_GroupMembers = FormData.removeUsersFromAGroup_GroupMembers?.join(",") || "";
+          var RemoveUsersFromAGroupFormDataProp = { GroupName: FormData.removeUsersFromAGroup_GroupName, GroupMembers: FormData.removeUsersFromAGroup_GroupMembers };
+          FormData.FormData = JSON.stringify(RemoveUsersFromAGroupFormDataProp);
+          break;
         case 'Change Line Manager':
           var ChangeLineManagerFormDataProp = { Employee: FormData.Employee, NewLine: FormData.NewLine };
           FormData.FormData = JSON.stringify(ChangeLineManagerFormDataProp);
@@ -148,7 +153,7 @@ export const ITServiceRequestForm = (props: ITServiceRequestFormProps) => {
           var VPNAccess_FormDataProp = { From: moment(new Date(FormData?.VPNAccess_Duration[0])).format('MM/DD/YYYY'), To: moment(new Date(FormData?.VPNAccess_Duration[1])).format('MM/DD/YYYY') };
           FormData.FormData = JSON.stringify(VPNAccess_FormDataProp);
           break;
-        case 'Resend eSign Invitation':
+        case 'Invite User To Sign Document':
           var ResendESignInvitation_FormDataProp = { Id: FormData?.resendEsignInvitation_Id, Subject: FormData?.resendEsignInvitation_Subject, Users: FormData?.resendEsignInvitation_UsersList };
           FormData.FormData = JSON.stringify(ResendESignInvitation_FormDataProp);
           break;

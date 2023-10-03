@@ -207,6 +207,28 @@ export function GetFormDataAddUserstoAGroup({ request }: any) {
   )
 }
 
+
+
+export function GetFormDataRemoveUsersFromAGroup({ request }: any) {
+  const formDate = request.FormData;
+  return (
+    <>
+      <Descriptions bordered title="" size="default" column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }} >
+        <Descriptions.Item label="Group Name">{formDate.GroupName || ' - '}</Descriptions.Item>
+        <Descriptions.Item label="Members">
+          <List
+            size="small"
+            dataSource={formDate.GroupMembers?.split(",")}
+            renderItem={(item: any) => <List.Item>{item}</List.Item>}
+          />
+        </Descriptions.Item>
+      </Descriptions>
+    </>
+  )
+}
+
+
+
 export function GetFormDataChangeLineManager({ request }: any) {
   const formDate = request.FormData;
   return (
